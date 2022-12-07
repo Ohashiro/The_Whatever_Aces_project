@@ -1,4 +1,4 @@
-﻿,Country,Area,rank_2010,rank_2015,rank_2020,rank_2021,score_2010,score_2015,score_2020,score_2021,Year,HAQ Index (IHME (2017)),Code,Life expectancy
+﻿id,Country,Area,rank_2010,rank_2015,rank_2020,rank_2021,score_2010,score_2015,score_2020,score_2021,Year,HAQ Index (IHME (2017)),Code,Life expectancy
 0,Afghanistan,Asia-Pacific,162,165,163,163,33.7231987285,33.1927712557,33.5838831864,33.7112429767,1990,24.7,AFG,50.331
 1,Afghanistan,Asia-Pacific,162,165,163,163,33.7231987285,33.1927712557,33.5838831864,33.7112429767,1995,24.5,AFG,53.398
 2,Afghanistan,Asia-Pacific,162,165,163,163,33.7231987285,33.1927712557,33.5838831864,33.7112429767,2000,24.8,AFG,55.841

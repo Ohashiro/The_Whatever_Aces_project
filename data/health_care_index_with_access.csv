@@ -1,4 +1,4 @@
-﻿,Rank,Country,Health Care Index (Overall),Infrastructure,Professionals,Cost,Medicine Availability,Government Readiness,Year,HAQ Index (IHME (2017)),Code,Life expectancy
+﻿id,Rank,Country,Health Care Index (Overall),Infrastructure,Professionals,Cost,Medicine Availability,Government Readiness,Year,HAQ Index (IHME (2017)),Code,Life expectancy
 0,1,South Korea,78.72,87.16,14.23,83.59,82.3,87.89,1990,61.7,KOR,71.657
 1,1,South Korea,78.72,87.16,14.23,83.59,82.3,87.89,1995,70.5,KOR,73.918
 2,1,South Korea,78.72,87.16,14.23,83.59,82.3,87.89,2000,74.6,KOR,76.047
