@@ -7,8 +7,6 @@ data_sets = [
     'health_care_index_legatum.csv',
     'health_care_index_with_access.csv',
     'MedicalRessourcesOECD_processed.csv',
-    'number_of_medical_school_and_population.csv',
-    'number_of_school_and_health_index.csv',
     'OECD_health_exp_processed.csv',
     'R_D-expend-processed.csv',
     'tuition_fee_and_average_salary.csv'
@@ -21,8 +19,6 @@ data_structures = {
     'health_care_index_legatum.csv':{},
     'health_care_index_with_access.csv':{},
     'MedicalRessourcesOECD_processed.csv':{},
-    // 'number_of_medical_school_and_population.csv':{},
-    // 'number_of_school_and_health_index.csv':{},
     'OECD_health_exp_processed.csv':{},
     'R_D-expend-processed.csv':{},
     'tuition_fee_and_average_salary.csv':{},
@@ -112,24 +108,6 @@ Promise.all([
             'generalists_salary': +d['Remuneration of general practitioners'],
         }
     }),
-    // d3.csv("../data/number_of_medical_school_and_population.csv", d => {
-    //     return {
-    //         'country': d.Country,
-    //         'nb_schools': d['Number schools'],
-    //         'pop': d['Population (number)'],
-    //     }
-    // }),
-    // d3.csv("../data/number_of_school_and_health_index.csv", d => {
-    //     return {
-    //         '': d['Country'],
-    //         '': d['Number schools'],
-    //         '': d['Total Fees per Year (USD) MIN'],
-    //         '': d['Total Fees per Year (USD) MAX'],
-    //         '': d[''],
-    //         '': d[''],
-    //         '': d[''],
-    //     }
-    // }),
     d3.csv("../data/OECD_health_exp_processed.csv", d => {
         return {
             'code': d["'Country code'"],
@@ -158,13 +136,13 @@ Promise.all([
     for (let i = 0; i < files.length; i++){
         console.log("data from "+data_sets[i]);
         file = files[i];
-        for (let j = 0; j < 5; j++){
-            console.log(file[j]);
-        }
+        console.log(file[0]);
         console.log(file.length);
     }
+
+    createBarChart(files[0]);
 }).catch(function(err) {
-    console.log(err)
+    console.log(err);
 })
 
 const createBarChart = (data) => {
@@ -184,7 +162,7 @@ const createBarChart = (data) => {
         .range([margins.left, width-margins.right])
         .paddingInner(0.2);
     const yScale = d3.scaleLinear()
-        .domain([0, d3.max(data, d => d.value)])
+        .domain([0, d3.max(data, d => d.salary)])
         .range([height-margins.bottom, margins.top])
 
 
@@ -204,9 +182,9 @@ const createBarChart = (data) => {
         .data(data)
         .join("rect")
         .attr("x", d => xScale(d.country))
-        .attr("y", d => yScale(d.value))
+        .attr("y", d => yScale(d.salary))
         .attr("width", xScale.bandwidth())
-        .attr("height", d => yScale(0) - yScale(d.value))
+        .attr("height", d => yScale(0) - yScale(d.salary))
         .attr("fill", "lightgrey")
         .attr("fill", d => color(d.country));
 
