@@ -1,4 +1,5 @@
 import {createBarChart} from "./barChart.js";
+import {indicesChart} from "./indicesChart.js";
 
 // data sets list
 let data_sets = [
@@ -27,6 +28,7 @@ let data_structures = {
 
 /* Load the dataset and formatting variables*/
 Promise.all([
+    // 0
     d3.csv("../data/Average_Monthly_Net_salary.csv", d => {
         return {
             'rank_salary': d.Rank,
@@ -34,6 +36,7 @@ Promise.all([
             'salary': +d['Average Monthly Net Salary (US$)']
         }
     }),
+    // 1
     d3.csv("../data/Cost_of_education - Sheet1.csv", d => {
         return {
             'country': d.Country,
@@ -42,6 +45,7 @@ Promise.all([
             'max_fees': +d['Total Fees per Year (USD) MAX']
         }
     }),
+    // 2
     d3.csv("../data/generalData-processed.csv", d => {
         return {
             'code': d['Country Code'],
@@ -52,6 +56,7 @@ Promise.all([
             'hdi': +d['HDI']
         }
     }),
+    // 3
     d3.csv("../data/health_care_index_legatum.csv", d => {
         return {
             'country': d.Country,
@@ -70,6 +75,7 @@ Promise.all([
             'life_expectancy': +d['Life expectancy']
         }
     }),
+    // 4
     d3.csv("../data/health_care_index_with_access.csv", d => {
         return {
             'rank': d.Rank,
@@ -82,10 +88,11 @@ Promise.all([
             'readiness': +d['Government Readiness'],
             'year': +d.Year,
             'haq_2017': +d['HAQ index (IHME (2017))'],
-            'code': +d.Code,
+            'code': d['Code'],
             'life_expectancy': +d['Life expectancy'],
         }
     }),
+    // 5
     d3.csv("../data/MedicalRessourcesOECD_processed.csv", d => {
         //TO DO: precise that the csv is formatted with ";" rather than ","
         return {
@@ -109,6 +116,7 @@ Promise.all([
             'generalists_salary': +d['Remuneration of general practitioners'],
         }
     }),
+    // 6
     d3.csv("../data/OECD_health_exp_processed.csv", d => {
         return {
             'code': d["'Country code'"],
@@ -120,6 +128,7 @@ Promise.all([
             'share_gdp': +d[" 'Share of gross domestic product (in %)'"],
         }
     }),
+    // 7
     d3.csv("../data/R_D-expend-processed.csv", d => {
         return {
             'country': d["'Country'"],
@@ -132,6 +141,7 @@ Promise.all([
             'r_d_expenses_total': +d["'R&D expenses as PC_GDP (total)''"]
         }
     }),
+    // 8
     d3.csv("../data/tuition_fee_and_average_salary.csv"),
 ]).then(function(files) {
     for (let i = 0; i < files.length; i++){
@@ -140,11 +150,47 @@ Promise.all([
         console.log(file[0]);
         console.log(file.length);
     }
-
+    let indicesData = prepareDataIndicesChart([files[3],files[4]])
     createBarChart(files[0]);
+    indicesChart(indicesData);
 }).catch(function(err) {
     console.log(err);
 })
+
+function prepareDataIndicesChart(files) {
+    let legatum_file = files[0];
+    let HAQ_file = files[1];
+    let prepared_data = [];
+    for (let i = 0; i < HAQ_file.length; i++){
+        let country = HAQ_file[i]["code"];
+        let area_found = false;
+        for (let j = 0; j < legatum_file.length; j++){
+            
+            if (legatum_file[j].code == country){
+                var area = legatum_file[j].area;
+
+                if (area == 'Western Europe' || area == 'Eastern Europe') {
+                    area = 'Europe';
+                }
+                HAQ_file[i]['area'] = area;
+                area_found = true;
+                break;
+            }
+        }
+        if (!area_found){
+            var area = 'Unknown';
+            if (country == 'TWN') {
+                area = 'Asia-Pacific';
+            }
+            if (country == 'PRI') {
+                area = 'Latin America and the Caribbean';
+            }
+            HAQ_file[i]['area'] = area;
+        }
+        prepared_data.push(HAQ_file[i]);
+    }
+    return prepared_data
+}
 
 const createLineChart = (data, colors) => {
     /* Set the dimensions and margins of the graph */
