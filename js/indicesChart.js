@@ -1,5 +1,3 @@
-import {hdiChart} from "./hdiChart.js";
-
 export const indicesChart = (data) => {
     /* Set the dimensions and margins of the graph */
     const width = 900, height = 400;
@@ -50,6 +48,7 @@ export const indicesChart = (data) => {
         Ref: https://observablehq.com/@d3/bar-chart */
     const bar=svg.append("g")
         .attr("class", "bars")
+        .style('opacity', 0.7)
         .selectAll("rect")
         .data(data)
         .join("rect")
@@ -86,5 +85,72 @@ export const indicesChart = (data) => {
     yGroup.selectAll("text")
         .style("text-anchor","end")
 
-    hdiChart(data);
+    
+  // HDI index
+
+  /* Define x-axis, y-axis, and color scales */
+  const yScaleLine = d3.scaleLinear()
+    .domain([0, d3.max(data, d=>d.hdi)])
+    .range([height-margins.bottom, margins.top]);
+
+ 
+  /* Construct a line generator
+    Ref: https://observablehq.com/@d3/line-chart and https://github.com/d3/d3-shape */
+  const line = d3.line()
+    .curve(d3.curveLinear)
+    .x(d => xScale(d.country))
+    .y(d => yScaleLine(d.hdi) - yScaleLine(0));
+
+  /* Group the data for each country
+    Ref: https://observablehq.com/@d3/d3-group */
+  for (let j = 0; j < data.length; j++){
+    if (data[j].hdi != 'Unknown'){
+        data[j]['group'] = 1;
+    } else{
+        data[j]['group'] = 0;
+    }
+    
+  }
+  let group = d3.group(data, d =>  d.group );
+  console.log("group",group);
+  
+
+  /* Create line paths for each country */
+  const path = svg.selectAll('path')
+    .data(group)
+    .join('path')
+      .attr('d', ([i, d]) => line(d)) 
+      .style('stroke', 'darkblue')
+      .style('stroke-width', 2)
+      .style('fill', 'transparent')
+      .style('opacity', 1); // [NEW] Add opacity to the line
+
+  path.append('title').text(([i, d]) => i);
+  const yAxisLine = d3.axisRight(yScaleLine);
+
+  svg.append("g")
+    .attr("transform", `translate(${width - margins.right},0)`)
+    .call(yAxisLine)
+
+  /* [NEW] Add text labels on the right of the chart */
+  const data2020 = data.filter(data => data.year === 2020);
+  svg.selectAll('text.label')
+    .data(data2020)
+    .join('text')
+      .attr('x', width - margins.right + 5)
+      .attr('y', d => yScaleLine(d.hdi))
+      .attr('dy', '0.35em')
+      .style('font-family', 'sans-serif')
+      .style('font-size', 12)
+      .style('fill', d => color(d.country))
+    .text(d => d.country);
+
 }
+
+/*
+TO DO:
+
+Add title
+Add axis labels
+Handle the case where HDI = 0
+*/
