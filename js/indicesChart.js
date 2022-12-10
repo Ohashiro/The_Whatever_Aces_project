@@ -40,10 +40,12 @@ export const indicesChart = (data) => {
         .attr("transform", "translate(50,0)")
         .call(legend);
 
-    svg.append("title")
+    svg.append("text")
+        .attr("x", width/2)             
+        .attr("y", 0 + 2*(margins.top)/3)
         .attr("text-anchor", "middle")  
-        .style("font-size", "16px")
-        .text("HAQ score by country");
+        .style("font-size", "18px")
+        .text("HAQ and HDI score by country");
     /* Create the bar elements and append to the SVG group
         Ref: https://observablehq.com/@d3/bar-chart */
     const bar=svg.append("g")
@@ -145,12 +147,21 @@ export const indicesChart = (data) => {
       .style('fill', d => color(d.country))
     .text(d => d.country);
 
+
+        
+    svg.append("text")
+        .attr("text-anchor", "end")
+        .attr("x", -40)
+        .attr("y",2)
+        .attr("dy", ".75em")
+        .attr("transform", "rotate(-90)")
+        .text("HAQ score (bars)");
+
+    svg.append("text")
+        .attr("text-anchor", "end")
+        .attr("x", -40)
+        .attr("y", 0 + width - margins.right/3)
+        .attr("dy", ".75em")
+        .attr("transform", "rotate(-90)")
+        .text("HDI score (line)");
 }
-
-/*
-TO DO:
-
-Add title
-Add axis labels
-Handle the case where HDI = 0
-*/
