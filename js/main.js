@@ -199,11 +199,9 @@ function prepareDataIndicesChart(files) {
             }
             HAQ_file[i]['area'] = area;
         }
-        if (!hdi_found){
-            var hdi = 'Unknown';
-            HAQ_file[i]['hdi'] = hdi;
+        if (hdi_found && HAQ_file[i]['hdi'] != 0){
+            prepared_data.push(HAQ_file[i]);
         }
-        prepared_data.push(HAQ_file[i]);
     }
     return prepared_data
 }
