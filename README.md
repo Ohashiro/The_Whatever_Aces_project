@@ -1,6 +1,6 @@
 # The_Whatever_Aces_project
 
-FYI, HAQ measures healthcare access and quality.
+HAQ measures healthcare access and quality.
 
 ## HAQ and HDI score by country
 
