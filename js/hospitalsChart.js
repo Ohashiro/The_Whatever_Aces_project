@@ -14,7 +14,7 @@ export const hospitalsChart = (data) => {
 /* Set the dimensions and margins of the graph */
     const width = 800, height = 600  
 // [NEW] Change the right margin to show the country names
-    const margins = {top: 100, right: 40, bottom: 80, left: 40};
+    const margins = {top: 100, right: 40, bottom: 100, left: 40};
     const svg = d3.select("#scatterplot").append("svg").attr("viewBox", [0, 0, width, height])
     
     const svg_legend = d3.select("#scatterplot")
@@ -34,11 +34,9 @@ export const hospitalsChart = (data) => {
         .range([height-margins.bottom, margins.top])
 
 
-    
-    
     svg.append("text")
     .attr("x", width/2)             
-    .attr("y", 0 + 2*(margins.top)/3)
+    .attr("y", 2*(margins.top)/3)
     .attr("text-anchor", "middle")  
     .style("font-size", "18px")
     .text("Correlation between HAQ and number of hospitals per capita");
