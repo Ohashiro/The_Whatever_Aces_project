@@ -1,6 +1,6 @@
 import {createBarChart} from "./barChart.js";
 import {indicesChart} from "./indicesChart.js";import {hdiChart} from "./hdiChart.js";
-
+import {hospitalsChart} from "./hospitalsChart.js";
 // data sets list
 let data_sets = [
     'Average_Monthly_Net_salary.csv',
@@ -93,8 +93,7 @@ Promise.all([
         }
     }),
     // 5
-    d3.csv("../data/MedicalRessourcesOECD_processed.csv", d => {
-        //TO DO: precise that the csv is formatted with ";" rather than ","
+    d3.csv( "../data/MedicalRessourcesOECD_processed.csv", d => {
         return {
             'code': d['CountryCode'],
             'country': d['CountryName'],
@@ -114,6 +113,9 @@ Promise.all([
             'nurses_salary': +d['Remuneration of hospital nurses'],
             'specialists_salary': +d['Remuneration of specialists'],
             'generalists_salary': +d['Remuneration of general practitioners'],
+            'haq': +d['HAQ'],
+            'hospitals_per_capita':+d["Number of hospitals per capita"],
+            'area': d['Area'],
         }
     }),
     // 6
@@ -145,7 +147,7 @@ Promise.all([
     d3.csv("../data/tuition_fee_and_average_salary.csv"),
 ]).then(function(files) {
     for (let i = 0; i < files.length; i++){
-        console.log("data from "+data_sets[i]);
+        console.log("data from "+i+" "+data_sets[i]);
         let file = files[i];
         console.log(file[0]);
         console.log(file.length);
@@ -153,10 +155,13 @@ Promise.all([
     let indicesData = prepareDataIndicesChart([files[3],files[4],files[2]])
     createBarChart(files[0]);
     indicesChart(indicesData);
+    hospitalsChart(files[5]);
+
     
 }).catch(function(err) {
     console.log(err);
 })
+
 
 function prepareDataIndicesChart(files) {
     let legatum_file = files[0];
@@ -205,7 +210,6 @@ function prepareDataIndicesChart(files) {
     }
     return prepared_data
 }
-
 
 const createLineChart = (data, color) => {
     /* Set the dimensions and margins of the graph */
