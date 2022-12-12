@@ -1,5 +1,4 @@
-import {createBarChart} from "./barChart.js";
-import {indicesChart} from "./indicesChart.js";import {hdiChart} from "./hdiChart.js";
+import {indicesChart} from "./indicesChart.js"
 import {hospitalsChart} from "./hospitalsChart.js";
 // data sets list
 let data_sets = [
@@ -14,17 +13,6 @@ let data_sets = [
     'tuition_fee_and_average_salary.csv'
 ];
 
-let data_structures = {
-    'Average_Monthly_Net_salary.csv':{},
-    'Cost_of_education - Sheet1.csv':{},
-    'generalData-processed.csv':{},
-    'health_care_index_legatum.csv':{},
-    'health_care_index_with_access.csv':{},
-    'MedicalRessourcesOECD_processed.csv':{},
-    'OECD_health_exp_processed.csv':{},
-    'R_D-expend-processed.csv':{},
-    'tuition_fee_and_average_salary.csv':{},
-};
 
 /* Load the dataset and formatting variables*/
 Promise.all([
@@ -153,7 +141,6 @@ Promise.all([
         console.log(file.length);
     }
     let indicesData = prepareDataIndicesChart([files[3],files[4],files[2]])
-    createBarChart(files[0]);
     indicesChart(indicesData);
     hospitalsChart(files[5]);
 
@@ -210,80 +197,3 @@ function prepareDataIndicesChart(files) {
     }
     return prepared_data
 }
-
-const createLineChart = (data, color) => {
-    /* Set the dimensions and margins of the graph */
-    const width = 900, height = 400;
-    // [NEW] Change the right margin to show the country names
-    //const margins = {top: 20, right: 40, bottom: 80, left: 40};
-    const margins = {top: 20, right: 100, bottom: 80, left: 40};
-  
-    /* Create the SVG container */
-    const svg = d3.select("#line")
-      .append("svg")
-        .attr("viewBox", [0, 0, width, height]);
-  
-    console.log(data);
-  
-    /* Define x-axis, y-axis, and color scales */
-    const yScale = d3.scaleLinear()
-      .domain([0, d3.max(data, d=>d.value)])
-      .range([height - margins.bottom, margins.top]);
-  
-    console.log(yScale(22));
-  
-    const xScale = d3.scaleTime()
-      .domain(d3.extent(data, d => d.date))
-      .range([margins.left, width - margins.right]); 
-  
-    /* Construct a line generator
-      Ref: https://observablehq.com/@d3/line-chart and https://github.com/d3/d3-shape */
-    const line = d3.line()
-      .curve(d3.curveLinear)
-      .x(d => xScale(d.date))
-      .y(d => yScale(d.value));
-  
-    /* Group the data for each country
-      Ref: https://observablehq.com/@d3/d3-group */
-    const group = d3.group(data, d => d.country);
-    console.log(group);
-  
-    /* Create line paths for each country */
-    const path = svg.selectAll('path')
-      .data(group)
-      .join('path')
-        .attr('d', ([i, d]) => line(d))
-        .style('stroke', ([i, d]) => color(i)) // [NEW] Change the stroke color to align with bar chart
-        .style('stroke-width', 2)
-        .style('fill', 'transparent')
-        .style('opacity', 0.8); // [NEW] Add opacity to the line
-  
-    /* [NEW] Add the tooltip when hover on the line */
-    path.append('title').text(([i, d]) => i);
-  
-    /* [NEW] Create the x and y axes and append them to the chart */
-    const xAxis = d3.axisBottom(xScale);
-  
-    svg.append("g")
-      .attr("transform", `translate(0,${height - margins.bottom})`)
-      .call(xAxis);
-  
-    const yAxis = d3.axisLeft(yScale);
-  
-    svg.append("g")
-      .attr("transform", `translate(${margins.left},0)`)
-      .call(yAxis)
-  
-    /* [NEW] Add text labels on the right of the chart */
-    const data2020 = data.filter(data => data.year === 2020);
-    svg.selectAll('text.label')
-      .data(data2020)
-      .join('text')
-        .attr('x', width - margins.right + 5)
-        .attr('y', d => yScale(d.value))
-        .attr('dy', '0.35em')
-        .style('font-family', 'sans-serif')
-        .style('font-size', 12)
-        .style('fill', d => color(d.country))
-      .text(d => d.country);
-  }

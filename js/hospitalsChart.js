@@ -58,6 +58,7 @@ export const hospitalsChart = (data) => {
     .style("fill", d =>  color(d.area))
     .attr("x", d => xScale(d.hospitals_per_capita))
     .attr("y", d => yScale(d.haq))
+    .append("title").text(d => (d.country));
 
 
     /* Create the x and y axes and append them to the chart
