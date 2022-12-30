@@ -16,21 +16,6 @@ export const gaugeChart = (data) => {
     gaugeLayout(newHDI,1,meanHDI,'gaugeHDI', 'HDI score');
     gaugeLayout(newLifeEx,100,meanLifeEx,'gaugeLifeExpectancy', 'Life expectancy');
 
-
-     // Add event listener to the year slider
-     d3.select("#yearSlider").on("change", function(e) {
-        // Update the chart
-        updateGaugesChart(data);
-    });
-
-    // Add event listener to the sort dropdown
-    d3.select("#gdp").on("change", function(e) {
-        updateGaugesChart(data);
-    });
-    // Add event listener to the sort dropdown
-    d3.select("#selectCountry").on("change", function(e) {
-        updateGaugesChart(data);
-    });
 }
 
 function averageScore(data) {
@@ -65,7 +50,7 @@ function gaugeLayout(indicatedvalue,maxvalue,meanvalue,divname,title) {
           title: { text: title },
           type: "indicator",
           mode: "gauge+number+delta",
-        //   delta: { reference: 380 },
+          delta: { reference: meanvalue },
           gauge: {
             axis: { range: [null, maxvalue] },
             threshold: {
@@ -82,9 +67,7 @@ function gaugeLayout(indicatedvalue,maxvalue,meanvalue,divname,title) {
     Plotly.newPlot(divname, gaugeChart, layout);
 }
 
-function updateGaugesChart(data) {
-    // Get the selected year and sorting method
-    console.log("year chosen",d3.select("#yearSlider").node().value);
+export const updateGaugesChart = (data) => {
     let newData = animationFilter(data);
 
     let scores = averageScore(data);

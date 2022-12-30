@@ -14,8 +14,8 @@ export const animationFilter = (data) => {
             newData = data.filter(data => data.gdp <= gdp_limit);
         } 
         if (gdp_profile == 'mid') {
-            newData = data.filter(function(data) {
-                if (5*gdp_limit > data.gdp && data.gdp  >= gdp_limit) {
+            newData = data.filter(function(item) {
+                if (5*gdp_limit > item.gdp && item.gdp  >= gdp_limit) {
                     return true;
                 }
                 return false;

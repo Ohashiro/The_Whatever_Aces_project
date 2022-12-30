@@ -1,4 +1,5 @@
 import {animationFilter} from "./animation_components.js";
+import { updateGaugesChart } from "./gauge.js";
 
 export const indicesChart = (data) => {
     /* Set the dimensions and margins of the graph */
@@ -135,80 +136,80 @@ export const indicesChart = (data) => {
 
 
     // Update the bar chart based on new inputs
-  function updateBarChart() {
-    // Get the selected year and sorting method
-    console.log("year chosen",d3.select("#yearSlider").node().value);
-    let newData = animationFilter(data);
-
-    // if (sort == 'alphabet') {
-    //   newData = newData.sort((a, b) => d3.ascending(a.country, b.country));
-    // }
-    // else if (sort == 'pctAsce') {
-    //   newData = newData.sort((a, b) => d3.ascending(a.haq, b.haq));
-    // }
-    // else {
-    //   newData = newData.sort((a, b) => d3.descending(a.haq, b.haq));
-    // }
-
-    // Define new x and y scales
-    const xScale = d3.scaleBand()
-        .domain(newData.map(d => d.country))
-        .range([margins.left, width - margins.right])
-        .padding(0.2);
-
-    const yScale = d3.scaleLinear()
-      .domain([0, d3.max(newData, d => d.haq)])
-      .range([height - margins.bottom, margins.top]);
-
-    // Define a transition.
-    const t = d3.transition().duration(1000);
+    function updateBarChart() {
+        // Get the selected year and sorting method
+        console.log("year chosen",d3.select("#yearSlider").node().value);
+        let newData = animationFilter(data);
     
-    // Update the bar chart with enter, update, and exit pattern
-    bar = bar
-      .data(newData, d => d.haq)
-      .join(
-        enter => enter.append("rect")
-          .attr("class", d => d.haq)
-          .attr("x", d => xScale(d.country))
-          .attr("y", d => yScale(d.haq))
-          .attr("height", d => - yScale(d.haq))
-          .attr("width", xScale.bandwidth())
-          .attr("fill", d => color(d.country))
-          //.on("mouseover",mouseover)
-          //.on("mouseout",mouseout)
-          .call(enter => enter.transition(t)
-            .attr("height",d => yScale(0) - yScale(d.haq))),
-        update => update.transition(t)
-          .attr("x", d => xScale(d.country))
-          .attr("y", d => yScale(d.haq))
-          .attr("height", d => yScale(0) - yScale(d.haq))
-          .attr("width", xScale.bandwidth()),
-        exit => exit.transition(t)
-          .attr("y", yScale(0))
-          .attr("height", 0)
-          .remove()
-      )
-      
-    // Transition on the x and y axes
-    const xAxis = d3.axisBottom(xScale)
-    const yAxis = d3.axisLeft(yScale)
-
-    xGroup.transition(t)
-      .call(xAxis)
-      .call(g => g.selectAll(".tick"));
-
-    xGroup.selectAll("text")
-      .style("text-anchor", "end")
-      .attr("dx", "-.8em")
-      .attr("dy", ".15em")
-      .attr("transform", "rotate(-65)");
-
-    yGroup.transition(t)
-        .call(yAxis)
-      .selection()
-        .call(g => g.select(".domain").remove());
-  }
+        // if (sort == 'alphabet') {
+        //   newData = newData.sort((a, b) => d3.ascending(a.country, b.country));
+        // }
+        // else if (sort == 'pctAsce') {
+        //   newData = newData.sort((a, b) => d3.ascending(a.haq, b.haq));
+        // }
+        // else {
+        //   newData = newData.sort((a, b) => d3.descending(a.haq, b.haq));
+        // }
     
+        // Define new x and y scales
+        const xScale = d3.scaleBand()
+            .domain(newData.map(d => d.country))
+            .range([margins.left, width - margins.right])
+            .padding(0.2);
+    
+        const yScale = d3.scaleLinear()
+          .domain([0, d3.max(newData, d => d.haq)])
+          .range([height - margins.bottom, margins.top]);
+    
+        // Define a transition.
+        const t = d3.transition().duration(1000);
+        
+        // Update the bar chart with enter, update, and exit pattern
+        bar = bar
+          .data(newData, d => d.haq)
+          .join(
+            enter => enter.append("rect")
+              .attr("class", d => d.haq)
+              .attr("x", d => xScale(d.country))
+              .attr("y", d => yScale(d.haq))
+              .attr("height", d => - yScale(d.haq))
+              .attr("width", xScale.bandwidth())
+              .attr("fill", d => color(d.country))
+              //.on("mouseover",mouseover)
+              //.on("mouseout",mouseout)
+              .call(enter => enter.transition(t)
+                .attr("height",d => yScale(0) - yScale(d.haq))),
+            update => update.transition(t)
+              .attr("x", d => xScale(d.country))
+              .attr("y", d => yScale(d.haq))
+              .attr("height", d => yScale(0) - yScale(d.haq))
+              .attr("width", xScale.bandwidth()),
+            exit => exit.transition(t)
+              .attr("y", yScale(0))
+              .attr("height", 0)
+              .remove()
+          )
+          
+        // Transition on the x and y axes
+        const xAxis = d3.axisBottom(xScale)
+        const yAxis = d3.axisLeft(yScale)
+    
+        xGroup.transition(t)
+          .call(xAxis)
+          .call(g => g.selectAll(".tick"));
+    
+        xGroup.selectAll("text")
+          .style("text-anchor", "end")
+          .attr("dx", "-.8em")
+          .attr("dy", ".15em")
+          .attr("transform", "rotate(-65)");
+    
+        yGroup.transition(t)
+            .call(yAxis)
+          .selection()
+            .call(g => g.select(".domain").remove());
+      }
+
   // HDI index
 
   /* Define x-axis, y-axis, and color scales */
@@ -256,7 +257,7 @@ export const indicesChart = (data) => {
     .call(yAxisLine)
 
   /* [NEW] Add text labels on the right of the chart */
-  const data2020 = data.filter(data => data.year === 2020);
+  const data2020 = data.filter(data => data.year === 2015);
   svg.selectAll('text.label')
     .data(data2020)
     .join('text')
@@ -268,29 +269,20 @@ export const indicesChart = (data) => {
       .style('fill', d => color(d.country))
     .text(d => d.country);
 
-    function updateLineChart(){
+    function updateLineChart() {
         // Get the selected year and sorting method
         let newData = animationFilter(data);
-        // if (sort == 'alphabet') {
-        //     newData = newData.sort((a, b) => d3.ascending(a.country, b.country));
-        // }
-        // else if (sort == 'pctAsce') {
-        //     newData = newData.sort((a, b) => d3.ascending(a.haq, b.haq));
-        // }
-        // else {
-        //     newData = newData.sort((a, b) => d3.descending(a.haq, b.haq));
-        // }
-
+    
         // Define new x and y scales
         const xScale = d3.scaleBand()
             .domain(newData.map(d => d.country))
             .range([margins.left, width - margins.right])
             .padding(0.2);
-
+    
         const yScale = d3.scaleLinear()
             .domain([0, d3.max(newData, d => d.haq)])
             .range([height - margins.bottom, margins.top]);
-
+    
         // Define a transition.
         const t = d3.transition().duration(1000);
         
@@ -300,17 +292,17 @@ export const indicesChart = (data) => {
         // Transition on the x and y axes
         const xAxis = d3.axisBottom(xScale)
         const yAxis = d3.axisLeft(yScale)
-
+    
         xGroup.transition(t)
             .call(xAxis)
             .call(g => g.selectAll(".tick"));
-
+    
         xGroup.selectAll("text")
             .style("text-anchor", "end")
             .attr("dx", "-.8em")
             .attr("dy", ".15em")
             .attr("transform", "rotate(-65)");
-
+    
         yGroup.transition(t)
             .call(yAxis)
             .selection()
@@ -337,17 +329,18 @@ export const indicesChart = (data) => {
     d3.select("#yearSlider").on("change", function(e) {
         // Update the chart
         updateBarChart();
-        updateLineChart();
+        updateGaugesChart(data);
+        // updateLineChart(data);
     });
 
-    // Add event listener to the sort dropdown
     d3.select("#gdp").on("change", function(e) {
         updateBarChart();
-        updateLineChart();
+        updateGaugesChart(data);
+        // updateLineChart(data);
     });
-    // Add event listener to the sort dropdown
     d3.select("#selectCountry").on("change", function(e) {
         updateBarChart();
-        updateLineChart();
+        updateGaugesChart(data);
+        // updateLineChart(data);
     });
 }

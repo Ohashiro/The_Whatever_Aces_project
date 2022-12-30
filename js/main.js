@@ -168,18 +168,12 @@ Promise.all([
 })
 
 function prepareDataIndicesChart(file) {
-    console.log(file);
-    console.log("preparing DataMerged...");
-    console.log("length",file.length);
 
     let prepared_data = [];
     for (let i = 0; i<file.length; i++){
-        console.log(file[i].gdp);
         if (file[i].haq){
-            console.log(file[i].haq,file[i].year);
             prepared_data.push(file[i]);
         } else {
-            console.log("haq not found",file[i].year);
         }
     }
     return prepared_data
