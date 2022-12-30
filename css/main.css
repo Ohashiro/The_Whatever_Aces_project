@@ -5,3 +5,9 @@
   max-width: 800px;
   margin-bottom: 1.5rem;
 }
+.gauge{
+  width: 30%;
+  height: 250px;
+  float: left;
+  margin: 1%;
+}
