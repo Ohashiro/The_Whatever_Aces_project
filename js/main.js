@@ -10,7 +10,8 @@ let data_sets = [
     'MedicalRessourcesOECD_processed.csv',
     'OECD_health_exp_processed.csv',
     'R_D-expend-processed.csv',
-    'tuition_fee_and_average_salary.csv'
+    'tuition_fee_and_average_salary.csv',
+    'DatasetMerged.csv'
 ];
 
 
@@ -133,6 +134,19 @@ Promise.all([
     }),
     // 8
     d3.csv("../data/tuition_fee_and_average_salary.csv"),
+    // 9
+    // Clé,Country Code,Country Name,Region,Year,GDP (US$),Population (number),HDI,rank legatum index,score legatum,HAQ,Life expectancy,NumbeEasternr of Hospitals,Number of General hospitals,Number of Publicly owned hospitals,Number of Not-for-profit privately owned hospitals,Number of For-profit privately owned hospitals,Total hospital beds,Number of Beds in publicly owned hospitals,Number of Beds in not-for-profit privately owned hospitals,Number of Beds in for-profit privately owned hospitals,Number of Generalist medical practitioners,Number of Specialist medical practitioners,Number of Medical doctors not further defined,Number of Practising nurses,Remuneration of hospital nurses,Remuneration of specialists,Remuneration of general practitioners, Share of gross domestic product (in %) -  All financing schemes, Share of current expenditure on health (in %) -  Government/compulsory schemes, Share of gross domestic product (in %) -  Government/compulsory schemes, Share of current expenditure on health (in %) -  Household out-of-pocket payments, Share of gross domestic product (in %) -  Household out-of-pocket payments, Share of current expenditure on health (in %) - Voluntary health care payment schemes, Share of gross domestic product (in %) -   Voluntary health care payment schemes, Share of current expenditure on health (in %) -  Voluntary schemes/household out-of-pocket payments, Share of gross domestic product (in %) -  Voluntary schemes/household out-of-pocket payments,R&D expenses as PC_GDP (total GOV),R&D expenses as PC_GDP (total HES),R&D expenses as PC_GDP (total BES),R&D expenses as PC_GDP (total),Number schools,Total Fees per Year (USD) MIN,Total Fees per Year (USD) MAX
+    d3.csv("../data/DatasetMerged.csv", d => {
+        return {
+            'country': d['Country Name'],
+            'code': d['Country Code'],
+            'year': +d.Year,
+            'area': d['Region'],
+            'hdi': +d['HDI'],
+            'haq': +d['HAQ'],
+            
+        }
+    })
 ]).then(function(files) {
     for (let i = 0; i < files.length; i++){
         console.log("data from "+i+" "+data_sets[i]);
@@ -140,8 +154,9 @@ Promise.all([
         console.log(file[0]);
         console.log(file.length);
     }
-    let indicesData = prepareDataIndicesChart([files[3],files[4],files[2]])
-    indicesChart(indicesData);
+    //let indicesData = prepareDataIndicesChart([files[3],files[4],files[2]])
+    //indicesChart(indicesData);
+    indicesChart(prepareDataIndicesChart(files[9]));
     hospitalsChart(files[5]);
 
     
@@ -149,8 +164,24 @@ Promise.all([
     console.log(err);
 })
 
+function prepareDataIndicesChart(file) {
+    console.log(file);
+    console.log("preparing DataMerged...");
+    console.log("length",file.length);
 
-function prepareDataIndicesChart(files) {
+    let prepared_data = [];
+    for (let i = 0; i<file.length; i++){
+        if (file[i].haq){
+            console.log(file[i].haq,file[i].year);
+            prepared_data.push(file[i]);
+        } else {
+            console.log("haq not found",file[i].year);
+        }
+    }
+    return prepared_data
+}
+
+function prepareDataIndicesChar_old(files) {
     let legatum_file = files[0];
     let HAQ_file = files[1];
     let HDI_file = files[2];
