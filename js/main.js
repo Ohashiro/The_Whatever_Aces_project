@@ -1,5 +1,6 @@
-import {indicesChart} from "./indicesChart.js"
+import {indicesChart} from "./indicesChart.js";
 import {hospitalsChart} from "./hospitalsChart.js";
+import {gaugeChart} from "./gauge.js"
 // data sets list
 let data_sets = [
     'Average_Monthly_Net_salary.csv',
@@ -144,6 +145,8 @@ Promise.all([
             'area': d['Region'],
             'hdi': +d['HDI'],
             'haq': +d['HAQ'],
+            'gdp': +d['GDP (US$)'],
+            'life': +d['Life expectancy'],
             
         }
     })
@@ -158,7 +161,7 @@ Promise.all([
     //indicesChart(indicesData);
     indicesChart(prepareDataIndicesChart(files[9]));
     hospitalsChart(files[5]);
-
+    gaugeChart(files[9]);
     
 }).catch(function(err) {
     console.log(err);
@@ -171,6 +174,7 @@ function prepareDataIndicesChart(file) {
 
     let prepared_data = [];
     for (let i = 0; i<file.length; i++){
+        console.log(file[i].gdp);
         if (file[i].haq){
             console.log(file[i].haq,file[i].year);
             prepared_data.push(file[i]);

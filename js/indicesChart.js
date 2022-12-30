@@ -1,3 +1,5 @@
+import {animationFilter} from "./animation_components.js";
+
 export const indicesChart = (data) => {
     /* Set the dimensions and margins of the graph */
     const width = 900, height = 400;
@@ -136,26 +138,17 @@ export const indicesChart = (data) => {
   function updateBarChart() {
     // Get the selected year and sorting method
     console.log("year chosen",d3.select("#yearSlider").node().value);
-    let year = d3.select("#yearSlider").node().value;
-    sort = d3.select("#sort").node().value;
-    let country = d3.select("#selectCountry").node().value;
-    
-    // Filter and sorting the new data
-    let newData = data.filter(data => data.year == year);
+    let newData = animationFilter(data);
 
-    if (country != "All") {
-        newData = data.filter(data => data.country == country);
-    }
-
-    if (sort == 'alphabet') {
-      newData = newData.sort((a, b) => d3.ascending(a.country, b.country));
-    }
-    else if (sort == 'pctAsce') {
-      newData = newData.sort((a, b) => d3.ascending(a.haq, b.haq));
-    }
-    else {
-      newData = newData.sort((a, b) => d3.descending(a.haq, b.haq));
-    }
+    // if (sort == 'alphabet') {
+    //   newData = newData.sort((a, b) => d3.ascending(a.country, b.country));
+    // }
+    // else if (sort == 'pctAsce') {
+    //   newData = newData.sort((a, b) => d3.ascending(a.haq, b.haq));
+    // }
+    // else {
+    //   newData = newData.sort((a, b) => d3.descending(a.haq, b.haq));
+    // }
 
     // Define new x and y scales
     const xScale = d3.scaleBand()
@@ -275,79 +268,70 @@ export const indicesChart = (data) => {
       .style('fill', d => color(d.country))
     .text(d => d.country);
 
-function updateLineChart(){
-    // Get the selected year and sorting method
-    let year = d3.select("#yearSlider").node().value;
-    sort = d3.select("#sort").node().value;
-    let country = d3.select("#selectCountry").node().value;
-    // Filter and sorting the new data
-    let newData = data.filter(data => data.year == year);
+    function updateLineChart(){
+        // Get the selected year and sorting method
+        let newData = animationFilter(data);
+        // if (sort == 'alphabet') {
+        //     newData = newData.sort((a, b) => d3.ascending(a.country, b.country));
+        // }
+        // else if (sort == 'pctAsce') {
+        //     newData = newData.sort((a, b) => d3.ascending(a.haq, b.haq));
+        // }
+        // else {
+        //     newData = newData.sort((a, b) => d3.descending(a.haq, b.haq));
+        // }
 
-    if (country != "All") {
-        newData = data.filter(data => data.country == country);
-    }
+        // Define new x and y scales
+        const xScale = d3.scaleBand()
+            .domain(newData.map(d => d.country))
+            .range([margins.left, width - margins.right])
+            .padding(0.2);
 
-    if (sort == 'alphabet') {
-        newData = newData.sort((a, b) => d3.ascending(a.country, b.country));
-    }
-    else if (sort == 'pctAsce') {
-        newData = newData.sort((a, b) => d3.ascending(a.haq, b.haq));
-    }
-    else {
-        newData = newData.sort((a, b) => d3.descending(a.haq, b.haq));
-    }
+        const yScale = d3.scaleLinear()
+            .domain([0, d3.max(newData, d => d.haq)])
+            .range([height - margins.bottom, margins.top]);
 
-    // Define new x and y scales
-    const xScale = d3.scaleBand()
-        .domain(newData.map(d => d.country))
-        .range([margins.left, width - margins.right])
-        .padding(0.2);
-
-    const yScale = d3.scaleLinear()
-        .domain([0, d3.max(newData, d => d.haq)])
-        .range([height - margins.bottom, margins.top]);
-
-    // Define a transition.
-    const t = d3.transition().duration(1000);
-    
-    // Update the line chart with enter, update, and exit pattern
-    // TO DO
+        // Define a transition.
+        const t = d3.transition().duration(1000);
         
-    // Transition on the x and y axes
-    const xAxis = d3.axisBottom(xScale)
-    const yAxis = d3.axisLeft(yScale)
+        // Update the line chart with enter, update, and exit pattern
+        // TO DO
+            
+        // Transition on the x and y axes
+        const xAxis = d3.axisBottom(xScale)
+        const yAxis = d3.axisLeft(yScale)
 
-    xGroup.transition(t)
-        .call(xAxis)
-        .call(g => g.selectAll(".tick"));
+        xGroup.transition(t)
+            .call(xAxis)
+            .call(g => g.selectAll(".tick"));
 
-    xGroup.selectAll("text")
-        .style("text-anchor", "end")
-        .attr("dx", "-.8em")
-        .attr("dy", ".15em")
-        .attr("transform", "rotate(-65)");
+        xGroup.selectAll("text")
+            .style("text-anchor", "end")
+            .attr("dx", "-.8em")
+            .attr("dy", ".15em")
+            .attr("transform", "rotate(-65)");
 
-    yGroup.transition(t)
-        .call(yAxis)
-        .selection()
-        .call(g => g.select(".domain").remove());
-    }
+        yGroup.transition(t)
+            .call(yAxis)
+            .selection()
+            .call(g => g.select(".domain").remove());
+        }
         
-svg.append("text")
-    .attr("text-anchor", "end")
-    .attr("x", -40)
-    .attr("y",2)
-    .attr("dy", ".75em")
-    .attr("transform", "rotate(-90)")
-    .text("HAQ score (bars)");
+    svg.append("text")
+        .attr("text-anchor", "end")
+        .attr("x", -40)
+        .attr("y",2)
+        .attr("dy", ".75em")
+        .attr("transform", "rotate(-90)")
+        .text("HAQ score (bars)");
 
-svg.append("text")
-    .attr("text-anchor", "end")
-    .attr("x", -40)
-    .attr("y", 0 + width - margins.right/3)
-    .attr("dy", ".75em")
-    .attr("transform", "rotate(-90)")
-    .text("HDI score (line)");
+    svg.append("text")
+        .attr("text-anchor", "end")
+        .attr("x", -40)
+        .attr("y", 0 + width - margins.right/3)
+        .attr("dy", ".75em")
+        .attr("transform", "rotate(-90)")
+        .text("HDI score (line)");
 
     // Add event listener to the year slider
     d3.select("#yearSlider").on("change", function(e) {
@@ -357,7 +341,7 @@ svg.append("text")
     });
 
     // Add event listener to the sort dropdown
-    d3.select("#sort").on("change", function(e) {
+    d3.select("#gdp").on("change", function(e) {
         updateBarChart();
         updateLineChart();
     });
