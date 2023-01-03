@@ -11,18 +11,18 @@ export const animationFilter = (data) => {
     } else {
         let gdp_limit = 12000000000;
         if (gdp_profile == 'low') {
-            newData = data.filter(data => data.gdp <= gdp_limit);
+            newData = data.filter(data => data.gdp <= 2*gdp_limit);
         } 
         if (gdp_profile == 'mid') {
             newData = data.filter(function(item) {
-                if (5*gdp_limit > item.gdp && item.gdp  >= gdp_limit) {
+                if (7*gdp_limit >= item.gdp && item.gdp  > 2*gdp_limit) {
                     return true;
                 }
                 return false;
               })
         } 
         if (gdp_profile == 'high') {
-            newData = data.filter(data => data.gdp  >= 5*gdp_limit);
+            newData = data.filter(data => data.gdp  > 7*gdp_limit);
         } 
     }
     return newData;
