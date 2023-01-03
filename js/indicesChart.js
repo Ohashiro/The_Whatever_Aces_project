@@ -32,8 +32,8 @@ export const indicesChart = (data) => {
     const areas = data.map(d => d.area);
     var color=d3.scaleOrdinal()
         .domain(areas)
-        .range(d3.schemeTableau10); // work for less than 10 categories, if more, cycle
-    
+        //.range(d3.schemeTableau10); // work for less than 10 categories, if more, cycle
+        .range(["#66c2a5","#fc8d62","#8da0cb","#e78ac3","#a6d854","#ffd92f","#e5c494","#b3b3b3"]);
 
     // Legend creation
     var legend = d3.legendColor()
@@ -61,8 +61,7 @@ export const indicesChart = (data) => {
         .join("rect")
         .attr("class", d => d.code)
         //.attr("class", "bars")
-        .style('opacity', 0.7)
-        //.data(data)
+        .style('opacity', 1)
         .attr("x", d => xScale(d.country))
         .attr("y", d => yScale(d.haq))
         .attr("width", xScale.bandwidth())
@@ -71,42 +70,6 @@ export const indicesChart = (data) => {
         .attr("fill", d => color(d.area))
         .call(legend)
 
-    function mouseover() {
-        // Get the haq and color of the selected bar
-        const haq = d3.select(this).attr('class');
-        const color = d3.select(this).attr('fill');
-    
-        // Highlight the bar with black stroke
-        bar.select("this").style("stroke","#333")
-            .style("stroke-width",2);
-    
-        // Highlight the line with the color
-        d3.select(`path.${haq}`)
-            .style("stroke",color)
-            .style("opacity",1)
-    
-        // Make the text label visible
-        d3.select(`text.${haq}`).style("visibility","visible");
-        }
-    
-    //bar.on("mouseover", mouseover);
-
-    function mouseout() {
-        // Get the haq of the selected bar
-        const haq = d3.select(this).attr('class');
-        // Change the highlight stroke in the bar back to normal
-        
-        bar.select("this").style("stroke",null);
-    
-        // Change the line color to lightgrey
-        d3.select(`path.${haq}`)
-        .style("stroke","lightgrey")
-        .style("opacity",0.5)
-    
-        // Make the text label invisible again
-        d3.select(`text.${haq}`).style("visibility","hidden");
-      }
-    //bar.on("mouseout", mouseout);
 
     /* Add the tooltip when hover on the bar */
     bar.append("title").text(d => (d.country));
@@ -134,167 +97,65 @@ export const indicesChart = (data) => {
         .style("text-anchor","end")
 
 
-    // Update the bar chart based on new inputs
-    function updateBarChart() {
-        let newData = animationFilter(data);
     
-        // Define new x and y scales
-        const xScale = d3.scaleBand()
-            .domain(newData.map(d => d.country))
-            .range([margins.left, width - margins.right])
-            .padding(0.2);
-    
-        const yScale = d3.scaleLinear()
-          .domain([0, d3.max(newData, d => d.haq)])
-          .range([height - margins.bottom, margins.top]);
-    
-        // Define a transition.
-        const t = d3.transition().duration(1000);
-        
-        // Update the bar chart with enter, update, and exit pattern
-        bar = bar
-          .data(newData, d => d.code)
-          .join(
-            enter => enter.append("rect")
-              .attr("class", d => d.code)
-              .attr("x", d => xScale(d.country))
-              .attr("y", d => yScale(d.haq))
-              .attr("height", d => - yScale(d.haq))
-              .attr("width", xScale.bandwidth())
-              .attr("fill", d => color(d.area))
-              //.on("mouseover",mouseover)
-              //.on("mouseout",mouseout)
-              .call(enter => enter.transition(t)
-                .attr("height",d => yScale(0) - yScale(d.haq))),
-            update => update.transition(t)
-              .attr("x", d => xScale(d.country))
-              .attr("y", d => yScale(d.haq))
-              .attr("height", d => yScale(0) - yScale(d.haq))
-              .attr("width", xScale.bandwidth()),
-            exit => exit.transition(t)
-              .attr("y", yScale(0))
-              .attr("height", 0)
-              .remove()
-          )
-          
-        // Transition on the x and y axes
-        const xAxis = d3.axisBottom(xScale)
-        const yAxis = d3.axisLeft(yScale)
-    
-        xGroup.transition(t)
-          .call(xAxis)
-          .call(g => g.selectAll(".tick"));
-    
-        xGroup.selectAll("text")
-          .style("text-anchor", "end")
-          .attr("dx", "-.8em")
-          .attr("dy", ".15em")
-          .attr("transform", "rotate(-65)");
-    
-        yGroup.transition(t)
-            .call(yAxis)
-          .selection()
-            .call(g => g.select(".domain").remove());
-      }
+    // HDI index
 
-  // HDI index
-
-  /* Define x-axis, y-axis, and color scales */
-  const yScaleLine = d3.scaleLinear()
-    .domain([0, d3.max(data, d=>d.hdi)])
-    .range([height-margins.bottom, margins.top]);
+    /* Define x-axis, y-axis, and color scales */
+    let yScaleLine = d3.scaleLinear()
+        .domain([0, d3.max(data, d=>d.hdi)])
+        .range([height-margins.bottom, margins.top]);
 
  
-  /* Construct a line generator
-    Ref: https://observablehq.com/@d3/line-chart and https://github.com/d3/d3-shape */
-  let line = d3.line()
-    .curve(d3.curveLinear)
-    .x(d => 4+xScale(d.country))
-    .y(d => yScaleLine(d.hdi) - yScaleLine(0));
+    /* Construct a line generator
+        Ref: https://observablehq.com/@d3/line-chart and https://github.com/d3/d3-shape */
+    let line = d3.line()
+        .curve(d3.curveLinear)
+        .x(d => 4+xScale(d.country))
+        .y(d => yScaleLine(d.hdi) - yScaleLine(0));
 
-  /* Group the data for each country
-    Ref: https://observablehq.com/@d3/d3-group */
-  for (let j = 0; j < newData.length; j++){
-    if (newData[j].hdi != 'Unknown'){
-        newData[j]['group'] = 1;
-    } else{
-        newData[j]['group'] = 0;
+    /* Group the data for each country
+        Ref: https://observablehq.com/@d3/d3-group */
+    for (let j = 0; j < newData.length; j++){
+        if (newData[j].hdi){
+            newData[j]['group'] = 1;
+        } else{
+            newData[j]['group'] = 0;
+        }
+        
     }
-    
-  }
-  let group = d3.group(newData, d =>  d.group );
-  console.log("group",group);
+    let group = d3.group(newData, d =>  d.group );
+    console.log("group",group);
   
 
   /* Create line paths for each country */
-  const path = svg.selectAll('path')
-    .data(group)
-    .join('path')
-      .attr('d', ([i, d]) => line(d)) 
-      .style('stroke', '#576CC2')
-      .style('stroke-width', 2)
-      .style('fill', 'transparent')
-      .style('opacity', 1); // [NEW] Add opacity to the line
+    var path = svg.selectAll('path')
+        .data(group)
+        .join('path')
+        .attr('d', ([i, d]) => line(d)) 
+        .style('stroke', '#576CC2')
+        .style('stroke-width', 2)
+        .style('fill', 'transparent')
+        .style('opacity', 1); // [NEW] Add opacity to the line
 
-  path.append('title').text(([i, d]) => i);
-  const yAxisLine = d3.axisRight(yScaleLine);
+    path.append('title').text(([i, d]) => i);
+    const yAxisLine = d3.axisRight(yScaleLine);
 
-  svg.append("g")
-    .attr("transform", `translate(${width - margins.right},0)`)
-    .call(yAxisLine)
+    svg.append("g")
+        .attr("transform", `translate(${width - margins.right},0)`)
+        .call(yAxisLine)
 
   /* [NEW] Add text labels on the right of the chart */
-  const data2020 = data.filter(data => data.year === 2015);
-  svg.selectAll('text.label')
-    .data(data2020)
-    .join('text')
-      .attr('x', width - margins.right + 5)
-      .attr('y', d => yScaleLine(d.hdi))
-      .attr('dy', '0.35em')
-      .style('font-family', 'sans-serif')
-      .style('font-size', 12)
-      .style('fill', d => color(d.country))
-    .text(d => d.country);
-
-    function updateLineChart() {
-        // Get the selected year and sorting method
-        let newData = animationFilter(data);
-    
-        // Define new x and y scales
-        const xScale = d3.scaleBand()
-            .domain(newData.map(d => d.country))
-            .range([margins.left, width - margins.right])
-            .padding(0.2);
-    
-        const yScale = d3.scaleLinear()
-            .domain([0, d3.max(newData, d => d.haq)])
-            .range([height - margins.bottom, margins.top]);
-    
-        // Define a transition.
-        const t = d3.transition().duration(1000);
-        
-        // Update the line chart with enter, update, and exit pattern
-        // TO DO
-            
-        // Transition on the x and y axes
-        const xAxis = d3.axisBottom(xScale)
-        const yAxis = d3.axisLeft(yScale)
-    
-        xGroup.transition(t)
-            .call(xAxis)
-            .call(g => g.selectAll(".tick"));
-    
-        xGroup.selectAll("text")
-            .style("text-anchor", "end")
-            .attr("dx", "-.8em")
-            .attr("dy", ".15em")
-            .attr("transform", "rotate(-65)");
-    
-        yGroup.transition(t)
-            .call(yAxis)
-            .selection()
-            .call(g => g.select(".domain").remove());
-        }
+    const data2020 = data.filter(data => data.year === 2015);
+    svg.selectAll('text.label')
+        .data(data2020)
+        .join('text')
+        .attr('x', width - margins.right + 5)
+        .attr('y', d => yScaleLine(d.hdi))
+        .attr('dy', '0.35em')
+        .style('font-family', 'sans-serif')
+        .style('font-size', 12)
+        .style('fill', d => color(d.country))
+        .text(d => d.country);
 
     svg.append("text")
         .attr("text-anchor", "end")
@@ -315,31 +176,30 @@ export const indicesChart = (data) => {
     // Add event listener to the year slider
     d3.select("#yearSlider").on("change", function(e) {
         // Update the chart
-        updateBarChart();
+        bar = updateBarChart(bar,data,color,margins,height,width,xGroup,yGroup);
         updateGaugesChart(data);
-        // updateLineChart(data);
+        path,line = updateLineChart(path,svg,line,data,margins,height,width,xGroup,yGroup,yScaleLine);
     });
 
     d3.select("#gdp").on("change", function(e) {
         // when gdp profile is selected, we set country to "All"
         setCountryToAll();
 
-        updateBarChart();
+        bar = updateBarChart(bar,data,color,margins,height,width,xGroup,yGroup);
         updateGaugesChart(data);
-        // updateLineChart(data);
+        path,line = updateLineChart(path,svg,line,data,margins,height,width,xGroup,yGroup,yScaleLine);
     });
     d3.select("#selectCountry").on("change", function(e) {
-        updateBarChart();
+        bar = updateBarChart(bar,data,color,margins,height,width,xGroup,yGroup);
         updateGaugesChart(data);
-        // updateLineChart(data);
     });
     d3.select("#sort").on("change", function(e) {
         // when gdp profile is selected, we set country to "All"
         setCountryToAll();
 
-        updateBarChart();
+        bar = updateBarChart(bar,data,color,margins,height,width,xGroup,yGroup);
         updateGaugesChart(data);
-        // updateLineChart(data);
+        path,line = updateLineChart(path,svg,line,data,margins,height,width,xGroup,yGroup,yScaleLine);
     });
 }
 
@@ -353,3 +213,181 @@ function setCountryToAll() {
         }
     }
 }
+
+
+function updateBarChart(bar,data,color,margins,height,width,xGroup,yGroup,yScaleLine) {
+    let newData = animationFilter(data);
+
+    // Define new x and y scales
+    const xScale = d3.scaleBand()
+        .domain(newData.map(d => d.country))
+        .range([margins.left, width - margins.right])
+        .padding(0.2);
+
+    const yScale = d3.scaleLinear()
+      .domain([0, d3.max(newData, d => d.haq)])
+      .range([height - margins.bottom, margins.top]);
+
+    // Define a transition.
+    const t = d3.transition().duration(1000);
+    
+    // Update the bar chart with enter, update, and exit pattern
+    bar = bar
+      .data(newData, d => d.code)
+      .join(
+        enter => enter.append("rect")
+          .attr("class", d => d.code)
+          .attr("x", d => xScale(d.country))
+          .attr("y", d => yScale(d.haq))
+          .attr("height", d => - yScale(d.haq))
+          .attr("width", xScale.bandwidth())
+          .attr("fill", d => color(d.area))
+          //.on("mouseover",mouseover)
+          //.on("mouseout",mouseout)
+          .call(enter => enter.transition(t)
+            .attr("height",d => yScale(0) - yScale(d.haq))),
+        update => update.transition(t)
+          .attr("x", d => xScale(d.country))
+          .attr("y", d => yScale(d.haq))
+          .attr("height", d => yScale(0) - yScale(d.haq))
+          .attr("width", xScale.bandwidth()),
+        exit => exit.transition(t)
+          .attr("y", yScale(0))
+          .attr("height", 0)
+          .remove()
+      )
+      
+    // Transition on the x and y axes
+    const xAxis = d3.axisBottom(xScale)
+    const yAxis = d3.axisLeft(yScale)
+
+    xGroup.transition(t)
+      .call(xAxis)
+      .call(g => g.selectAll(".tick"));
+
+    xGroup.selectAll("text")
+      .style("text-anchor", "end")
+      .attr("dx", "-.8em")
+      .attr("dy", ".15em")
+      .attr("transform", "rotate(-65)");
+
+    yGroup.transition(t)
+        .call(yAxis)
+      .selection()
+        .call(g => g.select(".domain").remove());
+    return bar;
+}
+
+function updateLineChart(path,svg,line,data,margins,height,width,xGroup,yGroup,yScaleLine) {
+    console.log('update line chart...')
+    // Get the selected year and sorting method
+    let newData = animationFilter(data);
+
+    // Define new x and y scales
+    const xScale = d3.scaleBand()
+        .domain(newData.map(d => d.country))
+        .range([margins.left, width - margins.right])
+        .padding(0.2);
+
+    // Define a transition.
+    const t = d3.transition().duration(1000);
+    
+    // Update the line chart with enter, update, and exit pattern
+    for (let j = 0; j < newData.length; j++){
+        if (newData[j].hdi){
+            newData[j]['group'] = 1;
+        } else{
+            newData[j]['group'] = 0;
+        }
+    }
+    let group = d3.group(newData, d =>  d.group );
+    console.log("group",group);
+  
+    let newyScaleLine = d3.scaleLinear()
+        .domain([0, d3.max(newData, d=>d.hdi)])
+        .range([height-margins.bottom, margins.top]);
+ 
+    /* Construct a line generator
+        Ref: https://observablehq.com/@d3/line-chart and https://github.com/d3/d3-shape */
+    line = d3.line()
+        .curve(d3.curveLinear)
+        .x(d => 4+xScale(d.country))
+        .y(d => newyScaleLine(d.hdi) - newyScaleLine(0));
+    
+
+    /* Create line paths for each country */
+    path = path
+        .data(group)
+        .join(
+            enter => enter.selectAll('path')//append("rect")
+                .attr("class", d => d.code)
+                .style('stroke', '#576CC2')
+                .style('stroke-width', 2)
+                .style('fill', 'transparent')
+                .style('opacity', 1)
+                //.attr('d', ([i, d]) => line(d))
+                .call(enter => enter.transition(t)
+                    .attr('d', ([i, d]) => line(d)) ),
+            update => update.transition(t)
+                .attr('d', ([i, d]) => line(d)),
+            exit => exit.transition(t)
+                .attr('d', ([i, d]) => - line(0)) 
+                .remove()
+          )
+    
+    path.append('title').text(([i, d]) => i);
+    // Transition on the x and y axes
+    // const xAxis = d3.axisBottom(xScale)
+    // const yAxis = d3.axisLeft(yScale)
+
+    // xGroup.transition(t)
+    //     .call(xAxis)
+    //     .call(g => g.selectAll(".tick"));
+
+    // xGroup.selectAll("text")
+    //     .style("text-anchor", "end")
+    //     .attr("dx", "-.8em")
+    //     .attr("dy", ".15em")
+    //     .attr("transform", "rotate(-65)");
+
+    // yGroup.transition(t)
+    //     .call(yAxis)
+    //     .selection()
+    //     .call(g => g.select(".domain").remove());
+
+    return path,line
+    }
+
+function mouseover() {
+    // Get the haq and color of the selected bar
+    const haq = d3.select(this).attr('class');
+    const color = d3.select(this).attr('fill');
+
+    // Highlight the bar with black stroke
+    bar.select("this").style("stroke","#333")
+        .style("stroke-width",2);
+
+    // Highlight the line with the color
+    d3.select(`path.${haq}`)
+        .style("stroke",color)
+        .style("opacity",1)
+
+    // Make the text label visible
+    d3.select(`text.${haq}`).style("visibility","visible");
+    }
+
+function mouseout() {
+    // Get the haq of the selected bar
+    const haq = d3.select(this).attr('class');
+    // Change the highlight stroke in the bar back to normal
+    
+    bar.select("this").style("stroke",null);
+
+    // Change the line color to lightgrey
+    d3.select(`path.${haq}`)
+    .style("stroke","lightgrey")
+    .style("opacity",0.5)
+
+    // Make the text label invisible again
+    d3.select(`text.${haq}`).style("visibility","hidden");
+  }
