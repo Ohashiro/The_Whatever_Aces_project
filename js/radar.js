@@ -48,6 +48,11 @@ var mycfg = {
 var dataProcessed = dataPerHAQLevel(data);
 console.log(dataProcessed,"dataProcessed")
 RadarChart.draw("#radar", dataProcessed, mycfg);
+var svg = d3.select('#radar')
+	.selectAll('svg')
+	.append('svg')
+	.attr("width", w+300)
+	.attr("height", h)
 
 //Create the title for the legend
 var text = svg.append("text")
