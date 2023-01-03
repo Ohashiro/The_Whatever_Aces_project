@@ -14,6 +14,7 @@
 		<input id="yearSlider" type="range" value="2015" min="2010" max="2020" step="5" oninput="yearText.value=yearSlider.value" />
 		<input id="yearText" type="number" value="2015" min="2010" max="2020" step="5" oninput="yearSlider.value=yearText.value" disabled />
 
+		<br>
 		<label for="gdp">GDP profile</label>
 		<select name="gdp" id="gdp">
 			<option value="all">All</option>
@@ -21,6 +22,7 @@
 			<option value="mid">Mid GDP</option>
 			<option value="high">High GDP</option>
 		</select>
+		<br>
 		<label for="sort">Sort by</label>
 		<select name="sort" id="sort">
 			<option value="alphabet">Alphabetical</option>
@@ -39,7 +41,11 @@
 	<div id="gaugeHAQ" class="gauge"></div>
 	<div id="gaugeHDI" class="gauge"></div>
 	<div id="gaugeLifeExpectancy" class="gauge"></div>
-	<div id="bar" class="responsive-svg-container"></div>
+	<div class="canvas">
+		<canvas id="canvas" height="10" width="40"></canvas>
+		= world average
+	</div>
+	<div id="bar" class="responsive-bar-container"></div>
 	<div>
 	<div  class="radar_title" >Health system characteristics of countries grouped by HAQ level</div>
 	<!-- <div id="scatterplot" class="responsive-svg-container"></div> -->

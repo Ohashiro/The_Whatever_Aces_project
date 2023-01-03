@@ -5,9 +5,16 @@
   max-width: 800px;
   margin-bottom: 1.5rem;
 }
+.responsive-bar-container {
+  margin-right: auto;
+  margin-left: auto;
+  width: 100%;
+  max-width: 1200px;
+  margin-bottom: 1.5rem;
+}
 .gauge {
   width: 30%;
-  height: 250px;
+  height: 200px;
   float: left;
   margin: 1%;
 }
@@ -18,10 +25,15 @@
   align-items: center;
   justify-content: center;
 }
-
 .radar_title {
   text-align: center;
   margin-bottom: 15px;
   font-size: 20px;
   font-weight: bold;
+}
+.canvas {
+  width: 30%;
+  height: 10px;
+  float: left;
+  margin: 1%;
 }

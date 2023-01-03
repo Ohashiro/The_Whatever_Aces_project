@@ -15,7 +15,7 @@ export const gaugeChart = (data) => {
     gaugeLayout(newHAQ,100,meanHAQ,'gaugeHAQ','HAQ score');
     gaugeLayout(newHDI,1,meanHDI,'gaugeHDI', 'HDI score');
     gaugeLayout(newLifeEx,100,meanLifeEx,'gaugeLifeExpectancy', 'Life expectancy');
-
+    draw();
 }
 
 function averageScore(data) {
@@ -53,8 +53,9 @@ function gaugeLayout(indicatedvalue,maxvalue,meanvalue,divname,title) {
           delta: { reference: meanvalue },
           gauge: {
             axis: { range: [null, maxvalue] },
-            threshold: {
-              line: { color: "red", width: 2 },
+            bar: { color: "#68D47A" },
+            threshold: { // world average
+              line: { color: "red", width: 3 },
               thickness: 0.75,
               value: meanvalue
       
@@ -63,7 +64,7 @@ function gaugeLayout(indicatedvalue,maxvalue,meanvalue,divname,title) {
         }
       ];
     
-    var layout = { width: 300, height: 250, margin: { t: 0, b: 0 } };
+    var layout = { width: 300, height: 200, margin: { t: 0, b: 0 } };
     Plotly.newPlot(divname, gaugeChart, layout);
 }
 
@@ -85,3 +86,23 @@ export const updateGaugesChart = (data) => {
     gaugeLayout(newLifeEx,100,meanLifeEx,'gaugeLifeExpectancy', 'Life expectancy');
     
   }
+
+  function draw() {
+    const canvas = document.querySelector('#canvas');
+
+    if (!canvas.getContext) {
+        return;
+    }
+    const ctx = canvas.getContext('2d');
+
+    // set line stroke and line width
+    ctx.strokeStyle = 'red';
+    ctx.lineWidth = 4;
+
+    // draw a red line
+    ctx.beginPath();
+    ctx.moveTo(10, 5);
+    ctx.lineTo(30, 5);
+    ctx.stroke();
+
+}

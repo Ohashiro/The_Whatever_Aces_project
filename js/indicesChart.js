@@ -3,7 +3,7 @@ import { updateGaugesChart } from "./gauge.js";
 
 export const indicesChart = (data) => {
     /* Set the dimensions and margins of the graph */
-    const width = 900, height = 400;
+    const width = 1200, height = 400;
     const margins = {top: 50, right: 40, bottom: 120, left: 40};
 
     // Filter the data from the year 2020
@@ -214,15 +214,15 @@ export const indicesChart = (data) => {
 
   /* Group the data for each country
     Ref: https://observablehq.com/@d3/d3-group */
-  for (let j = 0; j < data.length; j++){
-    if (data[j].hdi != 'Unknown'){
-        data[j]['group'] = 1;
+  for (let j = 0; j < newData.length; j++){
+    if (newData[j].hdi != 'Unknown'){
+        newData[j]['group'] = 1;
     } else{
-        data[j]['group'] = 0;
+        newData[j]['group'] = 0;
     }
     
   }
-  let group = d3.group(data, d =>  d.group );
+  let group = d3.group(newData, d =>  d.group );
   console.log("group",group);
   
 
@@ -231,7 +231,7 @@ export const indicesChart = (data) => {
     .data(group)
     .join('path')
       .attr('d', ([i, d]) => line(d)) 
-      .style('stroke', 'darkblue')
+      .style('stroke', '#576CC2')
       .style('stroke-width', 2)
       .style('fill', 'transparent')
       .style('opacity', 1); // [NEW] Add opacity to the line
@@ -334,6 +334,9 @@ export const indicesChart = (data) => {
         // updateLineChart(data);
     });
     d3.select("#sort").on("change", function(e) {
+        // when gdp profile is selected, we set country to "All"
+        setCountryToAll();
+
         updateBarChart();
         updateGaugesChart(data);
         // updateLineChart(data);
