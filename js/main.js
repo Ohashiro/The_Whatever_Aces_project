@@ -1,6 +1,7 @@
 import {indicesChart} from "./indicesChart.js";
 import {hospitalsChart} from "./hospitalsChart.js";
 import {gaugeChart} from "./gauge.js"
+import {radarChart} from "./radar.js"
 // data sets list
 let data_sets = [
     'Average_Monthly_Net_salary.csv',
@@ -146,7 +147,15 @@ Promise.all([
             'hdi': +d['HDI'],
             'haq': +d['HAQ'],
             'gdp': +d['GDP (US$)'],
+            'population': +d['Population (number)'],
             'life': +d['Life expectancy'],
+            "nb_hospitals": +d['Number of Hospitals'],
+            "nb_beds": +d['Total hospital beds'],
+            "nb_general_practitionners": +d['Number of Generalist medical practitioners'],
+            "nb_specialists": +d['Number of Specialist medical practitioners'],
+            "RD_expenses_as_PC_GDP": +d['R&D expenses as PC_GDP (total)'],
+            "nb_schools": +d['Number schools'],
+            "remuneration_general_practitionners": +d['Remuneration of general practitioners'],
             
         }
     })
@@ -162,6 +171,7 @@ Promise.all([
     indicesChart(prepareDataIndicesChart(files[9]));
     hospitalsChart(files[5]);
     gaugeChart(files[9]);
+    radarChart(files[9]);
     
 }).catch(function(err) {
     console.log(err);

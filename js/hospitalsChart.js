@@ -49,7 +49,6 @@ export const hospitalsChart = (data) => {
     .enter()
     .append("circle")
     .attr("cx",function(d){
-        console.log(d.area)
         return xScale(d.hospitals_per_capita);})
     .attr("cy",function(d){return yScale(d.haq);})
     .attr("r",5)
