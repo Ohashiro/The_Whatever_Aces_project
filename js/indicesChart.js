@@ -321,6 +321,9 @@ export const indicesChart = (data) => {
     });
 
     d3.select("#gdp").on("change", function(e) {
+        // when gdp profile is selected, we set country to "All"
+        setCountryToAll();
+
         updateBarChart();
         updateGaugesChart(data);
         // updateLineChart(data);
@@ -330,4 +333,20 @@ export const indicesChart = (data) => {
         updateGaugesChart(data);
         // updateLineChart(data);
     });
+    d3.select("#sort").on("change", function(e) {
+        updateBarChart();
+        updateGaugesChart(data);
+        // updateLineChart(data);
+    });
+}
+
+function setCountryToAll() {
+    var ddl = document.getElementById('selectCountry');
+    var opts = ddl.options.length;
+    for (var i=0; i<opts; i++){
+        if (ddl.options[i].value == "All"){
+            ddl.options[i].selected = true;
+            break;
+        }
+    }
 }

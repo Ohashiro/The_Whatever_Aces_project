@@ -25,5 +25,17 @@ export const animationFilter = (data) => {
             newData = data.filter(data => data.gdp  > 7*gdp_limit);
         } 
     }
+
+    sort = d3.select("#sort").node().value;
+    
+    if (sort == 'alphabet') {
+      newData = newData.sort((a, b) => d3.ascending(a.country, b.country));
+    }
+    else if (sort == 'pctAsce') {
+      newData = newData.sort((a, b) => d3.ascending(a.haq, b.haq));
+    }
+    else {
+      newData = newData.sort((a, b) => d3.descending(a.haq, b.haq));
+    }
     return newData;
 }
