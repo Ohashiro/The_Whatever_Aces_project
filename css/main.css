@@ -5,9 +5,23 @@
   max-width: 800px;
   margin-bottom: 1.5rem;
 }
-.gauge{
+.gauge {
   width: 30%;
   height: 250px;
   float: left;
   margin: 1%;
+}
+.radar {
+  width: 1000px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.radar_title {
+  text-align: center;
+  margin-bottom: 15px;
+  font-size: 20px;
+  font-weight: bold;
 }
