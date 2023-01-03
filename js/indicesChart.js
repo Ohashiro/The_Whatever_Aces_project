@@ -56,14 +56,13 @@ export const indicesChart = (data) => {
         Ref: https://observablehq.com/@d3/bar-chart */
     let bar=svg.append("g")
         .selectAll("rect")
-    // TODO: Add geo as id to refer to the data point
-        .data(newData, data => data.haq)
+    // TODO: Add code as id to refer to the data point
+        .data(newData, data => data.code)
         .join("rect")
-        .attr("class", d => d.haq)
+        .attr("class", d => d.code)
         //.attr("class", "bars")
         .style('opacity', 0.7)
         //.data(data)
-        .join("rect")
         .attr("x", d => xScale(d.country))
         .attr("y", d => yScale(d.haq))
         .attr("width", xScale.bandwidth())
@@ -154,15 +153,15 @@ export const indicesChart = (data) => {
         
         // Update the bar chart with enter, update, and exit pattern
         bar = bar
-          .data(newData, d => d.haq)
+          .data(newData, d => d.code)
           .join(
             enter => enter.append("rect")
-              .attr("class", d => d.haq)
+              .attr("class", d => d.code)
               .attr("x", d => xScale(d.country))
               .attr("y", d => yScale(d.haq))
               .attr("height", d => - yScale(d.haq))
               .attr("width", xScale.bandwidth())
-              .attr("fill", d => color(d.country))
+              .attr("fill", d => color(d.area))
               //.on("mouseover",mouseover)
               //.on("mouseout",mouseout)
               .call(enter => enter.transition(t)
