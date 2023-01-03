@@ -137,19 +137,7 @@ export const indicesChart = (data) => {
 
     // Update the bar chart based on new inputs
     function updateBarChart() {
-        // Get the selected year and sorting method
-        console.log("year chosen",d3.select("#yearSlider").node().value);
         let newData = animationFilter(data);
-    
-        // if (sort == 'alphabet') {
-        //   newData = newData.sort((a, b) => d3.ascending(a.country, b.country));
-        // }
-        // else if (sort == 'pctAsce') {
-        //   newData = newData.sort((a, b) => d3.ascending(a.haq, b.haq));
-        // }
-        // else {
-        //   newData = newData.sort((a, b) => d3.descending(a.haq, b.haq));
-        // }
     
         // Define new x and y scales
         const xScale = d3.scaleBand()
@@ -308,7 +296,7 @@ export const indicesChart = (data) => {
             .selection()
             .call(g => g.select(".domain").remove());
         }
-        
+
     svg.append("text")
         .attr("text-anchor", "end")
         .attr("x", -40)
