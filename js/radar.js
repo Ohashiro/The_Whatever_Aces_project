@@ -1,4 +1,4 @@
-import {RadarChart} from '../node_modules/d3-spider-chart/src/radar-chart.js';
+import {RadarChart} from './d3-spider-chart/src/radar-chart.js';
 
 // RadarChart.defaultConfig.color = function() {};
 // RadarChart.defaultConfig.radius = 3;
