@@ -92,7 +92,7 @@ export const indicesChart = (data) => {
         Ref: https://observablehq.com/@d3/line-chart and https://github.com/d3/d3-shape */
     let line = d3.line()
         .curve(d3.curveLinear)
-        .x(d => 4+xScale(d.country))
+        .x(d => 3+xScale(d.country))
         .y(d => yScaleLine(d.hdi) - yScaleLine(0));
 
     /* Group the data for each country
@@ -350,7 +350,7 @@ function updateLineChart(path,line,data,margins,height,width,yGroup) {
         Ref: https://observablehq.com/@d3/line-chart and https://github.com/d3/d3-shape */
     let newline = d3.line()
         .curve(d3.curveLinear)
-        .x(d => 4+xScale(d.country))
+        .x(d => 9+xScale(d.country))
         .y(d => newyScaleLine(d.hdi) - newyScaleLine(0));
     
 
