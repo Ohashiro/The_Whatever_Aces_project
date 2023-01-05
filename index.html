@@ -15,21 +15,13 @@
 		<input id="yearText" type="number" value="2015" min="2010" max="2020" step="5" oninput="yearSlider.value=yearText.value" disabled />
 
 		<br>
-		<label for="gdp">GDP profile</label>
+		<label for="gdp">GDP/capita profile</label>
 		<select name="gdp" id="gdp">
 			<option value="all">All</option>
-			<option value="low">Low GDP</option>
-			<option value="mid">Mid GDP</option>
-			<option value="high">High GDP</option>
+			<option value="low">Low GDP/capita</option>
+			<option value="mid">Mid GDP/capita</option>
+			<option value="high">High GDP/capita</option>
 		</select>
-		<br>
-		<label for="sort">Sort by</label>
-		<select name="sort" id="sort">
-			<option value="alphabet">Alphabetical</option>
-			<option value="pctAsce">HAQ ascending</option>
-			<option value="pctDesc">HAQ descending</option>
-		</select>
-
 		<br>
 		Choose a country
 		<select id="selectCountry">
@@ -46,6 +38,14 @@
 	<div class="canvas">
 		<canvas id="canvas" height="10" width="40"></canvas>
 		= world average
+	</div>
+	<div class="canvas">
+		<label for="sort">Sort by</label>
+		<select name="sort" id="sort">
+			<option value="alphabet">Alphabetical</option>
+			<option value="pctAsce">HAQ ascending</option>
+			<option value="pctDesc">HAQ descending</option>
+		</select>
 	</div>
 	<div id="bar" class="responsive-bar-container"></div>
 	<div id="bar-legend" class="responsive-bar-legend"></div>
