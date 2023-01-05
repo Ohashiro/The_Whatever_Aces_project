@@ -1,7 +1,9 @@
 import {animationFilter} from "./animation_components.js";
 
 export const gaugeChart = (data) => {
-    let scores = averageScore(data);
+    let year = d3.select("#yearSlider").node().value;
+    let worldData = data.filter(data => data.year == year);
+    let scores = averageScore(worldData);
     let meanHAQ = scores[0];
     let meanHDI = scores[1];
     let meanLifeEx = scores[2];
@@ -71,7 +73,9 @@ function gaugeLayout(indicatedvalue,maxvalue,meanvalue,divname,title) {
 export const updateGaugesChart = (data) => {
     let newData = animationFilter(data);
 
-    let scores = averageScore(data);
+    let year = d3.select("#yearSlider").node().value;
+    let worldData = data.filter(data => data.year == year);
+    let scores = averageScore(worldData);
     let meanHAQ = scores[0];
     let meanHDI = scores[1];
     let meanLifeEx = scores[2];
