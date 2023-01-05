@@ -343,7 +343,7 @@ function updateLineChart(path,line,data,margins,height,width,yGroup) {
     let group = d3.group(newData, d =>  d.group );
   
     let newyScaleLine = d3.scaleLinear()
-        .domain([0, d3.max(newData, d=>d.hdi)])
+        .domain([0, d3.max(data, d=>d.hdi)])
         .range([height-margins.bottom, margins.top]);
  
     /* Construct a line generator
@@ -375,14 +375,6 @@ function updateLineChart(path,line,data,margins,height,width,yGroup) {
           )
     
     path.append('title').text(([i, d]) => i);
-    // Transition on the x and y axes
-    const yAxis = d3.axisLeft(newyScaleLine)
-
-    yGroup.transition(t)
-        .call(yAxis)
-        .selection()
-        .call(g => g.select(".domain").remove());
-    
     return path,newline
     }
 
