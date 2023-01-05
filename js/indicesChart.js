@@ -8,6 +8,7 @@ export const indicesChart = (data) => {
 
     // Filter the data from the year 2020
     let newData = data.filter(data => data.year == 2015);
+    initializeFilters();
 
     /* Create the SVG container */
     const svg = d3.select("#bar")
@@ -183,7 +184,7 @@ export const indicesChart = (data) => {
 
     d3.select("#gdp").on("change", function(e) {
         // when gdp profile is selected, we set country to "All"
-        setCountryToAll();
+        setCountry("All");
 
         bar = updateBarChart(bar,data,color,margins,height,width,xGroup,yGroup);
         updateGaugesChart(data);
@@ -195,7 +196,7 @@ export const indicesChart = (data) => {
     });
     d3.select("#sort").on("change", function(e) {
         // when gdp profile is selected, we set country to "All"
-        setCountryToAll();
+        setCountry("All");
 
         bar = updateBarChart(bar,data,color,margins,height,width,xGroup,yGroup);
         updateGaugesChart(data);
@@ -203,17 +204,52 @@ export const indicesChart = (data) => {
     });
 }
 
-function setCountryToAll() {
+function setCountry(value) {
     var ddl = document.getElementById('selectCountry');
     var opts = ddl.options.length;
     for (var i=0; i<opts; i++){
-        if (ddl.options[i].value == "All"){
+        if (ddl.options[i].value == value){
             ddl.options[i].selected = true;
             break;
         }
     }
 }
 
+function setGDPprofile(gdp_value) {
+    var ddl = document.getElementById('gdp');
+    var opts = ddl.options.length;
+    for (var i=0; i<opts; i++){
+        if (ddl.options[i].value == gdp_value){
+            ddl.options[i].selected = true;
+            break;
+        }
+    }
+}
+
+function setSort(value) {
+    var ddl = document.getElementById('sort');
+    var opts = ddl.options.length;
+    for (var i=0; i<opts; i++){
+        if (ddl.options[i].value == value){
+            ddl.options[i].selected = true;
+            break;
+        }
+    }
+}
+
+function setYear(value) {
+    var ddl = document.getElementById('yearSlider');
+    ddl.value = value;
+    ddl = document.getElementById('yearText');
+    ddl.value = value.toString();
+}
+
+function initializeFilters() {
+    setCountry("All");
+    setGDPprofile("all");
+    setSort("alphabet");
+    setYear(2015);
+}
 
 function updateBarChart(bar,data,color,margins,height,width,xGroup,yGroup) {
     let newData = animationFilter(data);
@@ -301,15 +337,6 @@ function updateLineChart(path,line,data,margins,height,width,yGroup) {
         }
     }
     let group = d3.group(newData, d =>  d.group );
-    console.log("group",group.get(1));
-    let countries_to_display = [];
-    let years_to_display = [];
-    for (let i = 0; i < 5; i++) {
-        countries_to_display.push(group.get(1)[i].country);
-        years_to_display.push(group.get(1)[i].year);
-    }
-    console.log(countries_to_display);
-    console.log(years_to_display);
   
     let newyScaleLine = d3.scaleLinear()
         .domain([0, d3.max(newData, d=>d.hdi)])
