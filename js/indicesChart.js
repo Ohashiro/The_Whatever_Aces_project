@@ -36,33 +36,15 @@ export const indicesChart = (data) => {
         //.range(d3.schemeTableau10); // work for less than 10 categories, if more, cycle
         .range(["#66c2a5","#fc8d62","#8da0cb","#e78ac3","#a6d854","#ffd92f","#e5c494","#b3b3b3"]);
 
-    // Legend creation
-    var legend = d3.legendColor()
-        .scale(color);
-    const svg_legend = d3.select("#bar")
-        .append("svg")
-        .attr("viewBox", [0, 0, width, 150]);
+    let legend = barLegend(svg,color,margins,width,height);
 
-    svg_legend.append("g")
-        .attr("transform", "translate(50,0)")
-        .call(legend);
-
-    svg.append("text")
-        .attr("x", width/2)             
-        .attr("y", 0 + 2*(margins.top)/3)
-        .attr("text-anchor", "middle")  
-        .style("font-size", "18px")
-        .text("HAQ and HDI score by country");
-    /* Create the bar elements and append to the SVG group
-        Ref: https://observablehq.com/@d3/bar-chart */
     let bar=svg.append("g")
         .selectAll("rect")
-    // TODO: Add code as id to refer to the data point
         .data(newData, data => data.code)
         .join("rect")
         .attr("class", d => d.code)
         //.attr("class", "bars")
-        .style('opacity', 1)
+        .style('opacity', 0.7)
         .attr("x", d => xScale(d.country))
         .attr("y", d => yScale(d.haq))
         .attr("width", xScale.bandwidth())
@@ -70,7 +52,6 @@ export const indicesChart = (data) => {
         .attr("fill", "lightgrey")
         .attr("fill", d => color(d.area))
         .call(legend)
-
 
     /* Add the tooltip when hover on the bar */
     bar.append("title").text(d => (d.country));
@@ -204,6 +185,27 @@ export const indicesChart = (data) => {
     });
 }
 
+function barLegend(svg,color,margins,width,height) {
+    // Legend creation
+    var legend = d3.legendColor()
+        .scale(color);
+    const svg_legend = d3.select("#bar-legend")
+        .append("svg")
+        .attr("viewBox", [0, 0, width/5, height]);
+
+    svg_legend.append("g")
+        .attr("transform", "translate(0,110)")
+        .call(legend);
+
+    svg.append("text")
+        .attr("x", width/2)             
+        .attr("y", 0 + 2*(margins.top)/3)
+        .attr("text-anchor", "middle")  
+        .style("font-size", "25px")
+        .text("HAQ and HDI score by country");
+    return legend
+}
+
 function setCountry(value) {
     var ddl = document.getElementById('selectCountry');
     var opts = ddl.options.length;
@@ -278,6 +280,7 @@ function updateBarChart(bar,data,color,margins,height,width,xGroup,yGroup) {
           .attr("height", d => - yScale(d.haq))
           .attr("width", xScale.bandwidth())
           .attr("fill", d => color(d.area))
+          .attr("opacity", 0.7)
           //.on("mouseover",mouseover)
           //.on("mouseout",mouseout)
           .call(enter => enter.transition(t)
@@ -286,6 +289,7 @@ function updateBarChart(bar,data,color,margins,height,width,xGroup,yGroup) {
           .attr("x", d => xScale(d.country))
           .attr("y", d => yScale(d.haq))
           .attr("height", d => yScale(0) - yScale(d.haq))
+          .attr("opacity", 0.7)
           .attr("width", xScale.bandwidth()),
         exit => exit.transition(t)
           .attr("y", yScale(0))
