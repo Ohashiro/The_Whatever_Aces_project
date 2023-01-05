@@ -9,21 +9,21 @@ export const animationFilter = (data) => {
     if (country != "All") {
         newData = data.filter(data => data.country == country);
     } else {
-        let gdp_limit = 12000000000;
-        if (gdp_profile == 'low') {
-            newData = data.filter(data => data.gdp <= 2*gdp_limit);
-        } 
-        if (gdp_profile == 'mid') {
-            newData = data.filter(function(item) {
-                if (7*gdp_limit >= item.gdp && item.gdp  > 2*gdp_limit) {
-                    return true;
-                }
-                return false;
-              })
-        } 
-        if (gdp_profile == 'high') {
-            newData = data.filter(data => data.gdp  > 7*gdp_limit);
-        } 
+      let gdp_limit = 1200;
+      if (gdp_profile == 'low') {
+          newData = data.filter(data => data.gdp/data.population <= 2*gdp_limit);
+      } 
+      if (gdp_profile == 'mid') {
+          newData = data.filter(function(item) {
+              if (7*gdp_limit >= item.gdp/item.population && item.gdp/item.population  > 2*gdp_limit) {
+                  return true;
+              }
+              return false;
+            })
+      } 
+      if (gdp_profile == 'high') {
+          newData = data.filter(data => data.gdp/data.population  > 7*gdp_limit);
+      } 
     }
 
     sort = d3.select("#sort").node().value;
