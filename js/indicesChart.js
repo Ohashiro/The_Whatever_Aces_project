@@ -127,7 +127,7 @@ export const indicesChart = (data) => {
     console.log("group",group);
   
 
-  /* Create line paths for each country */
+    /* Create line paths for each country */
     var path = svg.selectAll('path')
         .data(group)
         .join('path')
@@ -178,7 +178,7 @@ export const indicesChart = (data) => {
         // Update the chart
         bar = updateBarChart(bar,data,color,margins,height,width,xGroup,yGroup);
         updateGaugesChart(data);
-        path,line = updateLineChart(path,svg,line,data,margins,height,width,xGroup,yGroup,yScaleLine);
+        path,line = updateLineChart(path,line,data,margins,height,width,yGroup);
     });
 
     d3.select("#gdp").on("change", function(e) {
@@ -187,7 +187,7 @@ export const indicesChart = (data) => {
 
         bar = updateBarChart(bar,data,color,margins,height,width,xGroup,yGroup);
         updateGaugesChart(data);
-        path,line = updateLineChart(path,svg,line,data,margins,height,width,xGroup,yGroup,yScaleLine);
+        path,line = updateLineChart(path,line,data,margins,height,width,yGroup);
     });
     d3.select("#selectCountry").on("change", function(e) {
         bar = updateBarChart(bar,data,color,margins,height,width,xGroup,yGroup);
@@ -199,7 +199,7 @@ export const indicesChart = (data) => {
 
         bar = updateBarChart(bar,data,color,margins,height,width,xGroup,yGroup);
         updateGaugesChart(data);
-        path,line = updateLineChart(path,svg,line,data,margins,height,width,xGroup,yGroup,yScaleLine);
+        path,line = updateLineChart(path,line,data,margins,height,width,yGroup);
     });
 }
 
@@ -215,7 +215,7 @@ function setCountryToAll() {
 }
 
 
-function updateBarChart(bar,data,color,margins,height,width,xGroup,yGroup,yScaleLine) {
+function updateBarChart(bar,data,color,margins,height,width,xGroup,yGroup) {
     let newData = animationFilter(data);
 
     // Define new x and y scales
@@ -278,7 +278,7 @@ function updateBarChart(bar,data,color,margins,height,width,xGroup,yGroup,yScale
     return bar;
 }
 
-function updateLineChart(path,svg,line,data,margins,height,width,xGroup,yGroup,yScaleLine) {
+function updateLineChart(path,line,data,margins,height,width,yGroup) {
     console.log('update line chart...')
     // Get the selected year and sorting method
     let newData = animationFilter(data);
@@ -301,7 +301,15 @@ function updateLineChart(path,svg,line,data,margins,height,width,xGroup,yGroup,y
         }
     }
     let group = d3.group(newData, d =>  d.group );
-    console.log("group",group);
+    console.log("group",group.get(1));
+    let countries_to_display = [];
+    let years_to_display = [];
+    for (let i = 0; i < 5; i++) {
+        countries_to_display.push(group.get(1)[i].country);
+        years_to_display.push(group.get(1)[i].year);
+    }
+    console.log(countries_to_display);
+    console.log(years_to_display);
   
     let newyScaleLine = d3.scaleLinear()
         .domain([0, d3.max(newData, d=>d.hdi)])
@@ -309,7 +317,7 @@ function updateLineChart(path,svg,line,data,margins,height,width,xGroup,yGroup,y
  
     /* Construct a line generator
         Ref: https://observablehq.com/@d3/line-chart and https://github.com/d3/d3-shape */
-    line = d3.line()
+    let newline = d3.line()
         .curve(d3.curveLinear)
         .x(d => 4+xScale(d.country))
         .y(d => newyScaleLine(d.hdi) - newyScaleLine(0));
@@ -327,35 +335,24 @@ function updateLineChart(path,svg,line,data,margins,height,width,xGroup,yGroup,y
                 .style('opacity', 1)
                 //.attr('d', ([i, d]) => line(d))
                 .call(enter => enter.transition(t)
-                    .attr('d', ([i, d]) => line(d)) ),
+                    .attr('d', ([i, d]) => newline(d))),
             update => update.transition(t)
-                .attr('d', ([i, d]) => line(d)),
+                .attr('d', ([i, d]) => newline(d)),
             exit => exit.transition(t)
-                .attr('d', ([i, d]) => - line(0)) 
+                .attr('d', ([i, d]) => - newline(0)) 
                 .remove()
           )
     
     path.append('title').text(([i, d]) => i);
     // Transition on the x and y axes
-    // const xAxis = d3.axisBottom(xScale)
-    // const yAxis = d3.axisLeft(yScale)
+    const yAxis = d3.axisLeft(newyScaleLine)
 
-    // xGroup.transition(t)
-    //     .call(xAxis)
-    //     .call(g => g.selectAll(".tick"));
-
-    // xGroup.selectAll("text")
-    //     .style("text-anchor", "end")
-    //     .attr("dx", "-.8em")
-    //     .attr("dy", ".15em")
-    //     .attr("transform", "rotate(-65)");
-
-    // yGroup.transition(t)
-    //     .call(yAxis)
-    //     .selection()
-    //     .call(g => g.select(".domain").remove());
-
-    return path,line
+    yGroup.transition(t)
+        .call(yAxis)
+        .selection()
+        .call(g => g.select(".domain").remove());
+    
+    return path,newline
     }
 
 function mouseover() {
@@ -390,4 +387,4 @@ function mouseout() {
 
     // Make the text label invisible again
     d3.select(`text.${haq}`).style("visibility","hidden");
-  }
+    }

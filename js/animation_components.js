@@ -7,14 +7,14 @@ export const animationFilter = (data) => {
     let newData = data.filter(data => data.year == year);
 
     if (country != "All") {
-        newData = data.filter(data => data.country == country);
+        newData = newData.filter(data => data.country == country);
     } else {
       let gdp_limit = 1200;
       if (gdp_profile == 'low') {
-          newData = data.filter(data => data.gdp/data.population <= 2*gdp_limit);
+          newData = newData.filter(data => data.gdp/data.population <= 2*gdp_limit);
       } 
       if (gdp_profile == 'mid') {
-          newData = data.filter(function(item) {
+          newData = newData.filter(function(item) {
               if (7*gdp_limit >= item.gdp/item.population && item.gdp/item.population  > 2*gdp_limit) {
                   return true;
               }
@@ -22,7 +22,7 @@ export const animationFilter = (data) => {
             })
       } 
       if (gdp_profile == 'high') {
-          newData = data.filter(data => data.gdp/data.population  > 7*gdp_limit);
+          newData = newData.filter(data => data.gdp/data.population  > 7*gdp_limit);
       } 
     }
 
