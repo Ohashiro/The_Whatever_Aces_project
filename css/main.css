@@ -99,3 +99,6 @@
 .dropdown-check-list.visible .items {
   display: block;
 }
+
+nav ul{height:200px; width:100%;}
+nav ul{overflow:hidden; overflow-y:scroll;}

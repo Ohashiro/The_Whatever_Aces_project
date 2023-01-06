@@ -204,7 +204,7 @@ export const indicesChart = (data) => {
 
     d3.select("#gdp").on("change", function(e) {
         // when gdp profile is selected, we set country to "All"
-        setCountry("All");
+        // setCountries("All");
 
         bar = updateBarChart(bar,data,color,margins,height,width,xGroup,yGroup);
         updateGaugesChart(data);
@@ -214,9 +214,14 @@ export const indicesChart = (data) => {
         bar = updateBarChart(bar,data,color,margins,height,width,xGroup,yGroup);
         updateGaugesChart(data);
     });
+    d3.selectAll("input").on("change", function(e) {
+        bar = updateBarChart(bar,data,color,margins,height,width,xGroup,yGroup);
+        updateGaugesChart(data);
+        path,line = updateLineChart(path,line,data,margins,height,width,yGroup);
+    });
     d3.select("#sort").on("change", function(e) {
         // when gdp profile is selected, we set country to "All"
-        setCountry("All");
+        // setCountries("All");
 
         bar = updateBarChart(bar,data,color,margins,height,width,xGroup,yGroup);
         updateGaugesChart(data);
@@ -256,6 +261,30 @@ function setCountry(value) {
     }
 }
 
+function setCountries(value) {
+    var myCountries = document.querySelectorAll('.country');
+    let selectCountriesText = d3.select("#selectCountriesText").node().value;
+    var selectedCountries = selectCountriesText.split(",");
+    for (let i = 0; i < myCountries.length; ++i) {
+        let selectedCountry = myCountries[i];
+        if (selectedCountry.value != value && selectedCountries.includes(selectedCountry.value)){
+            selectedCountry.classList.remove('selected');
+            selectedCountry.checked = false;
+            // remove from selectedCountries
+            let index = selectedCountries.indexOf(selectedCountry.value);
+            if (index > -1) {
+                selectedCountries.splice(index, 1);
+            }
+        }
+        if (selectedCountry.value == value && !selectedCountries.includes(value)) {
+            selectedCountry.classList.add('selected');
+            // add to selectedCountries
+            selectedCountries.push(selectedCountry.value);
+        }
+    }
+    return selectedCountries;
+}
+
 function setGDPprofile(gdp_value) {
     var ddl = document.getElementById('gdp');
     var opts = ddl.options.length;
@@ -286,7 +315,7 @@ function setYear(value) {
 }
 
 function initializeFilters() {
-    setCountry("All");
+    // setCountry("All");
     setGDPprofile("all");
     setSort("alphabet");
     setYear(2015);
@@ -320,8 +349,8 @@ function updateBarChart(bar,data,color,margins,height,width,xGroup,yGroup) {
           .attr("width", xScale.bandwidth())
           .attr("fill", d => color(d.area))
           .attr("opacity", 0.7)
-          .on("mouseover",mouseover)
-          .on("mouseout",mouseout)
+        //   .on("mouseover",mouseover)
+        //   .on("mouseout",mouseout)
           .call(enter => enter.transition(t)
             .attr("height",d => yScale(0) - yScale(d.haq))),
         update => update.transition(t)
@@ -389,7 +418,7 @@ function updateLineChart(path,line,data,margins,height,width,yGroup) {
         Ref: https://observablehq.com/@d3/line-chart and https://github.com/d3/d3-shape */
     let newline = d3.line()
         .curve(d3.curveLinear)
-        .x(d => 9+xScale(d.country))
+        .x(d => 4+xScale(d.country))
         .y(d => newyScaleLine(d.hdi) - newyScaleLine(0));
     
 

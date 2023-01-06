@@ -1,12 +1,17 @@
 export const animationFilter = (data) => {
     let year = d3.select("#yearSlider").node().value;
-    let country = d3.select("#selectCountry").node().value;
-    
+    // let country = d3.select("#selectCountry").node().value;
+    let countries = d3.select("#selectCountriesText").node().value;
     // Filter and sorting the new data
     let newData = data.filter(data => data.year == year);
 
-    if (country != "All") {
-      newData = newData.filter(data => data.country == country);
+    // if (country != "All") {
+    //   newData = newData.filter(data => data.country == country);
+    // } else {
+    //   newData = filter_data_on_gdp_profile(newData);
+    // }
+    if (countries != ["All"]) {
+      newData = newData.filter(data => countries.includes(data.country));
     } else {
       newData = filter_data_on_gdp_profile(newData);
     }

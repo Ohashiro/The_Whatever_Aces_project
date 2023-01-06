@@ -24,6 +24,7 @@ Promise.all([
 ]).then(function(files) {
     const countries = country_list(files[0]);
     console.log("countries are: ", countries);
+    selectCountriesText.value = "All";
     var select = document.getElementById("countrySelector").getElementsByClassName("items")[0];
     var options = countries;
     options = ["All"].concat(countries);
@@ -72,7 +73,7 @@ function dropdownSelection() {
     var myCountries = document.querySelectorAll('.country');
     var selectCountriesText = document.getElementById("selectCountriesText");
     var selectedCountries = [];
-    for (let i = 0; i < myCountries.length; ++i) {
+    for (let i = 1; i < myCountries.length; ++i) {
         let selectedCountry = myCountries[i];
         selectedCountry.addEventListener('click', function(e) {
             
@@ -86,11 +87,48 @@ function dropdownSelection() {
 
             } else {
                 selectedCountry.classList.add('selected');
+                myCountries[0].checked = false;
+                let index = selectedCountries.indexOf(myCountries[0].value);
+                if (index > -1) {
+                    selectedCountries.splice(index, 1);
+                }
                 // add to selectedCountries
                 selectedCountries.push(selectedCountry.value);
             }
             console.log("selected countries:",selectedCountries);
-            selectCountriesText.value = selectedCountries;
+            selectCountriesText.value = selectedCountries.join();
         })
     }
+    // for i=0, the all the countries are selected
+    let selectedCountry = myCountries[0];
+    selectedCountry.addEventListener('click', function(e) {
+        selectedCountries = setCountries("All");
+        console.log("selected countries:",selectedCountries);
+        selectCountriesText.value = selectedCountries.join();
+    })
+}
+
+function setCountries(value) {
+    var myCountries = document.querySelectorAll('.country');
+    //var selectCountriesText = document.getElementById("selectCountriesText");
+    let selectCountriesText = d3.select("#selectCountriesText").node().value;
+    var selectedCountries = selectCountriesText.split(",");
+    for (let i = 0; i < myCountries.length; ++i) {
+        let selectedCountry = myCountries[i];
+        if (selectedCountry.value != value && selectedCountries.includes(selectedCountry.value)){
+            selectedCountry.classList.remove('selected');
+            selectedCountry.checked = false;
+            // remove from selectedCountries
+            let index = selectedCountries.indexOf(selectedCountry.value);
+            if (index > -1) {
+                selectedCountries.splice(index, 1);
+            }
+        }
+        if (selectedCountry.value == value && !selectedCountries.includes(value)) {
+            selectedCountry.classList.add('selected');
+            // add to selectedCountries
+            selectedCountries.push(selectedCountry.value);
+        }
+    }
+    return selectedCountries;
 }
