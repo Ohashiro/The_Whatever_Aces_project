@@ -131,7 +131,7 @@ export const indicesChart = (data) => {
         Ref: https://observablehq.com/@d3/line-chart and https://github.com/d3/d3-shape */
     let line = d3.line()
         .curve(d3.curveLinear)
-        .x(d => 3+xScale(d.country))
+        .x(d => width/(newData.length*3)+xScale(d.country))
         .y(d => yScaleLine(d.hdi) - yScaleLine(0));
 
     /* Group the data for each country
@@ -197,34 +197,28 @@ export const indicesChart = (data) => {
     // Add event listener to the year slider
     d3.select("#yearSlider").on("change", function(e) {
         // Update the chart
-        bar = updateBarChart(bar,data,color,margins,height,width,xGroup,yGroup);
+        bar = updateBarChart(bar,data,color,margins,height,width,xGroup,yGroup,mouseover,mouseout);
         updateGaugesChart(data);
         path,line = updateLineChart(path,line,data,margins,height,width,yGroup);
     });
 
     d3.select("#gdp").on("change", function(e) {
         // when gdp profile is selected, we set country to "All"
-        // setCountries("All");
+        // var selectCountriesText = document.getElementById("selectCountriesText");
+        // let selectedCountries = setCountries("All");
+        // selectCountriesText.value = selectedCountries.join();
 
-        bar = updateBarChart(bar,data,color,margins,height,width,xGroup,yGroup);
+        bar = updateBarChart(bar,data,color,margins,height,width,xGroup,yGroup,mouseover,mouseout);
         updateGaugesChart(data);
         path,line = updateLineChart(path,line,data,margins,height,width,yGroup);
     });
-    // d3.select("#selectCountry").on("change", function(e) {
-    //     console.log("change")
-    //     bar = updateBarChart(bar,data,color,margins,height,width,xGroup,yGroup);
-    //     updateGaugesChart(data);
-    // });
     d3.selectAll("input").on("change", function(e) {
-        bar = updateBarChart(bar,data,color,margins,height,width,xGroup,yGroup);
+        bar = updateBarChart(bar,data,color,margins,height,width,xGroup,yGroup,mouseover,mouseout);
         updateGaugesChart(data);
         path,line = updateLineChart(path,line,data,margins,height,width,yGroup);
     });
     d3.select("#sort").on("change", function(e) {
-        // when gdp profile is selected, we set country to "All"
-        // setCountries("All");
-
-        bar = updateBarChart(bar,data,color,margins,height,width,xGroup,yGroup);
+        bar = updateBarChart(bar,data,color,margins,height,width,xGroup,yGroup,mouseover,mouseout);
         updateGaugesChart(data);
         path,line = updateLineChart(path,line,data,margins,height,width,yGroup);
     });
@@ -250,17 +244,6 @@ function barLegend(svg,color,margins,width,height) {
         .text("HAQ and HDI score by country");
     return legend
 }
-
-// function setCountry(value) {
-//     var ddl = document.getElementById('selectCountry');
-//     var opts = ddl.options.length;
-//     for (var i=0; i<opts; i++){
-//         if (ddl.options[i].value == value){
-//             ddl.options[i].selected = true;
-//             break;
-//         }
-//     }
-// }
 
 function setCountries(value) {
     var myCountries = document.querySelectorAll('.country');
@@ -323,7 +306,7 @@ function initializeFilters() {
     setYear(2015);
 }
 
-function updateBarChart(bar,data,color,margins,height,width,xGroup,yGroup) {
+function updateBarChart(bar,data,color,margins,height,width,xGroup,yGroup,mouseover,mouseout) {
     let newData = animationFilter(data);
 
     // Define new x and y scales
@@ -351,8 +334,8 @@ function updateBarChart(bar,data,color,margins,height,width,xGroup,yGroup) {
           .attr("width", xScale.bandwidth())
           .attr("fill", d => color(d.area))
           .attr("opacity", 0.7)
-        //   .on("mouseover",mouseover)
-        //   .on("mouseout",mouseout)
+          .on("mouseover",mouseover)
+          .on("mouseout",mouseout)
           .call(enter => enter.transition(t)
             .attr("height",d => yScale(0) - yScale(d.haq))),
         update => update.transition(t)
@@ -420,7 +403,7 @@ function updateLineChart(path,line,data,margins,height,width,yGroup) {
         Ref: https://observablehq.com/@d3/line-chart and https://github.com/d3/d3-shape */
     let newline = d3.line()
         .curve(d3.curveLinear)
-        .x(d => 4+xScale(d.country))
+        .x(d => width/(newData.length*3)+xScale(d.country))
         .y(d => newyScaleLine(d.hdi) - newyScaleLine(0));
     
 
