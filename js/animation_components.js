@@ -1,8 +1,8 @@
 export const animationFilter = (data) => {
-    let year = d3.select("#yearSlider").node().value;
+    // let year = d3.select("#yearSlider").node().value;
     let countries = d3.select("#selectCountriesText").node().value;
     // Filter and sorting the new data
-    let newData = data.filter(data => data.year == year);
+    let newData = data.filter(data => data.year == 2015);
 
     if (countries != "All" && countries != "") {
       newData = newData.filter(data => countries.includes(data.country));

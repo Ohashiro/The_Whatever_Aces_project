@@ -26,6 +26,7 @@ Promise.all([
     console.log("countries are: ", countries);
     selectCountriesText.value = "All";
     var select = document.getElementById("countrySelector").getElementsByClassName("items")[0];
+    console.log("select",select);
     var options = countries;
     options = ["All"].concat(countries);
 
@@ -41,7 +42,7 @@ Promise.all([
         li.appendChild(el);
         li.appendChild(countryText);
     }
-    dropdownDisplay();
+    // dropdownDisplay();
     dropdownSelection();
 
     

@@ -10,9 +10,9 @@
 <body>
 	<h1 style="text-align: center;margin-bottom: 1em;">What is the relationship between health system performance and health money investment in hospitals and medical staff</h1>
 	<div class="responsive-svg-container" id="form">
-		<label for="yearSlider">Year</label>
+		<!-- <label for="yearSlider">Year</label>
 		<input id="yearSlider" type="range" value="2015" min="2010" max="2020" step="5" oninput="yearText.value=yearSlider.value" />
-		<input id="yearText" type="number" value="2015" min="2010" max="2020" step="5" oninput="yearSlider.value=yearText.value" disabled />
+		<input id="yearText" type="number" value="2015" min="2010" max="2020" step="5" oninput="yearSlider.value=yearText.value" disabled /> -->
 
 		<br>
 		<label for="gdp">GDP/capita profile</label>
@@ -29,14 +29,28 @@
 			<option>All</option>
 		</select>
 		<script src="js/dropdown.js" type="module"></script>
-		<div id="countrySelector" class="dropdown-check-list" tabindex="100">
+		<!-- <div id="countrySelector" class="dropdown-check-list" tabindex="100">
 			<span class="anchor">Select countries</span>
 			<nav id="topNav">
 				<ul class="items">
 				</ul>
 			</nav>
-		</div>
+		</div> -->
 		<input id="selectCountriesText" type="text" value="" disabled />
+		<br>
+		<div class="navbar">
+			<div class="dropdown">
+			  <button class="dropbtn">Select countries
+				<i class="fa fa-caret-down"></i>
+			  </button>
+			  <div id="countrySelector" class="dropdown-content">
+					<nav id="topNav">
+						<ul class="items">
+						</ul>
+					</nav>
+			  </div>
+			</div>
+		  </div> 
 		<script src="js/dropdown2.js" type="module"></script>
 	</div>
 

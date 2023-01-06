@@ -83,7 +83,7 @@ export const indicesChart = (data) => {
     
         // Change the line color to lightgrey
         d3.select(this)//.select(`path.${code}`)
-        .style("stroke","lightgrey")
+        .style("stroke",null)
         .style("opacity",0.6)
     
         // Make the text label invisible again
@@ -195,12 +195,12 @@ export const indicesChart = (data) => {
         .text("HDI score (line)");
 
     // Add event listener to the year slider
-    d3.select("#yearSlider").on("change", function(e) {
-        // Update the chart
-        bar = updateBarChart(bar,data,color,margins,height,width,xGroup,yGroup,mouseover,mouseout);
-        updateGaugesChart(data);
-        path,line = updateLineChart(path,line,data,margins,height,width,yGroup);
-    });
+    // d3.select("#yearSlider").on("change", function(e) {
+    //     // Update the chart
+    //     bar = updateBarChart(bar,data,color,margins,height,width,xGroup,yGroup,mouseover,mouseout);
+    //     updateGaugesChart(data);
+    //     path,line = updateLineChart(path,line,data,margins,height,width,yGroup);
+    // });
 
     d3.select("#gdp").on("change", function(e) {
         // when gdp profile is selected, we set country to "All"
@@ -292,18 +292,18 @@ function setSort(value) {
     }
 }
 
-function setYear(value) {
-    var ddl = document.getElementById('yearSlider');
-    ddl.value = value;
-    ddl = document.getElementById('yearText');
-    ddl.value = value.toString();
-}
+// function setYear(value) {
+//     var ddl = document.getElementById('yearSlider');
+//     ddl.value = value;
+//     ddl = document.getElementById('yearText');
+//     ddl.value = value.toString();
+// }
 
 function initializeFilters() {
     // setCountry("All");
     setGDPprofile("all");
     setSort("alphabet");
-    setYear(2015);
+    // setYear(2015);
 }
 
 function updateBarChart(bar,data,color,margins,height,width,xGroup,yGroup,mouseover,mouseout) {
