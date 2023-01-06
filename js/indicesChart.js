@@ -210,10 +210,11 @@ export const indicesChart = (data) => {
         updateGaugesChart(data);
         path,line = updateLineChart(path,line,data,margins,height,width,yGroup);
     });
-    d3.select("#selectCountry").on("change", function(e) {
-        bar = updateBarChart(bar,data,color,margins,height,width,xGroup,yGroup);
-        updateGaugesChart(data);
-    });
+    // d3.select("#selectCountry").on("change", function(e) {
+    //     console.log("change")
+    //     bar = updateBarChart(bar,data,color,margins,height,width,xGroup,yGroup);
+    //     updateGaugesChart(data);
+    // });
     d3.selectAll("input").on("change", function(e) {
         bar = updateBarChart(bar,data,color,margins,height,width,xGroup,yGroup);
         updateGaugesChart(data);
@@ -250,19 +251,20 @@ function barLegend(svg,color,margins,width,height) {
     return legend
 }
 
-function setCountry(value) {
-    var ddl = document.getElementById('selectCountry');
-    var opts = ddl.options.length;
-    for (var i=0; i<opts; i++){
-        if (ddl.options[i].value == value){
-            ddl.options[i].selected = true;
-            break;
-        }
-    }
-}
+// function setCountry(value) {
+//     var ddl = document.getElementById('selectCountry');
+//     var opts = ddl.options.length;
+//     for (var i=0; i<opts; i++){
+//         if (ddl.options[i].value == value){
+//             ddl.options[i].selected = true;
+//             break;
+//         }
+//     }
+// }
 
 function setCountries(value) {
     var myCountries = document.querySelectorAll('.country');
+    //var selectCountriesText = document.getElementById("selectCountriesText");
     let selectCountriesText = d3.select("#selectCountriesText").node().value;
     var selectedCountries = selectCountriesText.split(",");
     for (let i = 0; i < myCountries.length; ++i) {

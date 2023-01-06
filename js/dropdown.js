@@ -22,29 +22,7 @@ Promise.all([
         }
     })
 ]).then(function(files) {
-    const countries = country_list(files[0]);
-    console.log("countries are: ", countries)
-    var select = document.getElementById("selectCountry");
-    var options = countries;//["Denmark","Austria","Japan","Australia","France"];
-    
-    for(var i = 0; i < options.length; i++) {
-        var opt = options[i];
-        var el = document.createElement("option");
-        el.textContent = opt;
-        el.value = opt;
-        select.appendChild(el);
-    }
     
 }).catch(function(err) {
     console.log(err);
 })
-
-function country_list(file) {
-    var country_list = []
-    for (let i = 0; i<file.length; i++){
-        if (file[i].haq && file[i].hdi && !country_list.includes(file[i].country)){
-            country_list.push(file[i].country);
-        }
-    }
-    return country_list
-}
