@@ -44,14 +44,53 @@ export const indicesChart = (data) => {
         .join("rect")
         .attr("class", d => d.code)
         //.attr("class", "bars")
-        .style('opacity', 0.7)
+        .style('opacity', 0.6)
         .attr("x", d => xScale(d.country))
         .attr("y", d => yScale(d.haq))
         .attr("width", xScale.bandwidth())
         .attr("height", d => yScale(0) - yScale(d.haq))
-        .attr("fill", "lightgrey")
+        //.attr("fill", "lightgrey")
         .attr("fill", d => color(d.area))
         .call(legend)
+
+    function mouseover() {
+        // Get the haq and color of the selected bar
+        const code = d3.select(this).attr('class');
+        console.log("code",code);
+        console.log(d3.select(`text.${code}`));
+        const colors = d3.select(this).attr('fill');
+    
+        // Highlight the bar with black stroke
+        // bar.select("this").style("stroke","#333")
+        //     .style("stroke-width",2);
+    
+        // Highlight the line with the color
+        d3.select(this)//select(`path.${code}`)
+            .style("stroke",colors)
+            .style("opacity",1)
+    
+        // Make the text label visible
+        d3.select(`text.${code}`).style("visibility","visible");
+        }
+    bar.on("mouseover", mouseover);
+
+    function mouseout() {
+        // Get the haq of the selected bar
+        const code = d3.select(this).attr('class');
+        // Change the highlight stroke in the bar back to normal
+        
+        bar.select("this").style("stroke",null);
+    
+        // Change the line color to lightgrey
+        d3.select(this)//.select(`path.${code}`)
+        .style("stroke","lightgrey")
+        .style("opacity",0.6)
+    
+        // Make the text label invisible again
+        d3.select(`text.${code}`).style("visibility","hidden");
+        // d3.select(this.text).style("visibility","hidden");
+    }
+    bar.on("mouseout", mouseout);
 
     /* Add the tooltip when hover on the bar */
     bar.append("title").text(d => (d.country));
@@ -281,8 +320,8 @@ function updateBarChart(bar,data,color,margins,height,width,xGroup,yGroup) {
           .attr("width", xScale.bandwidth())
           .attr("fill", d => color(d.area))
           .attr("opacity", 0.7)
-          //.on("mouseover",mouseover)
-          //.on("mouseout",mouseout)
+          .on("mouseover",mouseover)
+          .on("mouseout",mouseout)
           .call(enter => enter.transition(t)
             .attr("height",d => yScale(0) - yScale(d.haq))),
         update => update.transition(t)
@@ -378,36 +417,5 @@ function updateLineChart(path,line,data,margins,height,width,yGroup) {
     return path,newline
     }
 
-function mouseover() {
-    // Get the haq and color of the selected bar
-    const haq = d3.select(this).attr('class');
-    const color = d3.select(this).attr('fill');
 
-    // Highlight the bar with black stroke
-    bar.select("this").style("stroke","#333")
-        .style("stroke-width",2);
 
-    // Highlight the line with the color
-    d3.select(`path.${haq}`)
-        .style("stroke",color)
-        .style("opacity",1)
-
-    // Make the text label visible
-    d3.select(`text.${haq}`).style("visibility","visible");
-    }
-
-function mouseout() {
-    // Get the haq of the selected bar
-    const haq = d3.select(this).attr('class');
-    // Change the highlight stroke in the bar back to normal
-    
-    bar.select("this").style("stroke",null);
-
-    // Change the line color to lightgrey
-    d3.select(`path.${haq}`)
-    .style("stroke","lightgrey")
-    .style("opacity",0.5)
-
-    // Make the text label invisible again
-    d3.select(`text.${haq}`).style("visibility","hidden");
-    }
