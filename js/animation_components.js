@@ -3,8 +3,8 @@ export const animationFilter = (data) => {
     let countries = d3.select("#selectCountriesText").node().value;
     // Filter and sorting the new data
     let newData = data.filter(data => data.year == year);
-    
-    if (countries != "All") {
+
+    if (countries != "All" && countries != "") {
       newData = newData.filter(data => countries.includes(data.country));
     }
 
