@@ -2,6 +2,7 @@ import {indicesChart} from "./indicesChart.js";
 // import {hospitalsChart} from "./hospitalsChart.js";
 import {gaugeChart} from "./gauge.js"
 import {radarChart} from "./radar.js"
+import {dataPerHAQLevel,dataPerGDPLevel} from "./radarData.js"
 
 // data sets list
 let data_sets = [
@@ -30,6 +31,9 @@ Promise.all([
             "RD_expenses_as_PC_GDP": +d['R&D expenses as PC_GDP (total)'],
             "nb_schools": +d['Number schools'],
             "remuneration_general_practitionners": +d['Remuneration of general practitioners'],
+            "remuneration_specialists": +d['Remuneration of specialists'],
+            "share_gov_expenses": +d['Share of gross domestic product (in %) -  Government/compulsory schemes'],
+            "share_outpocket_expenses": +d['Share of gross domestic product (in %) -  Household out-of-pocket payments'],
             
         }
     })
@@ -44,7 +48,15 @@ Promise.all([
     indicesChart(prepareDataIndicesChart(mergedDataset));
     // hospitalsChart(files[5]);
     gaugeChart(mergedDataset);
-    radarChart(mergedDataset);
+    radarChart(dataPerHAQLevel(mergedDataset),['low HAQ countries','mid HAQ countries','high HAQ countries'])
+    const selectorRadar= document.getElementById("selectorRadar");
+    
+    selectorRadar.addEventListener("click", function() {
+        const selected=document.querySelector('input[name="comparisonRadar"]:checked').value
+        if(selected=="haqradar"){radarChart(dataPerHAQLevel(mergedDataset),['low HAQ countries','mid HAQ countries','high HAQ countries','World Average'])}
+        else if(selected=="gdpradar"){radarChart(dataPerGDPLevel(mergedDataset),['low GDP countries','mid GDP countries','high GDP countries',"World Average"])}
+        else if (selected=="countriesradar"){radarChart(dataPerGDPLevel(mergedDataset),['low GDP countries','mid GDP countries','high GDP countries',"World Average"])}
+    })
     
 }).catch(function(err) {
     console.log(err);

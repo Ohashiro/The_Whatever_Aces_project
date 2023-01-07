@@ -11,11 +11,20 @@ export var RadarChart = {
 	 radians: 2 * Math.PI,
 	 opacityArea: 0.5,
 	 ToRight: 5,
-	 TranslateX: 120,
-	 TranslateY: 30,
+	 TranslateX: 160,
+	 TranslateY: 40,
 	 ExtraWidthX: 100,
 	 ExtraWidthY: 100,
-	 color: d3.scaleOrdinal(d3.schemeCategory10)
+	 color: d3.scaleOrdinal(d3.schemeCategory10),
+	 axisJoin: function (d, i) {
+		return d.className || i;
+	  },
+	  tooltipFormatValue: function (d) {
+		return d;
+	  },
+	  tooltipFormatClass: function (d) {
+		return d;
+	  },
 	};
 	
 	if('undefined' !== typeof options){
@@ -103,8 +112,8 @@ export var RadarChart = {
 		.style("font-family", "sans-serif")
 		.style("font-size", "11px")
 		.attr("text-anchor", "middle")
-		.attr("dy", "1.5em")
-		.attr("transform", function(d, i){return "translate(0, -10)"})
+		.attr("dy", "-0.3em")
+		.attr("transform", function(d, i){return "translate(0, 0)"})
 		.attr("x", function(d, i){return cfg.w/2*(1-cfg.factorLegend*Math.sin(i*cfg.radians/total))-60*Math.sin(i*cfg.radians/total);})
 		.attr("y", function(d, i){return cfg.h/2*(1-Math.cos(i*cfg.radians/total))-20*Math.cos(i*cfg.radians/total);});
 
