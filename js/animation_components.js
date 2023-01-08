@@ -9,7 +9,7 @@ export const animationFilter = (data) => {
     }
 
     newData = filter_data_on_gdp_profile(newData);
-    let sort = d3.select("#sort").node().value;
+    let sort = document.querySelector('input[name="sortSelector"]:checked').value
     
     if (sort == 'alphabet') {
       newData = newData.sort((a, b) => d3.ascending(a.country, b.country));
@@ -34,7 +34,7 @@ function compute_gdp_profiles(data) {
 }
 
 function filter_data_on_gdp_profile(data) {
-  let gdp_profile = d3.select("#gdp").node().value;
+  let gdp_profile =document.querySelector('input[name="GDPselector"]:checked').value
   let lowGDPLimit = compute_gdp_profiles(data)[0];
   let midGDPLimit = compute_gdp_profiles(data)[1];
   if (gdp_profile == 'low') {

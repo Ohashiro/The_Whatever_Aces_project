@@ -202,7 +202,7 @@ export const indicesChart = (data) => {
     //     path,line = updateLineChart(path,line,data,margins,height,width,yGroup);
     // });
 
-    d3.select("#gdp").on("change", function(e) {
+    d3.select("#generalForm").on("change", function(e) {
         // when gdp profile is selected, we set country to "All"
         // var selectCountriesText = document.getElementById("selectCountriesText");
         // let selectedCountries = setCountries("All");
@@ -217,7 +217,7 @@ export const indicesChart = (data) => {
         updateGaugesChart(data);
         path,line = updateLineChart(path,line,data,margins,height,width,yGroup);
     });
-    d3.select("#sort").on("change", function(e) {
+    d3.select("#sortSelectorDiv").on("change", function(e) {
         bar = updateBarChart(bar,data,color,margins,height,width,xGroup,yGroup,mouseover,mouseout);
         updateGaugesChart(data);
         path,line = updateLineChart(path,line,data,margins,height,width,yGroup);
@@ -236,12 +236,12 @@ function barLegend(svg,color,margins,width,height) {
         .attr("transform", "translate(0,110)")
         .call(legend);
 
-    svg.append("text")
-        .attr("x", width/2)             
-        .attr("y", 0 + 2*(margins.top)/3)
-        .attr("text-anchor", "middle")  
-        .style("font-size", "25px")
-        .text("HAQ and HDI score by country");
+    // svg.append("text")
+    //     .attr("x", width/2)             
+    //     .attr("y", 0 + 2*(margins.top)/3)
+    //     .attr("text-anchor", "middle")  
+    //     .style("font-size", "25px")
+    //     .text("HAQ and HDI score by country");
     return legend
 }
 
@@ -271,25 +271,11 @@ function setCountries(value) {
 }
 
 function setGDPprofile(gdp_value) {
-    var ddl = document.getElementById('gdp');
-    var opts = ddl.options.length;
-    for (var i=0; i<opts; i++){
-        if (ddl.options[i].value == gdp_value){
-            ddl.options[i].selected = true;
-            break;
-        }
-    }
+    document.getElementById(gdp_value).checked = true;
 }
 
 function setSort(value) {
-    var ddl = document.getElementById('sort');
-    var opts = ddl.options.length;
-    for (var i=0; i<opts; i++){
-        if (ddl.options[i].value == value){
-            ddl.options[i].selected = true;
-            break;
-        }
-    }
+    document.getElementById(value).checked = true;
 }
 
 // function setYear(value) {

@@ -3,7 +3,6 @@ import {indicesChart} from "./indicesChart.js";
 import {gaugeChart} from "./gauge.js"
 import {radarChart} from "./radar.js"
 import {dataPerHAQLevel,dataPerGDPLevel} from "./radarData.js"
-
 // data sets list
 let data_sets = [
     'DatasetMerged.csv'

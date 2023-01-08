@@ -1,110 +1,219 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Health GAP</title>
-	<link rel="stylesheet" type="text/css" href="css/main.css">
-</head>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Health GAP</title>
+    <link rel="stylesheet" type="text/css" href="css/main.css" />
+  </head>
 
-<body>
-	<h1 style="text-align: center;margin-bottom: 1em;">What is the relationship between health system performance and health money investment in hospitals and medical staff</h1>
-	<div class="responsive-svg-container"id="form">
-		<!-- <label for="yearSlider">Year</label>
+  <body>
+    <h1 style="text-align: center; margin-bottom: 1em">
+      What is the relationship between health system performance and health
+      money investment in hospitals and medical staff
+    </h1>
+    <fieldset id="generalForm">
+      <legend>Parameters</legend>
+      <!-- <label for="yearSlider">Year</label>
 		<input id="yearSlider" type="range" value="2015" min="2010" max="2020" step="5" oninput="yearText.value=yearSlider.value" />
 		<input id="yearText" type="number" value="2015" min="2010" max="2020" step="5" oninput="yearSlider.value=yearText.value" disabled /> -->
 
-		<br>
-		<label for="gdp">GDP/capita profile</label>
-		<select name="gdp" id="gdp">
-			<option value="all">All</option>
-			<option value="low">Low GDP/capita</option>
-			<option value="mid">Mid GDP/capita</option>
-			<option value="high">High GDP/capita</option>
-		</select>
-		(Low &lt;= 2881 &lt; Mid &lt;= 10293 &lt; High)
-		<br>
-		Choose a country
-		<select id="selectCountry" hidden="true">
-			<option>All</option>
-		</select>
-		<script src="js/dropdown.js" type="module"></script>
-		<!-- <div id="countrySelector" class="dropdown-check-list" tabindex="100">
+      <br />
+      <div style="display: grid; grid-template-columns: 200px 900px">
+        <p style="font-weight: bold">GDP per capita profile</p>
+        <div style="margin-bottom: 10px">
+          <div class="r-pill">
+            <div class="r-pill__group" id="GDPselectorDiv">
+              <!-- optional styling wrapper -->
+              <span class="r-pill__item">
+                <input
+                  type="radio"
+                  id="all"
+                  name="GDPselector"
+                  value="all"
+                  checked
+                />
+                <label for="allgdp">All</label>
+              </span>
+              <span class="r-pill__item">
+                <input type="radio" id="low" name="GDPselector" value="low" />
+                <label for="lowgdp">Low GDP per capita</label>
+              </span>
+              <span class="r-pill__item">
+                <input type="radio" id="mid" name="GDPselector" value="mid" />
+                <label for="midgdp">Mid GDP per capita</label>
+              </span>
+              <span class="r-pill__item">
+                <input type="radio" id="high" name="GDPselector" value="high" />
+                <label for="highgdp">High GDP per capita</label>
+              </span>
+            </div>
+            (Low &lt;= 2881 &lt; Mid &lt;= 10293 &lt; High)
+          </div>
+        </div>
+        <p style="font-weight: bold">Countries</p>
+        <select id="selectCountry" hidden="true">
+          <option>All</option>
+        </select>
+        <script src="js/dropdown.js" type="module"></script>
+        <!-- <div id="countrySelector" class="dropdown-check-list" tabindex="100">
 			<span class="anchor">Select countries</span>
 			<nav id="topNav">
 				<ul class="items">
 				</ul>
 			</nav>
 		</div> -->
-		<input id="selectCountriesText" type="text" value="" disabled />
-		<br>
-		<div class="navbar">
-			<div class="dropdown">
-			  <button class="dropbtn">Select countries
-				<i class="fa fa-caret-down"></i>
-			  </button>
-			  <div id="countrySelector" class="dropdown-content">
-					<nav id="topNav">
-						<ul class="items">
-						</ul>
-					</nav>
-			  </div>
-			</div>
-		  </div> 
-		<script src="js/dropdown2.js" type="module"></script>
-	</div>
+        <div style="display: flex; flex-direction: column">
+          <div class="navbar">
+            <div class="dropdown">
+              <button class="dropbtn">
+                Change countries selected
+                <i class="fa fa-caret-down"></i>
+              </button>
+              <div id="countrySelector" class="dropdown-content">
+                <nav id="topNav">
+                  <ul class="items"></ul>
+                </nav>
+              </div>
+            </div>
+          </div>
+          <div id="countrySelectedList"></div>
+        </div>
+        <input
+          id="selectCountriesText"
+          type="text"
+          value=""
+          disabled
+          style="display: none"
+        />
+      </div>
 
-	<h2>Countries health system efficiency</h2>
-	<p>Below is the HAQ (Health Access Quality) score, HDI (Human Development Index) score and life expectancy of the selected countries. The HAQ is an index used to assess the global health level of a country. It takes into account: ......</p>
-	<div id="gaugeHAQ" class="gauge"></div>
-	<div id="gaugeHDI" class="gauge"></div>
-	<div id="gaugeLifeExpectancy" class="gauge"></div>
-	<div class="canvas">
-		<canvas id="canvas" height="10" width="40"></canvas>
-		= world average
-	</div>
-	<div class="canvas">
-		<label for="sort">Sort by</label>
-		<select name="sort" id="sort">
-			<option value="alphabet">Alphabetical</option>
-			<option value="pctAsce">HAQ ascending</option>
-			<option value="pctDesc">HAQ descending</option>
-		</select>
-	</div>
-	<div id="bar" class="responsive-bar-container"></div>
-	<div id="bar-legend" class="responsive-bar-legend"></div>
+      <script src="js/dropdown2.js" type="module"></script>
+    </fieldset>
+
+    <h2>Countries health system efficiency</h2>
+    <p>
+      Below is the HAQ (Health Access Quality) score, HDI (Human Development
+      Index) score and life expectancy of the selected countries. The HAQ is an
+      index used to assess the global health level of a country. It takes into
+      account: ......
+    </p>
+    <div id="gaugeHAQ" class="gauge"></div>
+    <div id="gaugeHDI" class="gauge"></div>
+    <div id="gaugeLifeExpectancy" class="gauge"></div>
+    <div class="canvas">
+      <canvas id="canvas" height="10" width="40"></canvas>
+      = world average
+    </div>
+
 	<div>
-		<div>
-			<fieldset id="selectorRadar">
-				<legend>Comparison of health systems of:</legend>
-				<div>
-					<input type="radio" id="haqradar" name="comparisonRadar" value="haqradar" checked>
-					<label for="haqradar">different HAQ levels</label>
-				</div>
-				
-				<div style="margin:auto">
-					<input type="radio" id="countryradar" name="comparisonRadar" value="countryradar">
-					<label for="countryradar">different countries</label>
-				</div>
-				
-				
-				<div>
-					<input type="radio" id="gdpradar" name="comparisonRadar" value="gdpradar">
-					<label for="gdpradar">different GDP levels</label>
-				</div>
-			</fieldset>
-		</div>
-+	<div  class="radar_title" >Health system characteristics of countries grouped by HAQ level</div>
-		<!-- <div id="scatterplot" class="responsive-svg-container"></div> -->
-	<div id="radar" class="radar" ></div>
-	
-	</div>
-	<script src="js/d3.v7.min.js"></script>
-	<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.25.6/d3-legend.min.js" integrity="sha512-wNH6xsp2n8CfB91nrBtfc4sfLwYPBMjSWVUwQOp60AYYXH6i8yCwuKFZ4rgK2i6pQek/b+bSyR7b01/922IBzQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-	<script src="js/main.js" type="module"></script>
-	By: The Whatever Aces
-</body>
+	<h2 class="radar_title" style="margin-top: 350px;">HAQ and HDI score by country</h2>
+    <fieldset>
+	  <legend>Sort by</legend>
+      <div
+        
+      >
+        <div style="margin-bottom: 10px">
+          <div class="r-pill">
+            <div class="r-pill__group" id="sortSelectorDiv">
+              <!-- optional styling wrapper -->
+              <span class="r-pill__item">
+                <input
+                  type="radio"
+                  id="alphabet"
+                  name="sortSelector"
+                  value="all"
+                  checked
+                />
+                <label for="alphabet">Alphabetical</label>
+              </span>
+              <span class="r-pill__item">
+                <input
+                  type="radio"
+                  id="pctAsce"
+                  name="sortSelector"
+                  value="pctAsce"
+                />
+                <label for="pctAsce">HAQ ascending</label>
+              </span>
+              <span class="r-pill__item">
+                <input
+                  type="radio"
+                  id="pctDesc"
+                  name="sortSelector"
+                  value="pctDesc"
+                />
+                <label for="pctDesc">HAQ descending</label>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </fieldset>
+</div>
+    <!-- <label for="sort">Sort by</label>
+      <select name="sort" id="sort">
+        <option value="alphabet">Alphabetical</option>
+        <option value="pctAsce">HAQ ascending</option>
+        <option value="pctDesc">HAQ descending</option>
+      </select> -->
+    <div style="display: flex; flex-direction: row">
+      <div id="bar" class="responsive-bar-container"></div>
+      <div id="bar-legend" class="responsive-bar-legend"></div>
+    </div>
+    <h2 class="radar_title">Health system characteristics of countries</h2>
+    <fieldset id="selectorRadar">
+      <legend>Comparison of health systems of:</legend>
+      <div style="margin-bottom: 10px">
+        <div class="r-pill">
+          <div class="r-pill__group" id="comparisonRadarDiv">
+            <!-- optional styling wrapper -->
+            <span class="r-pill__item">
+              <input
+                type="radio"
+                id="haqradar"
+                name="comparisonRadar"
+                value="haqradar"
+                checked
+              />
+              <label for="haqradar">different HAQ levels</label>
+            </span>
+            <span class="r-pill__item">
+              <input
+                type="radio"
+                id="countryradar"
+                name="comparisonRadar"
+                value="countryradar"
+              />
+              <label for="countryradar">different countries</label>
+            </span>
+            <span class="r-pill__item">
+              <input
+                type="radio"
+                id="gdpradar"
+                name="comparisonRadar"
+                value="gdpradar"
+              />
+              <label for="gdpradar">different GDP levels</label>
+            </span>
+
+          </div>
+        </div>
+      </div>
+    </fieldset>
+    <!-- <div id="scatterplot" class="responsive-svg-container"></div> -->
+    <div id="radar" class="radar"></div>
+    <script src="js/d3.v7.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.25.6/d3-legend.min.js"
+      integrity="sha512-wNH6xsp2n8CfB91nrBtfc4sfLwYPBMjSWVUwQOp60AYYXH6i8yCwuKFZ4rgK2i6pQek/b+bSyR7b01/922IBzQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script src="js/main.js" type="module"></script>
+    By: The Whatever Aces
+  </body>
 </html>
 
 <!--

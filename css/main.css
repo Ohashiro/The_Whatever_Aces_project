@@ -1,3 +1,12 @@
+html {
+  font-family: "Helvetica", sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #212529;
+  text-align: left;
+  background-color: #fff;
+  margin: 2em;
+}
 .responsive-svg-container {
   margin-right: auto;
   margin-left: auto;
@@ -103,15 +112,17 @@ nav ul {
   outline: none;
   color: rgb(0, 0, 0);
   padding: 14px 16px;
-  background-color: inherit;
+  background-color: #0b8199;
+  border-radius: 8px;
   font-family: inherit; /* Important for vertical align on mobile phones */
   margin: 0; /* Important for vertical align on mobile phones */
+  color: white;
 }
 
 /* Add a red background color to navbar links on hover */
 .navbar a:hover,
 .dropdown:hover .dropbtn {
-  background-color: rgb(225, 225, 225);
+  background-color: #9dcad4;
 }
 
 /* Dropdown content (hidden by default) */
@@ -142,4 +153,154 @@ nav ul {
 /* Show the dropdown menu on hover */
 .dropdown:hover .dropdown-content {
   display: block;
+}
+
+.dropbtn {
+    background-color: #0b8199; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+    font-size: 16px;
+}
+
+/* parent container <fieldset> */
+.r-pill {
+  border: 0;
+  padding: 0;
+  margin: 0;
+}
+
+/* radio groups need a legend */
+.r-pill legend {
+  display: block;
+  font-size: inherit;
+  font-weight: bold;
+  margin-bottom: 0.5em;
+  padding: 0;
+  width: 100%;
+}
+
+/*
+	Optional inner wrapper (<div>) to provide additional styling.
+*/
+.r-pill__group {
+  background: #fafafa;
+  border: 1px solid #0b8199;
+  border-radius: 2em;
+  display: inline-block;
+  padding: 0.25em;
+}
+
+.r-pill__item {
+  display: inline-block;
+  position: relative;
+}
+
+.r-pill input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: none;
+  border: 2px solid;
+  height: 100%;
+  left: 0;
+  opacity: 0.00001;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 2;
+}
+
+.r-pill__item label {
+  border-radius: 2em;
+  border: 2px solid transparent;
+  color: black;
+  display: block;
+  padding: 0.25em 0.75em;
+}
+
+.r-pill__item input:hover ~ label,
+.r-pill__item label:hover {
+  background: #9dcad4;
+  border-color: white;
+}
+
+.r-pill[disabled] .r-pill__item input:checked + label:hover,
+.r-pill__item input:checked + label {
+  background: #0b8199;
+  color: #fff;
+}
+
+.r-pill__item label:after {
+  border: 2px solid;
+  border-color: rgba(0, 0, 0, 0);
+  border-radius: 2em;
+  bottom: 0;
+  content: "";
+  left: 0;
+  pointer-events: none; /* 1 */
+  position: absolute;
+  right: 0;
+  top: 0;
+  transition: bottom 0.2s ease-in-out, border-color 0.2s ease-in-out,
+    left 0.2s ease-in-out, right 0.2s ease-in-out, top 0.2s ease-in-out;
+  /*
+		1. Don't like pointer-events?
+			 then use z-index: -1;
+			 but we don't want this getting in the way
+			 of touch / mouse clicks.
+	*/
+}
+
+.r-pill__item input:focus ~ label:after {
+  border-color: #2196f3;
+  bottom: -0.25em;
+  left: -0.25em;
+  right: -0.25em;
+  top: -0.25em;
+}
+
+/**
+ * Disabled
+ */
+.r-pill[disabled],
+.r-pill__item input[disabled] + label {
+  opacity: 0.5;
+}
+
+.r-pill__item input[disabled] ~ label,
+.r-pill__item input[disabled] ~ label:hover,
+.r-pill[disabled] label:hover {
+  background: transparent;
+  border-color: transparent;
+  cursor: not-allowed;
+}
+
+/**
+ * Undo styling that makes these pills appear as
+ * if they are all checked in high contrast mode.
+ */
+@media screen and (-ms-high-contrast: active) {
+  .r-pill__item label {
+    border: 0;
+    margin: 2px;
+  }
+
+  .r-pill__item input:checked + label {
+    border: 2px solid;
+    margin: 0;
+  }
+
+  .r-pill__item input:hover ~ label,
+  .r-pill__item label:hover {
+    text-decoration: underline;
+  }
+
+  .r-pill[disabled] .r-pill__item label:hover,
+  .r-pill[disabled] .r-pill__item input:hover ~ label {
+    text-decoration: none;
+  }
 }
