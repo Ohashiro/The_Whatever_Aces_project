@@ -103,12 +103,13 @@ function dropdownSelection() {
     }
     // for i=0, the all the countries are selected
     let selectedCountry = myCountries[0];
-    dynamicCountryList(selectedCountries);
-    selectedCountries = setCountries("All");
-    console.log("selected countries:",selectedCountries);
-    selectCountriesText.value = selectedCountries.join();
+    
     selectedCountry.addEventListener('click', function(e) {
-        setCountries("All");
+        // setCountries("All");
+        selectedCountries = setCountries("All");
+        console.log("selected countries:",selectedCountries);
+        selectCountriesText.value = selectedCountries.join();
+        dynamicCountryList(selectedCountries);
     })
 
 }
