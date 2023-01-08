@@ -108,6 +108,7 @@ function dropdownSelection() {
     console.log("selected countries:",selectedCountries);
     selectCountriesText.value = selectedCountries.join();
     selectedCountry.addEventListener('click', function(e) {
+        setCountries("All");
     })
 
 }
