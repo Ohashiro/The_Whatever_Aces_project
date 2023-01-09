@@ -8,10 +8,14 @@
   </head>
 
   <body>
-    <h1 style="text-align: center; margin-bottom: 1em">
-      What is the relationship between health system performance and health
-      money investment in hospitals and medical staff
-    </h1>
+    <fieldset id="generalFormTitle">
+		<h1 style="text-align: center">
+			Investment in health and healthcare development level
+		</h1>
+	</fieldset>
+	<br>
+    <b>What is the relationship between money invested in Health</b> (in Health care, in medical staff and equipment, and in medical schools) <b>and health system development level</b> (meaning health access and quality index, health index and life expectancy)<b>?</b>
+	<br><br>
     <p>
       The health care system is a crucial part of each modern country. 
       Nowadays, it is hard to imagine any country which can successfully work without it.
@@ -24,14 +28,33 @@
        individuals. All of these factors might influence the health index of each country. 
        The goal of this study, to find out these factors. 
     </p>
-    <fieldset id="generalForm">
+	<p style="color:Grey">
+		<!-- WHAT the visualizations show;
+		WHY we should care about it;
+		HOW to read the visualization. -->
+		<b>How to read the visualizations ?</b>
+		<br>The first part is dedicated to the health indicators (HAQ index, HDI index and life expectancy). It gives you an idea of the health quality and access of the countries. You can also filter the countries depending on their GDP/capita, but also select some specific countries to compare them.
+		<br>The second part details how the different countries invest in health (how many practitioners, medical schools, hospital beds, etc.) depending on their GDP or their health development level.
+	</p>
+    <h2 class="radar_title">Countries health system efficiency</h2>
+    <p>
+		This section shows the dependence between the Gross domestic product(GDP) and the HAQ (Health Access Quality) score, 
+		 HDI (Human Development Index) score, and life expectancy in the selected countries. Below is the HAQ score, HDI score
+		  and life expectancy. The HAQ is an index used to assess the global health level of a country. It takes into account:
+		   death rates from 32 causes of death that could be avoided by timely and effective medical care. HDI is a score based 
+		   on life expectancy, education, and per capita income indicators, which is used to rank countries into four tiers of 
+		   human development. Life expectancy is a statistical measure of the average life of a human-being. By choosing GDP 
+		   level, you can display specific types of countries. By choosing particular countries, you display
+		   the average score for each measure.
+	   </p>
+	<fieldset id="generalForm">
       <legend>Parameters</legend>
       <!-- <label for="yearSlider">Year</label>
 		<input id="yearSlider" type="range" value="2015" min="2010" max="2020" step="5" oninput="yearText.value=yearSlider.value" />
 		<input id="yearText" type="number" value="2015" min="2010" max="2020" step="5" oninput="yearSlider.value=yearText.value" disabled /> -->
 
       <br />
-      <div style="display: grid; grid-template-columns: 200px 900px">
+      <div style="display: grid; grid-template-columns: 200px auto-fit">
         <p style="font-weight: bold">GDP per capita profile</p>
         <div style="margin-bottom: 10px">
           <div class="r-pill">
@@ -60,7 +83,8 @@
                 <label for="highgdp">High GDP per capita</label>
               </span>
             </div>
-            (Low &lt;= 2881 &lt; Mid &lt;= 10293 &lt; High)
+			<br> <p style="color:Grey">Profiles: Low &le; 2881$ &lt; Mid &le; 10293$ &lt; High</p>
+            
           </div>
         </div>
         <p style="font-weight: bold">Countries</p>
@@ -103,17 +127,9 @@
       <script src="js/dropdown2.js" type="module"></script>
     </fieldset>
 
-    <h2 class="radar_title">Countries health system efficiency</h2>
-    <p>
-     This section shows the dependence between the Gross domestic product(GDP) and the HAQ (Health Access Quality) score, 
-      HDI (Human Development Index) score, and life expectancy in the selected countries. Below is the HAQ score, HDI score
-       and life expectancy. The HAQ is an index used to assess the global health level of a country. It takes into account:
-        death rates from 32 causes of death that could be avoided by timely and effective medical care. HDI is a score based 
-        on life expectancy, education, and per capita income indicators, which is used to rank countries into four tiers of 
-        human development. Life expectancy is a statistical measure of the average life of a human-being. By choosing GDP 
-        level, other measures are demonstrated. By choosing a particular country, other measures are displayed with proving 
-        the average score for each measure.
-    </p>
+	<br><br>
+    <b>Average HAQ, HDI scores and Life expectancy of the selected countries</b>
+	<br>
     <div id="gaugeHAQ" class="gauge"></div>
     <div id="gaugeHDI" class="gauge"></div>
     <div id="gaugeLifeExpectancy" class="gauge"></div>
@@ -123,7 +139,9 @@
     </div>
 
 	<div>
-	<h2 class="radar_title" style="margin-top: 350px;">HAQ and HDI scores by country</h2>
+	<!-- <h2 class="radar_title" style="margin-top: 350px;">HAQ and HDI scores by country</h2> -->
+	<h2 class="radar_title" style="margin-top: 270px;"> </h2>
+	<b>HAQ and HDI scores by countries</b>
 	<p>
 		The bar chart below represents information about  HAQ and HDI scores by country and graphically shows the 
 		difference between them. On the graph, the countries from the same region are painted in the same colour
