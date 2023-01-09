@@ -47,7 +47,7 @@ Promise.all([
     indicesChart(prepareDataIndicesChart(mergedDataset));
     // hospitalsChart(files[5]);
     gaugeChart(mergedDataset);
-    radarChart(dataPerHAQLevel(mergedDataset),['low HAQ countries','mid HAQ countries','high HAQ countries'])
+    radarChart(dataPerHAQLevel(mergedDataset),['low HAQ countries','mid HAQ countries','high HAQ countries','World Average'])
     const selectorRadar= document.getElementById("selectorRadar");
     
     selectorRadar.addEventListener("click", function() {
