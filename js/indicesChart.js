@@ -153,6 +153,7 @@ export const indicesChart = (data) => {
         .data(group)
         .join('path')
         .attr('d', ([i, d]) => line(d)) 
+        .attr('class','line')
         .style('stroke', '#576CC2')
         .style('stroke-width', 2)
         .style('fill', 'transparent')
@@ -361,40 +362,41 @@ function updateLineChart(path,line,data,margins,height,width,yGroup) {
     console.log('update line chart...')
     // Get the selected year and sorting method
     let newData = animationFilter(data);
-
-    // Define new x and y scales
-    const xScale = d3.scaleBand()
+    
+    if (newData.length > 0) {
+        // Define new x and y scales
+        const xScale = d3.scaleBand()
         .domain(newData.map(d => d.country))
         .range([margins.left, width - margins.right])
         .padding(0.2);
 
-    // Define a transition.
-    const t = d3.transition().duration(1000);
-    
-    // Update the line chart with enter, update, and exit pattern
-    for (let j = 0; j < newData.length; j++){
+        // Define a transition.
+        const t = d3.transition().duration(1000);
+
+        // Update the line chart with enter, update, and exit pattern
+        for (let j = 0; j < newData.length; j++){
         if (newData[j].hdi){
             newData[j]['group'] = 1;
         } else{
             newData[j]['group'] = 0;
         }
-    }
-    let group = d3.group(newData, d =>  d.group );
-  
-    let newyScaleLine = d3.scaleLinear()
+        }
+        let group = d3.group(newData, d =>  d.group );
+
+        let newyScaleLine = d3.scaleLinear()
         .domain([0, d3.max(data, d=>d.hdi)])
         .range([height-margins.bottom, margins.top]);
- 
-    /* Construct a line generator
+
+        /* Construct a line generator
         Ref: https://observablehq.com/@d3/line-chart and https://github.com/d3/d3-shape */
-    let newline = d3.line()
+        let newline = d3.line()
         .curve(d3.curveLinear)
         .x(d => width/(newData.length*3)+xScale(d.country))
         .y(d => newyScaleLine(d.hdi) - newyScaleLine(0));
-    
 
-    /* Create line paths for each country */
-    path = path
+        let totalLength = path.selectAll('path.line');//.select('.line').node().getTotalLength();
+        /* Create line paths for each country */
+        path = path
         .data(group)
         .join(
             enter => enter.selectAll('path')//append("rect")
@@ -403,7 +405,9 @@ function updateLineChart(path,line,data,margins,height,width,yGroup) {
                 .style('stroke-width', 2)
                 .style('fill', 'transparent')
                 .style('opacity', 1)
-                //.attr('d', ([i, d]) => line(d))
+                .attr("stroke-dasharray", totalLength + " " + totalLength)
+                .attr("stroke-dashoffset", totalLength)
+                // .attr('d', ([i, d]) => newline(d))
                 .call(enter => enter.transition(t)
                     .attr('d', ([i, d]) => newline(d))),
             update => update.transition(t)
@@ -411,10 +415,12 @@ function updateLineChart(path,line,data,margins,height,width,yGroup) {
             exit => exit.transition(t)
                 .attr('d', ([i, d]) => - newline(0)) 
                 .remove()
-          )
-    
-    path.append('title').text(([i, d]) => i);
-    return path,newline
+        )
+
+        path.append('title').text(([i, d]) => i);
+        return path,newline
+    }
+        return path, line
     }
 
 
