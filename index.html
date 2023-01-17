@@ -53,9 +53,13 @@
 		<input id="yearSlider" type="range" value="2015" min="2010" max="2020" step="5" oninput="yearText.value=yearSlider.value" />
 		<input id="yearText" type="number" value="2015" min="2010" max="2020" step="5" oninput="yearSlider.value=yearText.value" disabled /> -->
 
-      <br />
       <div style="display: grid; grid-template-columns: 200px auto-fit">
-        <p style="font-weight: bold">GDP per capita profile</p>
+        <p style="font-weight: bold">GDP per capita profile
+          <span class="tooltip">&#9432;
+            <!-- Tooltip text: -->
+            <span class="tooltiptext">Profiles: <br> Low GDP/capita &le; 2881$ <br> 2881$ &lt; Mid GDP/capita &le; 10293$ <br> 10293$ &lt; High GDP/capita</span>
+          </span>
+        </p>
         <div style="margin-bottom: 10px">
           <div class="r-pill">
             <div class="r-pill__group" id="GDPselectorDiv">
@@ -83,7 +87,7 @@
                 <label for="highgdp">High GDP per capita</label>
               </span>
             </div>
-			<br> <p style="color:Grey">Profiles: Low &le; 2881$ &lt; Mid &le; 10293$ &lt; High</p>
+			<br>
             
           </div>
         </div>
@@ -107,6 +111,7 @@
                 <i class="fa fa-caret-down"></i>
               </button>
               <div id="countrySelector" class="dropdown-content">
+                <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
                 <nav id="topNav">
                   <ul class="items"></ul>
                 </nav>
@@ -123,7 +128,22 @@
           style="display: none"
         />
       </div>
-
+      <script>function filterFunction() {
+        var input, filter, ul, li, a, i;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        console.log("filter",filter)
+        div = document.getElementById("topNav");
+        a = div.getElementsByTagName("li");
+        for (i = 0; i < a.length; i++) {
+          txtValue = a[i].textContent || a[i].innerText;
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            a[i].style.display = "";
+          } else {
+            a[i].style.display = "none";
+          }
+        }
+      } </script>
       <script src="js/dropdown2.js" type="module"></script>
     </fieldset>
 
