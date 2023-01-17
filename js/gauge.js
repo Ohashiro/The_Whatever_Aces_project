@@ -3,7 +3,8 @@ import {animationFilter} from "./animation_components.js";
 export const gaugeChart = (data) => {
     // let year = d3.select("#yearSlider").node().value;
     // let worldData = data.filter(data => data.year == year);
-    let scores = averageScore(data);
+    let worldData = data.filter(data => data.year == 2015);
+    let scores = averageScore(worldData);
     let meanHAQ = scores[0];
     let meanHDI = scores[1];
     let meanLifeEx = scores[2];
@@ -75,7 +76,8 @@ export const updateGaugesChart = (data) => {
 
     // let year = d3.select("#yearSlider").node().value;
     // let worldData = data.filter(data => data.year == year);
-    let worldData = data.map((x) => x);
+    // let worldData = data.map((x) => x);
+    let worldData = data.filter(data => data.year == 2015);
     let scores = averageScore(worldData);
     let meanHAQ = scores[0];
     let meanHDI = scores[1];
