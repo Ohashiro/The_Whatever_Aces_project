@@ -123,16 +123,26 @@ export const indicesChart = (data) => {
 
     /* Define x-axis, y-axis, and color scales */
     let yScaleLine = d3.scaleLinear()
-        .domain([0, d3.max(data, d=>d.hdi)])
+        .domain([0, d3.max(newData, d=>d.hdi)])
         .range([height-margins.bottom, margins.top]);
 
- 
+    let yhomeCountryScaleLine = d3.scaleLinear()
+        .domain([0, d3.max(newData, d=>d.haq)])
+        .range([height-margins.bottom, margins.top]);
+
     /* Construct a line generator
         Ref: https://observablehq.com/@d3/line-chart and https://github.com/d3/d3-shape */
     let line = d3.line()
         .curve(d3.curveLinear)
         .x(d => width/(newData.length*3)+xScale(d.country))
         .y(d => yScaleLine(d.hdi) - yScaleLine(0));
+
+    let homeCountry_value = homeCountryValue(data);
+    console.log("homeCountry value: ",homeCountry_value);
+    let homeCountryLine = d3.line()
+        .curve(d3.curveLinear)
+        .x(d => width/(newData.length*3)+xScale(d.country))
+        .y(d => yhomeCountryScaleLine(homeCountry_value) - yhomeCountryScaleLine(0));
 
     /* Group the data for each country
         Ref: https://observablehq.com/@d3/d3-group */
@@ -157,7 +167,17 @@ export const indicesChart = (data) => {
         .style('stroke', '#576CC2')
         .style('stroke-width', 2)
         .style('fill', 'transparent')
-        .style('opacity', 1); // [NEW] Add opacity to the line
+        .style('opacity', 1); 
+
+    var path = svg.selectAll('path')
+        .data(group)
+        .join('path')
+        .attr('d', ([i, d]) => homeCountryLine(d)) 
+        .attr('class','line')
+        .style('stroke', 'red')
+        .style('stroke-width', 2)
+        .style('fill', 'transparent')
+        .style('opacity', 1); 
 
     path.append('title').text(([i, d]) => i);
     const yAxisLine = d3.axisRight(yScaleLine);
@@ -195,14 +215,6 @@ export const indicesChart = (data) => {
         .attr("transform", "rotate(-90)")
         .text("HDI score (line)");
 
-    // Add event listener to the year slider
-    // d3.select("#yearSlider").on("change", function(e) {
-    //     // Update the chart
-    //     bar = updateBarChart(bar,data,color,margins,height,width,xGroup,yGroup,mouseover,mouseout);
-    //     updateGaugesChart(data);
-    //     path,line = updateLineChart(path,line,data,margins,height,width,yGroup);
-    // });
-
     d3.select("#generalForm").on("change", function(e) {
         // when gdp profile is selected, we set country to "All"
         // var selectCountriesText = document.getElementById("selectCountriesText");
@@ -211,23 +223,27 @@ export const indicesChart = (data) => {
 
         bar = updateBarChart(bar,data,color,margins,height,width,xGroup,yGroup,mouseover,mouseout);
         updateGaugesChart(data);
-        path,line = updateLineChart(path,line,data,margins,height,width,yGroup);
+        //path,line = updateLineChart(path,line,data,margins,height,width,yGroup);
+        path, homeCountryLine = updateLineChart(path,line,data,margins,height,width,yGroup);
     });
     d3.selectAll("input").on("change", function(e) {
         bar = updateBarChart(bar,data,color,margins,height,width,xGroup,yGroup,mouseover,mouseout);
         updateGaugesChart(data);
-        path,line = updateLineChart(path,line,data,margins,height,width,yGroup);
+        //path,line = updateLineChart(path,line,data,margins,height,width,yGroup);
+        path, homeCountryLine = updateLineChart(path,line,data,margins,height,width,yGroup);
     });
     d3.select("#sortSelectorDiv").on("change", function(e) {
         bar = updateBarChart(bar,data,color,margins,height,width,xGroup,yGroup,mouseover,mouseout);
         updateGaugesChart(data);
-        path,line = updateLineChart(path,line,data,margins,height,width,yGroup);
+        //path,line = updateLineChart(path,line,data,margins,height,width,yGroup);
+        path, homeCountryLine = updateLineChart(path,line,data,margins,height,width,yGroup);
     });
     d3.select("#homeCountrySelector").on("change", function(e) {
         let value = document.getElementById('homeCountryItems').value;
         bar = updateBarChart(bar,data,color,margins,height,width,xGroup,yGroup,mouseover,mouseout);
         updateGaugesChart(data);
-        path,line = updateLineChart(path,line,data,margins,height,width,yGroup);
+        //path,line = updateLineChart(path,line,data,margins,height,width,yGroup);
+        path, homeCountryLine = updateLineChart(path,line,data,margins,height,width,yGroup);
     });
 }
 
@@ -250,6 +266,27 @@ function barLegend(svg,color,margins,width,height) {
     //     .style("font-size", "25px")
     //     .text("HAQ and HDI score by country");
     return legend
+}
+
+function homeCountryValue(data) {
+    const homeCountry = document.getElementById('homeCountryItems').value;
+    console.log("homecountry selected:",homeCountry);
+    const world_data = data.filter(data => data.year == 2015);
+    if (homeCountry != "Not selected") {
+        for (let i = 0; i< world_data.length; i++) {
+            if (world_data[i].country == homeCountry){
+                let value = world_data[i].haq;
+                return value;
+            }
+        }
+    } else {
+        var world_average = 0;
+        for (let i = 0; i< world_data.length; i++) {
+            world_average += world_data[i].haq;
+        }
+        world_average = world_average/world_data.length;
+        return world_average;
+    }
 }
 
 function setCountries(value) {
@@ -285,18 +322,10 @@ function setSort(value) {
     document.getElementById(value).checked = true;
 }
 
-// function setYear(value) {
-//     var ddl = document.getElementById('yearSlider');
-//     ddl.value = value;
-//     ddl = document.getElementById('yearText');
-//     ddl.value = value.toString();
-// }
-
 function initializeFilters() {
     // setCountry("All");
     setGDPprofile("all");
     setSort("alphabet");
-    // setYear(2015);
 }
 
 function updateBarChart(bar,data,color,margins,height,width,xGroup,yGroup,mouseover,mouseout) {
@@ -365,9 +394,10 @@ function updateBarChart(bar,data,color,margins,height,width,xGroup,yGroup,mouseo
 }
 
 function updateLineChart(path,line,data,margins,height,width,yGroup) {
-    console.log('update line chart...')
     // Get the selected year and sorting method
     let newData = animationFilter(data);
+    let homeCountry_value = homeCountryValue(data);
+    console.log("homeCountry value: ",homeCountry_value);
     
     if (newData.length > 0) {
         // Define new x and y scales
@@ -390,41 +420,51 @@ function updateLineChart(path,line,data,margins,height,width,yGroup) {
         let group = d3.group(newData, d =>  d.group );
 
         let newyScaleLine = d3.scaleLinear()
-        .domain([0, d3.max(data, d=>d.hdi)])
-        .range([height-margins.bottom, margins.top]);
+            .domain([0, d3.max(newData, d=>d.hdi)])
+            .range([height-margins.bottom, margins.top]);
 
+        let newyhomeCountryScaleLine = d3.scaleLinear()
+            .domain([0, d3.max(newData, d=>d.haq)])
+            .range([height-margins.bottom, margins.top]);
+
+        let homeCountry_value = homeCountryValue(data);
         /* Construct a line generator
         Ref: https://observablehq.com/@d3/line-chart and https://github.com/d3/d3-shape */
         let newline = d3.line()
-        .curve(d3.curveLinear)
-        .x(d => width/(newData.length*3)+xScale(d.country))
-        .y(d => newyScaleLine(d.hdi) - newyScaleLine(0));
+            .curve(d3.curveLinear)
+            .x(d => width/(newData.length*3)+xScale(d.country))
+            .y(d => newyScaleLine(d.hdi) - newyScaleLine(0));
+            
+        let newhomeCountryline = d3.line()
+            .curve(d3.curveLinear)
+            .x(d => width/(newData.length*3)+xScale(d.country))
+            .y(d => newyhomeCountryScaleLine(homeCountry_value) - newyhomeCountryScaleLine(0));
 
         let totalLength = path.selectAll('path.line');//.select('.line').node().getTotalLength();
         /* Create line paths for each country */
         path = path
-        .data(group)
-        .join(
-            enter => enter.selectAll('path')//append("rect")
-                .attr("class", d => d.code)
-                .style('stroke', '#576CC2')
-                .style('stroke-width', 2)
-                .style('fill', 'transparent')
-                .style('opacity', 1)
-                .attr("stroke-dasharray", totalLength + " " + totalLength)
-                .attr("stroke-dashoffset", totalLength)
-                // .attr('d', ([i, d]) => newline(d))
-                .call(enter => enter.transition(t)
-                    .attr('d', ([i, d]) => newline(d))),
-            update => update.transition(t)
-                .attr('d', ([i, d]) => newline(d)),
-            exit => exit.transition(t)
-                .attr('d', ([i, d]) => - newline(0)) 
-                .remove()
-        )
+            .data(group)
+            .join(
+                enter => enter.selectAll('path')//append("rect")
+                    .attr("class", d => d.code)
+                    .style('stroke', 'red')
+                    .style('stroke-width', 2)
+                    .style('fill', 'transparent')
+                    .style('opacity', 1)
+                    .attr("stroke-dasharray", totalLength + " " + totalLength)
+                    .attr("stroke-dashoffset", totalLength)
+                    // .attr('d', ([i, d]) => newline(d))
+                    .call(enter => enter.transition(t)
+                        .attr('d', ([i, d]) => newhomeCountryline(d))),
+                update => update.transition(t)
+                    .attr('d', ([i, d]) => newhomeCountryline(d)),
+                exit => exit.transition(t)
+                    .attr('d', ([i, d]) => - newhomeCountryline(0)) 
+                    .remove()
+            )
 
         path.append('title').text(([i, d]) => i);
-        return path,newline
+        return path, newhomeCountryline
     }
         return path, line
     }
