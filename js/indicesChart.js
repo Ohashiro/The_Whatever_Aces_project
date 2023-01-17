@@ -223,6 +223,12 @@ export const indicesChart = (data) => {
         updateGaugesChart(data);
         path,line = updateLineChart(path,line,data,margins,height,width,yGroup);
     });
+    d3.select("#homeCountrySelector").on("change", function(e) {
+        let value = document.getElementById('homeCountryItems').value;
+        bar = updateBarChart(bar,data,color,margins,height,width,xGroup,yGroup,mouseover,mouseout);
+        updateGaugesChart(data);
+        path,line = updateLineChart(path,line,data,margins,height,width,yGroup);
+    });
 }
 
 function barLegend(svg,color,margins,width,height) {

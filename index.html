@@ -14,6 +14,18 @@
 		</h1>
 	</fieldset>
 	<br>
+  Where do you live ?
+  <div id="homeCountrySelector">
+  <select class="homeCountryItems" id="homeCountryItems"></select>
+  <input
+    id="selectHomeCountriesText"
+    type="text"
+    value=""
+    disabled
+    style="display: none"
+  />
+</div>
+<br>
     <b>What is the relationship between money invested in Health</b> (in Health care, in medical staff and equipment, and in medical schools) <b>and health system development level</b> (meaning health access and quality index, health index and life expectancy)<b>?</b>
 	<br><br>
     <p>
@@ -155,7 +167,7 @@
     <div id="gaugeLifeExpectancy" class="gauge"></div>
     <div class="canvas">
       <canvas id="canvas" height="10" width="40"></canvas>
-      = world average
+      = home country score (or world average si "not selected")
     </div>
 
 	<div>

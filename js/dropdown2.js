@@ -27,7 +27,6 @@ Promise.all([
     console.log("countries are: ", countries);
     selectCountriesText.value = "All";
     var select = document.getElementById("countrySelector").getElementsByClassName("items")[0];
-    console.log("select",select);
     var options = countries;
     options = ["All"].concat(countries);
 
@@ -43,7 +42,7 @@ Promise.all([
         li.appendChild(el);
         li.appendChild(countryText);
     }
-    // dropdownDisplay();
+    fillSelectSelector(countries);
     dropdownSelection();
 
     
@@ -137,4 +136,20 @@ function setCountries(value) {
         }
     }
     return selectedCountries;
+}
+
+function fillSelectSelector(countries) {
+    var select = document.getElementsByClassName("homeCountryItems")[0];
+    var options = countries;
+    options = ["Not selected"].concat(countries);
+
+    for(var i = 0; i < options.length; i++) {
+        var opt = options[i];
+        var li = document.createElement("option");
+        li.value = opt;
+        li.setAttribute("class", "homeCountry");
+        let countryText = document.createTextNode(opt);
+        select.appendChild(li);
+        li.appendChild(countryText);
+    }
 }

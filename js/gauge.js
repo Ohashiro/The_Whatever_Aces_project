@@ -3,7 +3,9 @@ import {animationFilter} from "./animation_components.js";
 export const gaugeChart = (data) => {
     // let year = d3.select("#yearSlider").node().value;
     // let worldData = data.filter(data => data.year == year);
-    let worldData = data.filter(data => data.year == 2015);
+    // worldData(data);
+    let worldData = world_Data(data);
+    // let worldData = data.filter(data => data.year == 2015);
     let scores = averageScore(worldData);
     let meanHAQ = scores[0];
     let meanHDI = scores[1];
@@ -71,13 +73,22 @@ function gaugeLayout(indicatedvalue,maxvalue,meanvalue,divname,title) {
     Plotly.newPlot(divname, gaugeChart, layout);
 }
 
+function world_Data(data) {
+  let homeCountry = document.getElementById('homeCountryItems').value;
+  let worldData = data.filter(data => data.year == 2015);
+  if (homeCountry == "Not selected"){
+    return worldData;
+  } else {
+    worldData = worldData.filter(data => data.country == homeCountry);
+    return worldData;
+  }
+}
+
 export const updateGaugesChart = (data) => {
     let newData = animationFilter(data);
-
-    // let year = d3.select("#yearSlider").node().value;
-    // let worldData = data.filter(data => data.year == year);
-    // let worldData = data.map((x) => x);
-    let worldData = data.filter(data => data.year == 2015);
+    let worldData = world_Data(data);
+    console.log("worldData",worldData);
+    
     let scores = averageScore(worldData);
     let meanHAQ = scores[0];
     let meanHDI = scores[1];
