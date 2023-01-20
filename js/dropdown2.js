@@ -42,7 +42,8 @@ Promise.all([
         li.appendChild(el);
         li.appendChild(countryText);
     }
-    fillSelectSelector(countries);
+    fillHomeSelectSelector(countries);
+    fillRadarSelectSelector(countries);
     dropdownSelection();
 
     
@@ -138,7 +139,7 @@ function setCountries(value) {
     return selectedCountries;
 }
 
-function fillSelectSelector(countries) {
+function fillHomeSelectSelector(countries) {
     var select = document.getElementsByClassName("homeCountryItems")[0];
     var options = countries;
     options = ["Not selected"].concat(countries);
@@ -148,6 +149,23 @@ function fillSelectSelector(countries) {
         var li = document.createElement("option");
         li.value = opt;
         li.setAttribute("class", "homeCountry");
+        let countryText = document.createTextNode(opt);
+        select.appendChild(li);
+        li.appendChild(countryText);
+    }
+}
+
+
+function fillRadarSelectSelector(countries) {
+    var select = document.getElementsByClassName("radarCountryItems")[0];
+    var options = countries;
+    options = ["Not selected"].concat(countries);
+
+    for(var i = 0; i < options.length; i++) {
+        var opt = options[i];
+        var li = document.createElement("option");
+        li.value = opt;
+        li.setAttribute("class", "radarCountry");
         let countryText = document.createTextNode(opt);
         select.appendChild(li);
         li.appendChild(countryText);
