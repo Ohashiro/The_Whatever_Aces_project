@@ -180,24 +180,24 @@ export const indicesChart = (data) => {
         .style('opacity', 1); 
 
     path.append('title').text(([i, d]) => i);
-    const yAxisLine = d3.axisRight(yScaleLine);
+    // const yAxisLine = d3.axisRight(yScaleLine);
 
-    svg.append("g")
-        .attr("transform", `translate(${width - margins.right},0)`)
-        .call(yAxisLine)
+    // svg.append("g")
+    //     .attr("transform", `translate(${width - margins.right},0)`)
+    //     .call(yAxisLine)
 
   /* [NEW] Add text labels on the right of the chart */
-    const data2020 = data.filter(data => data.year === 2015);
-    svg.selectAll('text.label')
-        .data(data2020)
-        .join('text')
-        .attr('x', width - margins.right + 5)
-        .attr('y', d => yScaleLine(d.hdi))
-        .attr('dy', '0.35em')
-        .style('font-family', 'sans-serif')
-        .style('font-size', 12)
-        .style('fill', d => color(d.country))
-        .text(d => d.country);
+    // const data2020 = data.filter(data => data.year === 2015);
+    // svg.selectAll('text.label')
+    //     .data(data2020)
+    //     .join('text')
+    //     .attr('x', width - margins.right + 5)
+    //     .attr('y', d => yScaleLine(d.hdi))
+    //     .attr('dy', '0.35em')
+    //     .style('font-family', 'sans-serif')
+    //     .style('font-size', 12)
+    //     .style('fill', d => color(d.country))
+    //     .text(d => d.country);
 
     svg.append("text")
         .attr("text-anchor", "end")
@@ -207,13 +207,13 @@ export const indicesChart = (data) => {
         .attr("transform", "rotate(-90)")
         .text("HAQ score (bars)");
 
-    svg.append("text")
-        .attr("text-anchor", "end")
-        .attr("x", -40)
-        .attr("y", 0 + width - margins.right/3)
-        .attr("dy", ".75em")
-        .attr("transform", "rotate(-90)")
-        .text("HDI score (line)");
+    // svg.append("text")
+    //     .attr("text-anchor", "end")
+    //     .attr("x", -40)
+    //     .attr("y", 0 + width - margins.right/3)
+    //     .attr("dy", ".75em")
+    //     .attr("transform", "rotate(-90)")
+    //     .text("HDI score (line)");
 
     d3.select("#generalForm").on("change", function(e) {
         // when gdp profile is selected, we set country to "All"
