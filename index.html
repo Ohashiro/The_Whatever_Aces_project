@@ -26,35 +26,6 @@
   />
 </div>
 <br>
-	<b>
-  The current visualization represents the dependency of the healthcare index on different factors, such as gross domestic product, 
-  location, government health expenses, number of medical schools, and so on.
-  Such a visualization might be interesting for researchers who work in the field of medical improvement. 
-  Furthermore, the information might be useful for government workers who are responsible for the medical sector in their 
-  countries(for instance, Ministry of Health employees). 
-  </b>
-    <b>What is the relationship between money invested in Health</b> (in Health care, in medical staff and equipment, and in medical schools) <b>and health system development level</b> (meaning health access and quality index, health index and life expectancy)<b>?</b>
-	<br><br>
-    <p style="color:Grey">
-      The health care system is a crucial part of each modern country. 
-      Nowadays, it is hard to imagine any country which can successfully work without it.
-       Even though in recent years medicine has developed at a significant pace, there are still 
-       a lot of countries which have significant problems with it. Millions of people in 
-       different parts of the earth suffer from the poor level of care system in their countries. 
-       However, the access to quality healthcare is vital to the survival of every individual. 
-       Even developed countries like the USA and France have issues with it. To date, France has a 
-       lack of medical personnel while the USA has a really expensive health care system for 
-       individuals. All of these factors might influence the health index of each country. 
-       The goal of this study, to find out these factors. 
-    </p>
-	<p style="color:Grey">
-		<!-- WHAT the visualizations show;
-		WHY we should care about it;
-		HOW to read the visualization. -->
-		<b>How to read the visualizations ?</b>
-		<br>The first part is dedicated to the health indicators (HAQ index, HDI index and life expectancy). It gives you an idea of the health quality and access of the countries. You can also filter the countries depending on their GDP/capita, but also select some specific countries to compare them.
-		<br>The second part details how the different countries invest in health (how many practitioners, medical schools, hospital beds, etc.) depending on their GDP or their health development level.
-	</p>
     <h2 class="radar_title">Countries health system efficiency</h2>
     <p>
 		This section shows the dependence between the Gross domestic product(GDP) and the HAQ (Health Access Quality) score, 
@@ -65,10 +36,7 @@
 	   </p>
 	<fieldset id="generalForm">
       <legend>Parameters</legend>
-      <!-- <label for="yearSlider">Year</label>
-		<input id="yearSlider" type="range" value="2015" min="2010" max="2020" step="5" oninput="yearText.value=yearSlider.value" />
-		<input id="yearText" type="number" value="2015" min="2010" max="2020" step="5" oninput="yearSlider.value=yearText.value" disabled /> -->
-
+      
       <div style="display: grid; grid-template-columns: 200px auto-fit">
         <p style="font-weight: bold">GDP per capita profile
           <span class="tooltip">&#9432;
@@ -163,27 +131,28 @@
       <script src="js/dropdown2.js" type="module"></script>
     </fieldset>
 
-	<br><br>
-    <b>Average HAQ, HDI scores and Life expectancy of the selected countries</b>
+	<br>
+    <h3>How are the selected countries doing on HAQ, HDI scores and Life expectancy compare to your country ?</h3>
 	<br>
     <div id="gaugeHAQ" class="gauge"></div>
     <div id="gaugeHDI" class="gauge"></div>
     <div id="gaugeLifeExpectancy" class="gauge"></div>
     <div class="canvas">
       <canvas id="canvas" height="10" width="40"></canvas>
-      = home country score (or world average si "not selected")
+      = your home country (or world average si "not selected")
     </div>
 
 	<div>
 	<!-- <h2 class="radar_title" style="margin-top: 350px;">HAQ and HDI scores by country</h2> -->
 	<h2 class="radar_title" style="margin-top: 270px;"> </h2>
-	<b>HAQ and HDI scores by countries</b>
-	<p>
+	<br>
+  <h3>Focus on HAQ score: how does your country compare to the others?</h3>
+	<!-- <p>
 		The bar chart below represents information about  HAQ and HDI scores by country and graphically shows the 
 		difference between them. On the graph, the countries from the same region are painted in the same colour
 		to easier distinguish the difference of these indexes in countries from different regions. As well, it 
 		gives a more clear picture if such scores depend on the region or not. 
-	</p>
+	</p> -->
     <fieldset>
 	  <legend>Sort by</legend>
       <div
@@ -305,12 +274,9 @@
       referrerpolicy="no-referrer"
     ></script>
     <script src="js/main.js" type="module"></script>
+    <a href="about.html">About these visualisations</a>
+    <br><br>
     By: The Whatever Aces
   </body>
 </html>
 
-<!--
-	TO DO:
-	- why no haq score for 2019 and 2020 ?
-	- define the gdp profiles correctly
--->
