@@ -17,13 +17,13 @@ export const radarChart = (dataProcessed, LegendOptions) => {
     levels: 7,
     ExtraWidthX: 300,
   };
-  RadarChart.draw("#radar", dataProcessed, mycfg);
+  d3.select("#radar").select("svg").remove();
   var svg = d3
     .select("#radar")
-    .selectAll("svg")
     .append("svg")
-    .attr("width", w + 300)
-    .attr("height", h);
+    .attr("class", "radarLegend")
+    .attr("width", w + 200)
+    .attr("height", 100);
   //Create the title for the legend
   var text = svg
     .append("text")
@@ -72,6 +72,7 @@ export const radarChart = (dataProcessed, LegendOptions) => {
     .text(function (d) {
       return d;
     });
+  RadarChart.draw("#radar", dataProcessed, mycfg);
 };
 
 // draw one
@@ -109,7 +110,7 @@ export const RadarDraw = (mergedDataset) => {
       let divElement = document.createElement("div");
       divElement.setAttribute(
         "style",
-        "font-weight: bold; margin: 30px; color: red;"
+        "font-style:italic; margin: 30px;color:red"
       );
       divElement.innerHTML =
         "Please choose a country you want to compare your home country with";

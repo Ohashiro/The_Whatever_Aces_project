@@ -38,7 +38,7 @@ html {
 }
 .radar {
   width: 900px;
-  margin: auto;
+  margin: 2em auto;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -55,6 +55,12 @@ html {
   height: 10px;
   float: left;
   margin: 1%;
+}
+
+.radarLegend {
+  margin: 1px;
+  margin-bottom:-50px;
+  margin-right: 10px;
 }
 
 nav ul {

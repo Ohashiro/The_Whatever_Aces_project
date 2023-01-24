@@ -51,7 +51,6 @@ export var RadarChart = {
     var total = allAxis.length;
     var radius = cfg.factor * Math.min(cfg.w / 2, cfg.h / 2);
     var Format = d3.format("");
-    d3.select(id).select("svg").remove();
 
     var g = d3
       .select(id)
