@@ -8,40 +8,53 @@
   </head>
 
   <body>
-    <fieldset id="generalFormTitle">
-		<h1 style="text-align: center">
-			Factors that can impact a country's healthcare index
-		</h1>
-	</fieldset>
-	<br>
-  Where do you live ?
-  <div id="homeCountrySelector">
-  <select class="homeCountryItems" id="homeCountryItems"></select>
-  <input
-    id="selectHomeCountriesText"
-    type="text"
-    value=""
-    disabled
-    style="display: none"
-  />
-</div>
-<br>
+    <fieldset id="generalFormTitle" style="margin-bottom: 70px">
+      <h1 style="text-align: center">
+        Factors that can impact a country's healthcare index
+      </h1>
+    </fieldset>
+    You can choose a country where you live and compare its health system with
+    other countries.
+    <fieldset style="margin-top: 30px" class="fielsetHomeCountry">
+      <legend class="homeCountryTextSelector">Where do you live ?</legend>
+      <div id="homeCountrySelector" style="display: flex; gap: 10px; margin: auto; justify-content: center;">
+        <div>Choose your country :</div>
+        <select class="homeCountryItems" id="homeCountryItems"></select>
+        <input
+        id="selectHomeCountriesText"
+        type="text"
+        value=""
+        disabled
+        style="display: none"
+        />
+      </div>
+    </fieldset>
+
+    <br />
     <h2 class="radar_title">Countries health system efficiency</h2>
     <p>
-		This section shows the dependence between the Gross domestic product(GDP) and the HAQ (Health Access Quality) score, 
-		 HDI (Human Development Index) score, and life expectancy in the selected countries. 
-    		 The HAQ is an index used to assess the global health level of a country. HDI is a score based 
-		   on life expectancy, education, and per capita income indicators. Life expectancy is a statistical measure of the average 
-       		life of a human-being.
-	   </p>
-	<fieldset id="generalForm">
+      This section shows the dependence between the Gross domestic product(GDP)
+      and the HAQ (Health Access Quality) score, HDI (Human Development Index)
+      score, and life expectancy in the selected countries. The HAQ is an index
+      used to assess the global health level of a country. HDI is a score based
+      on life expectancy, education, and per capita income indicators. Life
+      expectancy is a statistical measure of the average life of a human-being.
+    </p>
+    <fieldset id="generalForm">
       <legend>Parameters</legend>
-      
+
       <div style="display: grid; grid-template-columns: 200px auto-fit">
-        <p style="font-weight: bold">GDP per capita profile
-          <span class="tooltip">&#9432;
+        <p style="font-weight: bold">
+          GDP per capita profile
+          <span class="tooltip"
+            >&#9432;
             <!-- Tooltip text: -->
-            <span class="tooltiptext">Profiles: <br> Low GDP/capita &le; 2881$ <br> 2881$ &lt; Mid GDP/capita &le; 10293$ <br> 10293$ &lt; High GDP/capita</span>
+            <span class="tooltiptext"
+              >Profiles: <br />
+              Low GDP/capita &le; 2881$ <br />
+              2881$ &lt; Mid GDP/capita &le; 10293$ <br />
+              10293$ &lt; High GDP/capita</span
+            >
           </span>
         </p>
         <div style="margin-bottom: 10px">
@@ -71,8 +84,7 @@
                 <label for="highgdp">High GDP per capita</label>
               </span>
             </div>
-			<br>
-            
+            <br />
           </div>
         </div>
         <p style="font-weight: bold">Countries</p>
@@ -95,7 +107,12 @@
                 <i class="fa fa-caret-down"></i>
               </button>
               <div id="countrySelector" class="dropdown-content">
-                <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
+                <input
+                  type="text"
+                  placeholder="Search.."
+                  id="myInput"
+                  onkeyup="filterFunction()"
+                />
                 <nav id="topNav">
                   <ul class="items"></ul>
                 </nav>
@@ -112,28 +129,33 @@
           style="display: none"
         />
       </div>
-      <script>function filterFunction() {
-        var input, filter, ul, li, a, i;
-        input = document.getElementById("myInput");
-        filter = input.value.toUpperCase();
-        console.log("filter",filter)
-        div = document.getElementById("topNav");
-        a = div.getElementsByTagName("li");
-        for (i = 0; i < a.length; i++) {
-          txtValue = a[i].textContent || a[i].innerText;
-          if (txtValue.toUpperCase().indexOf(filter) > -1) {
-            a[i].style.display = "";
-          } else {
-            a[i].style.display = "none";
+      <script>
+        function filterFunction() {
+          var input, filter, ul, li, a, i;
+          input = document.getElementById("myInput");
+          filter = input.value.toUpperCase();
+          console.log("filter", filter);
+          div = document.getElementById("topNav");
+          a = div.getElementsByTagName("li");
+          for (i = 0; i < a.length; i++) {
+            txtValue = a[i].textContent || a[i].innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+              a[i].style.display = "";
+            } else {
+              a[i].style.display = "none";
+            }
           }
         }
-      } </script>
+      </script>
       <script src="js/dropdown2.js" type="module"></script>
     </fieldset>
 
-	<br>
-    <h3>How are the selected countries doing on HAQ, HDI scores and Life expectancy compare to your country ?</h3>
-	<br>
+    <br />
+    <h3>
+      How are the selected countries doing on HAQ, HDI scores and Life
+      expectancy compare to your country ?
+    </h3>
+    <br />
     <div id="gaugeHAQ" class="gauge"></div>
     <div id="gaugeHDI" class="gauge"></div>
     <div id="gaugeLifeExpectancy" class="gauge"></div>
@@ -142,60 +164,58 @@
       = your home country (or world average si "not selected")
     </div>
 
-	<div>
-	<!-- <h2 class="radar_title" style="margin-top: 350px;">HAQ and HDI scores by country</h2> -->
-	<h2 class="radar_title" style="margin-top: 270px;"> </h2>
-	<br>
-  <h3>Focus on HAQ score: how does your country compare to the others?</h3>
-	<!-- <p>
+    <div>
+      <!-- <h2 class="radar_title" style="margin-top: 350px;">HAQ and HDI scores by country</h2> -->
+      <h2 class="radar_title" style="margin-top: 270px"></h2>
+      <br />
+      <h3>Focus on HAQ score: how does your country compare to the others?</h3>
+      <!-- <p>
 		The bar chart below represents information about  HAQ and HDI scores by country and graphically shows the 
 		difference between them. On the graph, the countries from the same region are painted in the same colour
 		to easier distinguish the difference of these indexes in countries from different regions. As well, it 
 		gives a more clear picture if such scores depend on the region or not. 
 	</p> -->
-    <fieldset>
-	  <legend>Sort by</legend>
-      <div
-        
-      >
-        <div style="margin-bottom: 10px">
-          <div class="r-pill">
-            <div class="r-pill__group" id="sortSelectorDiv">
-              <!-- optional styling wrapper -->
-              <span class="r-pill__item">
-                <input
-                  type="radio"
-                  id="alphabet"
-                  name="sortSelector"
-                  value="alphabet"
-                  checked
-                />
-                <label for="alphabet">Alphabetical</label>
-              </span>
-              <span class="r-pill__item">
-                <input
-                  type="radio"
-                  id="pctAsce"
-                  name="sortSelector"
-                  value="pctAsce"
-                />
-                <label for="pctAsce">HAQ ascending</label>
-              </span>
-              <span class="r-pill__item">
-                <input
-                  type="radio"
-                  id="pctDesc"
-                  name="sortSelector"
-                  value="pctDesc"
-                />
-                <label for="pctDesc">HAQ descending</label>
-              </span>
+      <fieldset>
+        <legend>Sort by</legend>
+        <div>
+          <div style="margin-bottom: 10px">
+            <div class="r-pill">
+              <div class="r-pill__group" id="sortSelectorDiv">
+                <!-- optional styling wrapper -->
+                <span class="r-pill__item">
+                  <input
+                    type="radio"
+                    id="alphabet"
+                    name="sortSelector"
+                    value="alphabet"
+                    checked
+                  />
+                  <label for="alphabet">Alphabetical</label>
+                </span>
+                <span class="r-pill__item">
+                  <input
+                    type="radio"
+                    id="pctAsce"
+                    name="sortSelector"
+                    value="pctAsce"
+                  />
+                  <label for="pctAsce">HAQ ascending</label>
+                </span>
+                <span class="r-pill__item">
+                  <input
+                    type="radio"
+                    id="pctDesc"
+                    name="sortSelector"
+                    value="pctDesc"
+                  />
+                  <label for="pctDesc">HAQ descending</label>
+                </span>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </fieldset>
-</div>
+      </fieldset>
+    </div>
     <!-- <label for="sort">Sort by</label>
       <select name="sort" id="sort">
         <option value="alphabet">Alphabetical</option>
@@ -208,12 +228,14 @@
     </div>
     <h2 class="radar_title">Health system characteristics of countries</h2>
     <p>
-	     The radar chart provides the statistics about how parameters HAQ and GDP impact 
-	    on the different aspects of the medical care system. On the number of general practitioners 
-	    per 10,000 people, on the number of medical schools and so on. The visualisation indicate 
-	    how far from the world average all of these parameters depends on different levels of HAQ and GDP.
+      The radar chart provides the statistics about how parameters HAQ and GDP
+      impact on the different aspects of the medical care system. On the number
+      of general practitioners per 10,000 people, on the number of medical
+      schools and so on. The visualisation indicate how far from the world
+      average all of these parameters depends on different levels of HAQ and
+      GDP.
     </p>
-    <fieldset >
+    <fieldset>
       <legend>Comparison of health systems of:</legend>
       <div style="margin-bottom: 10px" id="selectorRadar">
         <div class="r-pill">
@@ -231,10 +253,10 @@
             </span>
             <span class="r-pill__item">
               <input
-              type="radio"
-              id="gdpradar"
-              name="comparisonRadar"
-              value="gdpradar"
+                type="radio"
+                id="gdpradar"
+                name="comparisonRadar"
+                value="gdpradar"
               />
               <label for="gdpradar">different GDP levels</label>
             </span>
@@ -247,24 +269,31 @@
               />
               <label for="countryradar">different countries</label>
             </span>
-            
           </div>
         </div>
       </div>
       <!-- Compare you country with another country: -->
-      <div id="radarCountrySelector" class="radarCountrySelector" ">
+      <div
+        id="radarCountrySelector"
+        class="radarCountrySelector"
+        style="display: flex; gap: 10px"
+      >
         <!-- <select class="radarCountryItems" id="radarCountryItems"></select> -->
         <input
-        id="selectRadarCountryText"
-        type="text"
-        value=""
-            disabled
-            style="display: none"
-          />
+          id="selectRadarCountryText"
+          type="text"
+          value=""
+          disabled
+          style="display: none"
+        />
       </div>
     </fieldset>
     <!-- <div id="scatterplot" class="responsive-svg-container"></div> -->
-    <div id="radar" class="radar" style="display:flex; flex-direction: column;"></div>
+    <div
+      id="radar"
+      class="radar"
+      style="display: flex; flex-direction: column"
+    ></div>
     <script src="js/d3.v7.min.js"></script>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script
@@ -277,8 +306,7 @@
     <fieldset id="generalForm">
       <a href="about.html">About these visualisations</a>
     </fieldset>
-    <br><br>
+    <br /><br />
     By: The Whatever Aces
   </body>
 </html>
-
