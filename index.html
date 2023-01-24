@@ -213,9 +213,9 @@
 	    per 10,000 people, on the number of medical schools and so on. The visualisation indicate 
 	    how far from the world average all of these parameters depends on different levels of HAQ and GDP.
     </p>
-    <fieldset id="selectorRadar">
+    <fieldset >
       <legend>Comparison of health systems of:</legend>
-      <div style="margin-bottom: 10px">
+      <div style="margin-bottom: 10px" id="selectorRadar">
         <div class="r-pill">
           <div class="r-pill__group" id="comparisonRadarDiv">
             <!-- optional styling wrapper -->
@@ -229,7 +229,16 @@
               />
               <label for="haqradar">different HAQ levels</label>
             </span>
-            <!-- <span class="r-pill__item">
+            <span class="r-pill__item">
+              <input
+              type="radio"
+              id="gdpradar"
+              name="comparisonRadar"
+              value="gdpradar"
+              />
+              <label for="gdpradar">different GDP levels</label>
+            </span>
+            <span class="r-pill__item">
               <input
                 type="radio"
                 id="countryradar"
@@ -237,31 +246,22 @@
                 value="countryradar"
               />
               <label for="countryradar">different countries</label>
-            </span> -->
-            <span class="r-pill__item">
-              <input
-                type="radio"
-                id="gdpradar"
-                name="comparisonRadar"
-                value="gdpradar"
-              />
-              <label for="gdpradar">different GDP levels</label>
             </span>
-
+            
           </div>
         </div>
       </div>
-      Compare you country with another country:
-      <div id="radarCountrySelector">
-          <select class="radarCountryItems" id="radarCountryItems"></select>
-          <input
-            id="selectRadarCountryText"
-            type="text"
-            value=""
+      <!-- Compare you country with another country: -->
+      <div id="radarCountrySelector" class="radarCountrySelector">
+        <!-- <select class="radarCountryItems" id="radarCountryItems"></select> -->
+        <input
+        id="selectRadarCountryText"
+        type="text"
+        value=""
             disabled
             style="display: none"
           />
-        </div>
+      </div>
     </fieldset>
     <!-- <div id="scatterplot" class="responsive-svg-container"></div> -->
     <div id="radar" class="radar"></div>
