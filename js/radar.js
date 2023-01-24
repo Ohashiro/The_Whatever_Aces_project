@@ -17,7 +17,8 @@ export const radarChart = (dataProcessed, LegendOptions) => {
     levels: 7,
     ExtraWidthX: 300,
   };
-  d3.select("#radar").select("svg").remove();
+  d3.select("#radar").selectAll("svg").remove();
+
   var svg = d3
     .select("#radar")
     .append("svg")
@@ -82,7 +83,10 @@ export const RadarDraw = (mergedDataset) => {
   const selected = document.querySelector(
     'input[name="comparisonRadar"]:checked'
   ).value;
-
+  var chartText = document.getElementById("divRadar");
+  if (chartText) {
+    chartText.remove();
+  }
   if (selected == "haqradar") {
     radarChart(
       dataPerHAQLevel(mergedDataset)[0],
@@ -95,10 +99,12 @@ export const RadarDraw = (mergedDataset) => {
     );
   } else if (selected == "countryradar") {
     let selectedCountry = document.getElementById("radarCountryItems").value;
+    console.log(selectedCountry, homeCountry, "coucou");
     var chart = document.getElementById("radar");
     if (homeCountry == "Not selected" || !homeCountry) {
       var chart = document.getElementById("radar");
       let divElement = document.createElement("div");
+      divElement.setAttribute("id", "divRadar");
       divElement.setAttribute(
         "style",
         "font-style:italic; margin: 30px;color:red"
@@ -108,6 +114,7 @@ export const RadarDraw = (mergedDataset) => {
     } else if (selectedCountry == "Not selected" || !selectedCountry) {
       var chart = document.getElementById("radar");
       let divElement = document.createElement("div");
+      divElement.setAttribute("id", "divRadar");
       divElement.setAttribute(
         "style",
         "font-style:italic; margin: 30px;color:red"
@@ -116,6 +123,7 @@ export const RadarDraw = (mergedDataset) => {
         "Please choose a country you want to compare your home country with";
       chart.replaceChildren(divElement);
     } else {
+      console.log("coucou");
       chart.innerHTML = "";
     }
     radarChart(
