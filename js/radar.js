@@ -98,11 +98,19 @@ export const RadarDraw = (mergedDataset) => {
     if (homeCountry == "Not selected" || !homeCountry) {
       var chart = document.getElementById("radar");
       let divElement = document.createElement("div");
+      divElement.setAttribute(
+        "style",
+        "font-style:italic; margin: 30px;color:red"
+      );
       divElement.innerHTML = "You can select above your home country";
       chart.replaceChildren(divElement);
     } else if (selectedCountry == "Not selected" || !selectedCountry) {
       var chart = document.getElementById("radar");
       let divElement = document.createElement("div");
+      divElement.setAttribute(
+        "style",
+        "font-weight: bold; margin: 30px; color: red;"
+      );
       divElement.innerHTML =
         "Please choose a country you want to compare your home country with";
       chart.replaceChildren(divElement);
