@@ -6,6 +6,7 @@ html {
   text-align: left;
   background-color: #fff;
   margin: 2em;
+  margin-top: 10px;
 }
 .responsive-svg-container {
   margin-right: auto;
@@ -67,6 +68,31 @@ html {
   font-size: medium;
   font-weight: bold;
 }
+.navbarCustom {
+  list-style-type: none;
+  padding: 0;
+  overflow: hidden;
+  background-color:#0b8199;
+  margin-bottom: 20px;
+}
+.navbarCustom a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+.navbarCustom li {
+  padding-right:20px ;
+  float: left;
+}
+.navbarCustom li a:hover {
+  background-color: #9dcad4;}
+
+.active {
+    background-color: #9dcad4;
+  }
+
 nav ul {
   height: 200px;
   width: 100%;
