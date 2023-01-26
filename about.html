@@ -12,47 +12,87 @@
 
     </ul> 
     <br><br>
-    <fieldset id="generalFormTitle">
-		<h1 style="text-align: center">
+    <div style="background-color: #e6f4f7; padding:10px">
+        <h1 style="text-align: center">
 			Why these visualisations?
 		</h1>
-	</fieldset>
+    </div>
+    <br>
+    <b>Motivations</b>
+    <p style="color:rgb(74, 74, 74)">
+        The health care system is a crucial part of each modern country. 
+        Nowadays, it is hard to imagine any country which can successfully work without it.
+         Even though in recent years medicine has developed at a significant pace, there are still 
+         a lot of countries which have significant problems with it. Millions of people in 
+         different parts of the earth suffer from the poor level of care system in their countries. 
+         However, the access to quality healthcare is vital to the survival of every individual. 
+         Even developed countries like the USA and France have issues with it. To date, France has a 
+         lack of medical personnel while the USA has a really expensive health care system for 
+         individuals. All of these factors might influence the health index of each country. 
+         The goal of this study, to find out these factors. 
+      </p>
+    This is why we find crucial to raise awareness on decisive financial investments that impact a country's health system.
+    This motivated us to create a visualisation dashboard with the goal of answering the following questions:
+    <br>
+    <ul>
+        <li>
+            <b>What is the relationship between money invested in Health</b> (in Health care, in medical staff and equipment, and in medical schools) <b>and health system development level</b> (meaning health access and quality index, health index and life expectancy)<b>?</b>
+        </li>
+        <li>
+            <b>What financial investments in health is correlated to an improvement in the health system development level of a country ?</b>
+        </li>
+    </ul>
+    <b>The visualizations</b>
     <br>
         The current visualization represents the dependency of the healthcare index on different factors, such as gross domestic product, 
         location, government health expenses, number of medical schools, and so on.
         Such a visualization might be interesting for researchers who work in the field of medical improvement. 
         Furthermore, the information might be useful for government workers who are responsible for the medical sector in their 
-        countries(for instance, Ministry of Health employees). We try to answer the following question:
+        countries(for instance, Ministry of Health employees).
         <br>
-            <h3><b>What is the relationship between money invested in Health</b> (in Health care, in medical staff and equipment, and in medical schools) <b>and health system development level</b> (meaning health access and quality index, health index and life expectancy)<b>?</b>
-            </h3>
-          
-          <p style="color:rgb(74, 74, 74)">
-            The health care system is a crucial part of each modern country. 
-            Nowadays, it is hard to imagine any country which can successfully work without it.
-             Even though in recent years medicine has developed at a significant pace, there are still 
-             a lot of countries which have significant problems with it. Millions of people in 
-             different parts of the earth suffer from the poor level of care system in their countries. 
-             However, the access to quality healthcare is vital to the survival of every individual. 
-             Even developed countries like the USA and France have issues with it. To date, France has a 
-             lack of medical personnel while the USA has a really expensive health care system for 
-             individuals. All of these factors might influence the health index of each country. 
-             The goal of this study, to find out these factors. 
-          </p>
-          <p style="color:rgb(74, 74, 74)">
-              <!-- WHAT the visualizations show;
-              WHY we should care about it;
-              HOW to read the visualization. -->
-              <b>How to read the visualizations ?</b>
-              <br>The first part is dedicated to the health indicators (HAQ index, HDI index and life expectancy). It gives you an idea of the health quality and access of the countries. You can also filter the countries depending on their GDP/capita, but also select some specific countries to compare them.
-              <br>The second part details how the different countries invest in health (how many practitioners, medical schools, hospital beds, etc.) depending on their GDP or their health development level.
-          </p>
-    <br><br>
-    <fieldset id="generalForm">
-        <h2 style="text-align: center">
-            Data set description
-        </h2>
-    </fieldset>
+        <br><br>
+    <div style="background-color: #e6f4f7; padding:10px">
+        <h1 style="text-align: center">
+            How to read the visualisations?
+        </h1>
+    </div>
+    <br>
+    First of all, you have to select <b>your own home country</b>. From this point, we will be comparing this country to the rest of the world.
+    
+    <div class="about_section">
+        <br><br><b>Countries health system efficiency</b>
+        <br>The first part is dedicated to the health indicators (HAQ index, HDI index and life expectancy). 
+        It gives you an idea of the health quality and access of the countries, compared to your country.
+        To do this, the top charts give an overview of the 3 health indicators and the bottom chart gives a more detailed view of the distribution of the HAQ score.
+        <br>
+        You can filter the countries depending on their GDP/capita, to see how well you country is doing compared to similar country (economically speaking).
+        You can also select some specific countries to compare them.
+        <img src="img/Countries health system efficiency.png" 
+            style="float:left;width:98%;"
+        />
+    </div>
+
+    <div class="about_section">
+        <br><br><b>Health system characteristics of countries</b>
+        <br>The goal of the second part is to give insights on interesting factors that impact the health system level. 
+        We decided to focus of financial investments because the goal is to help executives get pratical ideas to improve their health care system.
+        Therefore we selected 8 examples of medical indicators that can be improved by financial investments.
+        <img src="img/Health system characteristics of countries.png" 
+            style="float:left;width:98%;"
+        />
+    </div>
+    <br>
+    <b>Limitations/To go further</b>
+    <br>For this project, we decided to focus on 8 specific medical indicators, but others may be as interesting as ours.
+    Also, one has to bear in mind that this is a simplistic explanation of medical and health care system, and the reality is far more complex 
+    (and implies more complex interactions between stakeholders).
+    
+    <br><br><br>
+    <div style="background-color: #e6f4f7; padding:10px">
+        <h1 style="text-align: center">
+			Data set description
+		</h1>
+    </div>
     <br>
     We base our data set on the following sources:
     <ul>

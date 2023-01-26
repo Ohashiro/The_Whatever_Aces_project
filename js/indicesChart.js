@@ -205,7 +205,7 @@ export const indicesChart = (data) => {
         .attr("y",2)
         .attr("dy", ".75em")
         .attr("transform", "rotate(-90)")
-        .text("HAQ score (bars)");
+        .text("HAQ score");
 
     // svg.append("text")
     //     .attr("text-anchor", "end")
