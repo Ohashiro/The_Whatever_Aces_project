@@ -60,7 +60,6 @@ html {
 
 .radarLegend {
   margin: 1px;
-  margin-bottom:-50px;
   margin-right: 10px;
 }
 .fielsetHomeCountry{
@@ -347,30 +346,6 @@ li{
   }
 }
 
-.tooltip {
-  position: relative;
-  display: inline-block;
-  border-bottom: 1px dotted black;
-}
-
-.tooltip .tooltiptext {
-  visibility: hidden;
-  width: 300px;
-  background-color: black;
-  color: #fff;
-  text-align: center;
-  border-radius: 6px;
-  padding: 5px 0;
-
-  /* Position the tooltip */
-  position: absolute;
-  z-index: 1;
-}
-
-.tooltip:hover .tooltiptext {
-  visibility: visible;
-}
-
 .about_section {
   width: 48%;
   /* height: 200px; */
@@ -392,4 +367,3 @@ details > summary {
 details summary::-webkit-details-marker {
   display:none;
 }
-

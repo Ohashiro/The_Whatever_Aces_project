@@ -34,7 +34,7 @@ export const radarChart = (dataProcessed, LegendOptions) => {
     .attr("y", 10)
     .attr("font-size", "12px")
     .attr("fill", "#404040")
-    .text("Countries grouped by HAQ level");
+    .text("Group of countries (average)");
 
   //Initiate Legend
   var legend = svg
@@ -43,6 +43,7 @@ export const radarChart = (dataProcessed, LegendOptions) => {
     .attr("height", 100)
     .attr("width", 200)
     .attr("transform", "translate(90,20)");
+
   //Create colour squares
   legend
     .selectAll("rect")
@@ -58,6 +59,7 @@ export const radarChart = (dataProcessed, LegendOptions) => {
     .style("fill", function (d, i) {
       return colorscale(i);
     });
+
   //Create text next to squares
   legend
     .selectAll("text")
@@ -71,8 +73,13 @@ export const radarChart = (dataProcessed, LegendOptions) => {
     .attr("font-size", "11px")
     .attr("fill", "#737373")
     .text(function (d) {
-      return d;
+      return d[0];
+    })
+    .append("title")
+    .text(function (d) {
+      return d[1];
     });
+
   RadarChart.draw("#radar", dataProcessed, mycfg);
 };
 
@@ -123,7 +130,6 @@ export const RadarDraw = (mergedDataset) => {
         "Please choose a country you want to compare your home country with";
       chart.replaceChildren(divElement);
     } else {
-      console.log("coucou");
       chart.innerHTML = "";
     }
     radarChart(
