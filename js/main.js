@@ -90,7 +90,12 @@ Promise.all([
 
 function prepareDataIndicesChart(file) {
   let prepared_data = [];
-  file = file.filter((data) => data.year == 2015);
+  file = file.filter(
+    (data) =>
+      data.year === 2015 &&
+      data.gdp != 0 &&
+      data.population != 0
+  );
   let lowGDPLimit = compute_gdp_profiles(file)[0];
   let midGDPLimit = compute_gdp_profiles(file)[1];
   for (let i = 0; i < file.length; i++) {
