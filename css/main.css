@@ -117,6 +117,8 @@ li{
   list-style: none;
 }
 
+.licustom{list-style:circle;}
+
 /* Show the dropdown menu on hover */
 .dropdown-check-list:hover ul.items {
   display: block;
@@ -375,3 +377,19 @@ li{
   float: left;
   margin: 1%;
 }
+
+details > summary {
+  padding: 4px;
+  cursor: pointer;
+  list-style-type: 'ℹ️ ';
+}
+.summaryclass {
+  font-style: italic;
+
+  text-decoration: underline;
+  color:blue;
+}
+details summary::-webkit-details-marker {
+  display:none;
+}
+

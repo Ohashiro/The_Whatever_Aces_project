@@ -45,7 +45,7 @@ export const worldAverageData = (data2015) => {
       {
         axis: "Number of hospitals per 100,000 people",
         value: d3.mean(
-          data2015,
+          data2015.filter((d) => d !== +d && d != 0),
           (d) => (d.nb_hospitals / d.population) * 100000
         ),
       },
@@ -135,7 +135,7 @@ export const dataPerHAQLevel = (data2015) => {
       {
         axis: "Number of hospitals per 100,000 people",
         value: d3.mean(
-          dataLowHAQ,
+          dataLowHAQ.filter((d) => d !== +d && d != 0),
           (d) => (d.nb_hospitals / d.population) * 100000
         ),
       },
@@ -196,38 +196,44 @@ export const dataPerHAQLevel = (data2015) => {
       {
         axis: "Number of hospitals per 100,000 people",
         value: d3.mean(
-          dataMidHAQ,
+          dataMidHAQ.filter((d) => d !== +d && d != 0),
           (d) => (d.nb_hospitals / d.population) * 100000
         ),
       },
       {
         axis: "Number of beds per 1,000 people",
-        value: d3.mean(dataMidHAQ, (d) => (d.nb_beds / d.population) * 1000),
+        value: d3.mean(
+          dataMidHAQ.filter((d) => d !== +d && d != 0),
+          (d) => (d.nb_beds / d.population) * 1000
+        ),
       },
       {
         axis: "Number of general practitionners per 10,000 people",
         value: d3.mean(
-          dataMidHAQ,
+          dataMidHAQ.filter((d) => d !== +d && d != 0),
           (d) => (d.nb_general_practitionners / d.population) * 10000
         ),
       },
       {
         axis: "Number of specialist practitionners per 10,000 people",
         value: d3.mean(
-          dataMidHAQ,
+          dataMidHAQ.filter((d) => d !== +d && d != 0),
           (d) => (d.nb_specialists / d.population) * 10000
         ),
       },
       {
         axis: "Remuneration of general practionners in 10,000K USD",
         value: d3.mean(
-          dataMidHAQ,
+          dataMidHAQ.filter((d) => d !== +d && d != 0),
           (d) => d.remuneration_general_practitionners / 10000
         ),
       },
       {
         axis: "Number of schools",
-        value: d3.mean(dataMidHAQ, (d) => d.nb_schools),
+        value: d3.mean(
+          dataMidHAQ.filter((d) => d !== +d && d != 0),
+          (d) => d.nb_schools
+        ),
       },
       {
         axis: "Government health expenses share of GDP",
@@ -252,38 +258,44 @@ export const dataPerHAQLevel = (data2015) => {
       {
         axis: "Number of hospitals per 100,000 people",
         value: d3.mean(
-          dataHighHAQ,
+          dataHighHAQ.filter((d) => d !== +d && d != 0),
           (d) => (d.nb_hospitals / d.population) * 100000
         ),
       },
       {
         axis: "Number of beds per 1,000 people",
-        value: d3.mean(dataHighHAQ, (d) => (d.nb_beds / d.population) * 1000),
+        value: d3.mean(
+          dataHighHAQ.filter((d) => d !== +d && d != 0),
+          (d) => (d.nb_beds / d.population) * 1000
+        ),
       },
       {
         axis: "Number of general practitionners per 10,000 people",
         value: d3.mean(
-          dataHighHAQ,
+          dataHighHAQ.filter((d) => d !== +d && d != 0),
           (d) => (d.nb_general_practitionners / d.population) * 10000
         ),
       },
       {
         axis: "Number of specialist practitionners per 10,000 people",
         value: d3.mean(
-          dataHighHAQ,
+          dataHighHAQ.filter((d) => d !== +d && d != 0),
           (d) => (d.nb_specialists / d.population) * 10000
         ),
       },
       {
         axis: "Remuneration of general practionners in 10,000K USD",
         value: d3.mean(
-          dataHighHAQ,
+          dataHighHAQ.filter((d) => d !== +d && d != 0),
           (d) => d.remuneration_general_practitionners / 10000
         ),
       },
       {
         axis: "Number of schools",
-        value: d3.mean(dataHighHAQ, (d) => d.nb_schools),
+        value: d3.mean(
+          dataHighHAQ.filter((d) => d !== +d && d != 0),
+          (d) => d.nb_schools
+        ),
       },
       {
         axis: "Government health expenses share of GDP",
@@ -337,7 +349,7 @@ export const dataPerGDPLevel = (data2015) => {
       {
         axis: "Number of hospitals per 100,000 people",
         value: d3.mean(
-          dataLowGDP,
+          dataLowGDP.filter((d) => d !== +d && d != 0),
           (d) => (d.nb_hospitals / d.population) * 100000
         ),
       },
@@ -398,38 +410,44 @@ export const dataPerGDPLevel = (data2015) => {
       {
         axis: "Number of hospitals per 100,000 people",
         value: d3.mean(
-          dataMidGDP,
+          dataMidGDP.filter((d) => d !== +d && d != 0),
           (d) => (d.nb_hospitals / d.population) * 100000
         ),
       },
       {
         axis: "Number of beds per 1,000 people",
-        value: d3.mean(dataMidGDP, (d) => (d.nb_beds / d.population) * 1000),
+        value: d3.mean(
+          dataMidGDP.filter((d) => d !== +d && d != 0),
+          (d) => (d.nb_beds / d.population) * 1000
+        ),
       },
       {
         axis: "Number of general practitionners per 10,000 people",
         value: d3.mean(
-          dataMidGDP,
+          dataMidGDP.filter((d) => d !== +d && d != 0),
           (d) => (d.nb_general_practitionners / d.population) * 10000
         ),
       },
       {
         axis: "Number of specialist practitionners per 10,000 people",
         value: d3.mean(
-          dataMidGDP,
+          dataMidGDP.filter((d) => d !== +d && d != 0),
           (d) => (d.nb_specialists / d.population) * 10000
         ),
       },
       {
         axis: "Remuneration of general practionners in 10,000K USD",
         value: d3.mean(
-          dataMidGDP,
+          dataMidGDP.filter((d) => d !== +d && d != 0),
           (d) => d.remuneration_general_practitionners / 10000
         ),
       },
       {
         axis: "Number of schools",
-        value: d3.mean(dataMidGDP, (d) => d.nb_schools),
+        value: d3.mean(
+          dataMidGDP.filter((d) => d !== +d && d != 0),
+          (d) => d.nb_schools
+        ),
       },
       {
         axis: "Government health expenses share of GDP",
@@ -454,38 +472,44 @@ export const dataPerGDPLevel = (data2015) => {
       {
         axis: "Number of hospitals per 100,000 people",
         value: d3.mean(
-          dataHighGDP,
+          dataHighGDP.filter((d) => d !== +d && d != 0),
           (d) => (d.nb_hospitals / d.population) * 100000
         ),
       },
       {
         axis: "Number of beds per 1,000 people",
-        value: d3.mean(dataHighGDP, (d) => (d.nb_beds / d.population) * 1000),
+        value: d3.mean(
+          dataHighGDP.filter((d) => d !== +d && d != 0),
+          (d) => (d.nb_beds / d.population) * 1000
+        ),
       },
       {
         axis: "Number of general practitionners per 10,000 people",
         value: d3.mean(
-          dataHighGDP,
+          dataHighGDP.filter((d) => d !== +d && d != 0),
           (d) => (d.nb_general_practitionners / d.population) * 10000
         ),
       },
       {
         axis: "Number of specialist practitionners per 10,000 people",
         value: d3.mean(
-          dataHighGDP,
+          dataHighGDP.filter((d) => d !== +d && d != 0),
           (d) => (d.nb_specialists / d.population) * 10000
         ),
       },
       {
         axis: "Remuneration of general practionners in 10,000K USD",
         value: d3.mean(
-          dataHighGDP,
+          dataHighGDP.filter((d) => d !== +d && d != 0),
           (d) => d.remuneration_general_practitionners / 10000
         ),
       },
       {
         axis: "Number of schools",
-        value: d3.mean(dataHighGDP, (d) => d.nb_schools),
+        value: d3.mean(
+          dataHighGDP.filter((d) => d !== +d && d != 0),
+          (d) => d.nb_schools
+        ),
       },
       {
         axis: "Government health expenses share of GDP",

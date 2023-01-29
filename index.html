@@ -11,7 +11,7 @@
     <ul class="navbarCustom">
       <li class="active"><a href="index.html">Advisor</a></li>
       <li><a href="instructions.html">Instructions</a></li>
-      <li><a href="about.html">About</a></li>
+      <li style="float:right;"><a href="about.html">About</a></li>
 
     </ul>
     <fieldset id="generalFormTitle" style="margin-bottom: 35px">
@@ -22,9 +22,9 @@
     </fieldset>
     The goal of the <b>Health Investment Advisor</b> is to help you find the most efficient investment you could do in your health system.
     <br><br>
-    <div style="background-color: #e6f4f7; padding:30px">
-    Choose the country where you live and compare its health system with
-    other countries.
+    <div style="background-color: #e6f4f7; padding:30px ">
+    <div style="font-style:italic; text-align: center;">Choose the country where you live and compare its health system with
+    other countries.</div>
     <fieldset style="margin-top: 25px" class="fielsetHomeCountry">
       <legend class="homeCountryTextSelector">Where do you live ?</legend>
       <div id="homeCountrySelector" style="display: flex; gap: 10px; margin: auto; justify-content: center; margin-bottom: 5px;">
@@ -149,7 +149,7 @@
     </fieldset>
   
     <br />
-    <div style="width: 25%; float: right; color: rgb(73, 73, 73);">
+    <div >
       <br>
       <!-- This section shows the dependence between the Gross domestic product(GDP)
       and the HAQ (Health Access Quality) score, HDI (Human Development Index)
@@ -157,26 +157,20 @@
       used to assess the global health level of a country. HDI is a score based
       on life expectancy, education, and per capita income indicators. Life
       expectancy is a statistical measure of the average life of a human-being. -->
-      Health system efficiency is measured through 3 indices:
-      <ul>
-        <li>- the HAQ score</li> <!-- tooltip: Health Access Quality. It is an index
-          used to assess the global health level of a country. -->
-        <li>- the HDI score</li> <!-- tooltip: Human Development Index. It is used by 
-          the United Nations (UN) to evaluate countries in terms of the well-being 
-          of their citizens.-->
-        <li>- the life expectancy</li> 
-      </ul>
-      Compare your country (red line) to others using the country selection or by selecting
-      a type of GDP/capita profile.
+      <div style="font-style: italic; text-align: center; color:#0b8199">Compare your country (red line) to others using the country selection or by selecting
+      a type of GDP/capita profile. </div>
 
-      <br><br>
-      Below, see more details on the HAQ health index distribution.
+      
+      
+
+      <!-- <br><br>
+      Below, see more details on the HAQ health index distribution. -->
     </div>
-    <div style="width: 73%">
-      <h3>
+    <div >
+      <!-- <h3>
         How are the selected countries doing on HAQ, HDI scores and Life
         expectancy compare to your country ?
-      </h3>
+      </h3> -->
       <br />
       <div id="gaugeHAQ" class="gauge"></div>
       <div id="gaugeHDI" class="gauge"></div>
@@ -190,14 +184,30 @@
          Selected countries' average
       </div>
 
+      <br>
+      <br>
+      <div style="margin-top: 270px">
+      <details>
+        <summary><span class="summaryclass">Learn more</span></summary>
+        <p>Health system efficiency is measured through 3 indices:
+          <ul>
+            <li class="licustom"><b>HAQ score </b>is an index
+              used to assess the global health level of a country. This index considers 32 causes, representing a range of health service areas: vaccine-preventable diseases; infectious diseases and maternal and child health; non-communicable diseases, including cancers, cardiovascular diseases, and other non-communicable diseases such as diabetes; and gastrointestinal conditions from which surgery can easily avert death (eg, appendicitis). </li> 
+            <li class="licustom"><b>HDI score </b>is used by 
+              the United Nations (UN) to evaluate countries in terms of the well-being 
+              of their citizens. It focuses on 3 dimensions: health, education and standard of living</li> 
+            <li class="licustom"><b>Life expectancy </b></li> 
+          </ul></p>
+      </details>
+    </div>
+
       <div>
-        <h2 class="radar_title" style="margin-top: 270px"></h2>
+        <div style="font-style: italic; text-align: center; margin-top:40px ;color:#0b8199"> Identify your neighbours in terms of health system performance </div>
         <br />
-        <h3>Focus on HAQ score: how does your country compare to the others?</h3>
         <fieldset>
           <legend>Sort by</legend>
           <div>
-            <div style="margin-bottom: 10px">
+            <div style="margin-bottom: 5px">
               <div class="r-pill">
                 <div class="r-pill__group" id="sortSelectorDiv">
                   <!-- optional styling wrapper -->
@@ -241,6 +251,7 @@
       </div>
     </div>
     <h2 class="radar_title" style="color: #0b8199">How to improve your health system ?</h2>
+
     <fieldset>
       <legend>Comparison of health systems of:</legend>
       <div style="margin-bottom: 10px" id="selectorRadar">
@@ -249,29 +260,29 @@
             <!-- optional styling wrapper -->
             <span class="r-pill__item">
               <input
-                type="radio"
-                id="haqradar"
-                name="comparisonRadar"
-                value="haqradar"
-                checked
+              type="radio"
+              id="haqradar"
+              name="comparisonRadar"
+              value="haqradar"
+              checked
               />
               <label for="haqradar">different HAQ levels</label>
             </span>
             <span class="r-pill__item">
               <input
-                type="radio"
-                id="gdpradar"
-                name="comparisonRadar"
-                value="gdpradar"
+              type="radio"
+              id="gdpradar"
+              name="comparisonRadar"
+              value="gdpradar"
               />
               <label for="gdpradar">different GDP levels</label>
             </span>
             <span class="r-pill__item">
               <input
-                type="radio"
-                id="countryradar"
-                name="comparisonRadar"
-                value="countryradar"
+              type="radio"
+              id="countryradar"
+              name="comparisonRadar"
+              value="countryradar"
               />
               <label for="countryradar">different countries</label>
             </span>
@@ -280,47 +291,52 @@
       </div>
       <!-- Compare you country with another country: -->
       <div
-        id="radarCountrySelector"
-        class="radarCountrySelector"
-        style="display: flex; gap: 10px"
+      id="radarCountrySelector"
+      class="radarCountrySelector"
+      style="display: flex; gap: 10px"
       >
-        <!-- <select class="radarCountryItems" id="radarCountryItems"></select> -->
-        <input
-          id="selectRadarCountryText"
-          type="text"
-          value=""
-          disabled
-          style="display: none"
-        />
-      </div>
-    </fieldset>
-    <div style="width: 25%; float: right; color: rgb(73, 73, 73);">
-      <br><br>
-      <p>
-        <!-- The radar chart provides the statistics about how parameters HAQ and GDP
-        impact on the different aspects of the medical care system. On the number
-        of general practitioners per 10,000 people, on the number of medical
-        schools and so on. The visualisation indicate how far from the world
-        average all of these parameters depends on different levels of HAQ and
-        GDP. -->
-        To improve your health system, investment could be done along three main axis:
-        <ul>
-          <li>- <b>the level of your infrastructure</b> (number of beds and hospitals)</li>
-          <li>- your <b>medical training</b> (number of medical schools, average remunerations)</li>
-          <li>- the <b>personal and governmental spendings</b> in your country</li>
-        </ul>
-        You can compare your score for these medical indicators with the world average, the scores
-         of different categories of countries or the score of a selected country.
-      </p>
+      <!-- <select class="radarCountryItems" id="radarCountryItems"></select> -->
+      <input
+      id="selectRadarCountryText"
+      type="text"
+      value=""
+      disabled
+      style="display: none"
+      />
     </div>
-    <div style="width: 73%">
-      
-      <!-- <div id="scatterplot" class="responsive-svg-container"></div> -->
-      <div
-        id="radar"
-        class="radar"
-        style="display: flex; flex-direction: column"
+  </fieldset>
+  <div>
+    <br><br>
+    
+  </div>
+  <div >
+    
+    <!-- <div id="scatterplot" class="responsive-svg-container"></div> -->
+    <div style="font-style: italic; text-align: center; color:#0b8199; margin-top:10px">Identify on the radar the dimensions where your country underperforms in comparison to same level of GDP/HAQ countries or to your neighbour countries </div>
+    <div
+    id="radar"
+    class="radar"
+    style="display: flex; flex-direction: column"
       ></div>
+      <details>
+        <summary><span class="summaryclass">Learn more</span></summary>
+        <p>
+          To improve your health system, investment could be done along three main axis:
+          <ul>
+            <li class="licustom"><b>the level of your infrastructure</b> (number of beds and hospitals)</li>
+            <li class="licustom">your <b>medical training</b> (number of medical schools, average remunerations)</li>
+            <li class="licustom">the <b>personal and governmental spendings</b> in your country</li>
+          </ul>
+          You can compare your score for these medical indicators with the world average, the scores
+           of different categories of countries or the score of a selected country.
+           <br>
+           <span style="font-style: italic; color:red">Warning:</span>
+           <ul>
+           <li class="licustom">The GDP levels are defined differently from before due to the lack of data from low and mid gdp/capita countries. </li>
+           <li class="licustom">Some countries may have null values on the chart, which means we don't have the data for this country about this indicator</li>
+          </ul>
+          </p>
+      </details>
     </div>
     <script src="js/d3.v7.min.js"></script>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
