@@ -5,6 +5,10 @@ export const animationFilter = (data) => {
     let newData = data.filter(data => data.year == 2015);
 
     if (countries != "All" && countries != "") {
+      let homeCountry = d3.select("#homeCountryItems").node().value;
+      if (homeCountry != "Not selected"){
+        countries = countries + "," + homeCountry;
+      }
       newData = newData.filter(data => countries.includes(data.country));
     }
 
@@ -38,20 +42,23 @@ function filter_data_on_gdp_profile(data) {
   let lowGDPLimit = compute_gdp_profiles(data)[0];
   let midGDPLimit = compute_gdp_profiles(data)[1];
   if (gdp_profile == 'low') {
-    let newData = data.filter(data => data.gdp/data.population <= lowGDPLimit);
+    let newData = data.filter(data => data.gdpProfile == "Low");
+    // let newData = data.filter(data => data.gdp/data.population <= lowGDPLimit);
     return newData
   } 
   if (gdp_profile == 'mid') {
-    let newData = data.filter(function(item) {
-        if (midGDPLimit >= item.gdp/item.population && item.gdp/item.population  > lowGDPLimit) {
-            return true;
-        }
-        return false;
-      })
+    let newData = data.filter(data => data.gdpProfile == "Mid");
+    // let newData = data.filter(function(item) {
+    //     if (midGDPLimit >= item.gdp/item.population && item.gdp/item.population  > lowGDPLimit) {
+    //         return true;
+    //     }
+    //     return false;
+    //   })
     return newData
   } 
   if (gdp_profile == 'high') {
-    let newData = data.filter(data => data.gdp/data.population  > midGDPLimit);
+    let newData = data.filter(data => data.gdpProfile == "High");
+    // let newData = data.filter(data => data.gdp/data.population  > midGDPLimit);
     return newData
   } 
   return data

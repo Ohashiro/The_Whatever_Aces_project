@@ -60,7 +60,6 @@ Promise.all([
     );
     let countries = data2015.map((data) => data.country);
     indicesChart(prepareDataIndicesChart(mergedDataset));
-    // hospitalsChart(files[5]);
     gaugeChart(mergedDataset);
     radarChart(dataPerHAQLevel(data2015)[0], dataPerHAQLevel(data2015)[1]);
     document
@@ -91,6 +90,9 @@ Promise.all([
 
 function prepareDataIndicesChart(file) {
   let prepared_data = [];
+  file = file.filter((data) => data.year == 2015);
+  let lowGDPLimit = compute_gdp_profiles(file)[0];
+  let midGDPLimit = compute_gdp_profiles(file)[1];
   for (let i = 0; i < file.length; i++) {
     let area = "";
     if (file[i].area) {
@@ -109,10 +111,29 @@ function prepareDataIndicesChart(file) {
     }
     file[i].area = area;
 
+    if (file[i].gdp/file[i].population <= lowGDPLimit){
+      file[i].gdpProfile = "Low";
+    } 
+    if (file[i].gdp/file[i].population <= midGDPLimit && file[i].gdp/file[i].population > lowGDPLimit){
+      file[i].gdpProfile = "Mid";
+    } 
+    if (file[i].gdp/file[i].population > midGDPLimit){
+      file[i].gdpProfile = "High";
+    }
     if (file[i].haq && file[i].hdi) {
       prepared_data.push(file[i]);
     } else {
     }
   }
   return prepared_data;
+}
+
+function compute_gdp_profiles(data) {
+  let gdp_per_capita_array = [];
+  for (let i = 0; i < data.length; i++) {
+    gdp_per_capita_array.push(data[i].gdp/data[i].population);
+  }
+  const lowGDPLimit= d3.quantile(gdp_per_capita_array,0.33);
+  const midGDPLimit= d3.quantile(gdp_per_capita_array,0.66);
+  return [lowGDPLimit,midGDPLimit]
 }

@@ -31,10 +31,12 @@ export const indicesChart = (data) => {
         d3-scale-chromatic: https://github.com/d3/d3-scale-chromatic */
     const countries = data.map(d => d.country);
     const areas = data.map(d => d.area);
+    const profiles = data.map(d => d.gdpProfile);
     var color=d3.scaleOrdinal()
-        .domain(areas)
-        //.range(d3.schemeTableau10); // work for less than 10 categories, if more, cycle
-        .range(["#66c2a5","#fc8d62","#8da0cb","#e78ac3","#a6d854","#ffd92f","#e5c494","#b3b3b3"]);
+        .domain(profiles)
+        // .domain(areas)
+        .range(d3.schemeTableau10); // work for less than 10 categories, if more, cycle
+        // .range(["#66c2a5","#fc8d62","#8da0cb","#e78ac3","#a6d854","#ffd92f","#e5c494","#b3b3b3"]);
 
     let legend = barLegend(svg,color,margins,width,height);
 
@@ -44,13 +46,14 @@ export const indicesChart = (data) => {
         .join("rect")
         .attr("class", d => d.code)
         //.attr("class", "bars")
-        .style('opacity', 0.6)
+        .style('opacity', 0.7)
         .attr("x", d => xScale(d.country))
         .attr("y", d => yScale(d.haq))
         .attr("width", xScale.bandwidth())
         .attr("height", d => yScale(0) - yScale(d.haq))
         //.attr("fill", "lightgrey")
-        .attr("fill", d => color(d.area))
+        .attr("fill", d => color(d.gdpProfile))
+        // .attr("fill", d => color(d.area))
         .call(legend)
 
     function mouseover() {
@@ -84,7 +87,7 @@ export const indicesChart = (data) => {
         // Change the line color to lightgrey
         d3.select(this)//.select(`path.${code}`)
         .style("stroke",null)
-        .style("opacity",0.6)
+        .style("opacity",0.7)
     
         // Make the text label invisible again
         d3.select(`text.${code}`).style("visibility","hidden");
@@ -138,7 +141,6 @@ export const indicesChart = (data) => {
         .y(d => yScaleLine(d.hdi) - yScaleLine(0));
 
     let homeCountry_value = homeCountryValue(data);
-    console.log("homeCountry value: ",homeCountry_value);
     let homeCountryLine = d3.line()
         .curve(d3.curveLinear)
         .x(d => width/(newData.length*3)+xScale(d.country))
@@ -354,7 +356,8 @@ function updateBarChart(bar,data,color,margins,height,width,xGroup,yGroup,mouseo
           .attr("y", d => yScale(d.haq))
           .attr("height", d => - yScale(d.haq))
           .attr("width", xScale.bandwidth())
-          .attr("fill", d => color(d.area))
+          .attr("fill", d => color(d.gdpProfile))
+        //   .attr("fill", d => color(d.area))
           .attr("opacity", 0.7)
           .on("mouseover",mouseover)
           .on("mouseout",mouseout)
@@ -397,7 +400,6 @@ function updateLineChart(path,line,data,margins,height,width,yGroup) {
     // Get the selected year and sorting method
     let newData = animationFilter(data);
     let homeCountry_value = homeCountryValue(data);
-    console.log("homeCountry value: ",homeCountry_value);
     
     if (newData.length > 0) {
         // Define new x and y scales
