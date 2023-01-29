@@ -20,7 +20,8 @@ export const gaugeChart = (data) => {
     gaugeLayout(newHAQ,100,meanHAQ,'gaugeHAQ','HAQ score');
     gaugeLayout(newHDI,1,meanHDI,'gaugeHDI', 'HDI score');
     gaugeLayout(newLifeEx,100,meanLifeEx,'gaugeLifeExpectancy', 'Life expectancy');
-    draw();
+    drawRed();
+    drawGreen();
 }
 
 function averageScore(data) {
@@ -105,8 +106,8 @@ export const updateGaugesChart = (data) => {
     
   }
 
-  function draw() {
-    const canvas = document.querySelector('#canvas');
+  function drawRed() {
+    const canvas = document.querySelector('#canvasRed');
 
     if (!canvas.getContext) {
         return;
@@ -122,5 +123,25 @@ export const updateGaugesChart = (data) => {
     ctx.moveTo(10, 5);
     ctx.lineTo(30, 5);
     ctx.stroke();
+
+}
+
+function drawGreen() {
+  const canvas = document.querySelector('#canvasGreen');
+
+  if (!canvas.getContext) {
+      return;
+  }
+  const ctx = canvas.getContext('2d');
+
+  // set line stroke and line width
+  ctx.strokeStyle = "#68D47A";
+  ctx.lineWidth = 4;
+
+  // draw a red line
+  ctx.beginPath();
+  ctx.moveTo(10, 5);
+  ctx.lineTo(30, 5);
+  ctx.stroke();
 
 }
