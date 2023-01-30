@@ -1,3 +1,4 @@
+//Compute the mean of each axis for 2015 and for a  given dataset.
 const axesDefinitionMean = (data2015, axisName) => {
   data2015 = data2015.filter((d) => d !== +d && d != 0);
   const axes = {
@@ -52,7 +53,7 @@ const axesDefinitionMean = (data2015, axisName) => {
   return axes;
 };
 
-//Generates data for the radar chart grouped by HAQ level
+//Generates the list of country present in the selected dataset. (lowHAQ, middleHAQ, highHAQ, lowGDP, middleGDP, highGDP, ...)
 export const countryListString = (data) => {
   const countries = data.map((d) => d.country);
   const countriesString = countries.reduce(
@@ -62,6 +63,7 @@ export const countryListString = (data) => {
   return countriesString.slice(0, -2);
 };
 
+//Creates the axis for one country.
 export const dataForCountryData = (dataCountry, country) => {
   return {
     className: country.toString(),
@@ -100,9 +102,11 @@ export const dataForCountryData = (dataCountry, country) => {
     ],
   };
 };
+//Computes world average data for the radar chart.
 export const worldAverageData = (data2015) => {
   return axesDefinitionMean(data2015, "World average");
 };
+//Computes the data displayed as the last group of countries either one home country or the world average.
 const LastColumn = (data2015) => {
   data2015 = data2015.filter((d) => d !== +d && d != 0);
   let homeCountry = document.getElementById("homeCountryItems").value;
@@ -118,6 +122,7 @@ const LastColumn = (data2015) => {
   return dataForCountry;
 };
 
+//Computes the data used to plot the radar chart when the toggle "HAQ levels" is selected.
 export const dataPerHAQLevel = (data2015) => {
   let homeCountry = document.getElementById("homeCountryItems").value;
   data2015 = data2015.filter((d) => d !== +d && d != 0);
@@ -151,7 +156,7 @@ export const dataPerHAQLevel = (data2015) => {
   ];
   return [[lowHAQ, midHAQ, highHAQ, lastColumn], legend];
 };
-//Generates data for the radar chart grouped by GDP level
+//Computes the data used to plot the radar chart when the toggle "GDP levels" is selected.
 export const dataPerGDPLevel = (data2015) => {
   data2015 = data2015.filter((d) => d !== +d && d != 0);
   let homeCountry = document.getElementById("homeCountryItems").value;
@@ -186,6 +191,7 @@ export const dataPerGDPLevel = (data2015) => {
   return [[lowGDP, midGDP, highGDP, lastColumn], legend];
 };
 
+//Computes the data used to plot the radar chart when the toggle "comparison of countries" is selected.
 export const dataComparisonCountries = (data2015) => {
   data2015 = data2015.filter((d) => d !== +d && d != 0);
   let homeCountry = document.getElementById("homeCountryItems").value;

@@ -31,6 +31,7 @@
     other countries.</div>
     <fieldset style="margin-top: 25px" class="fielsetHomeCountry">
       <legend class="homeCountryTextSelector">Where do you live ?</legend>
+      <!-- Home country selector -->
       <div id="homeCountrySelector" style="display: flex; gap: 10px; margin: auto; justify-content: center; margin-bottom: 5px;">
         <div>Choose your country :</div>
         <select class="homeCountryItems" id="homeCountryItems"></select>
@@ -65,6 +66,7 @@
             >
           </span>
         </p>
+        <!-- Selection of GDP profile -->
         <div style="margin-bottom: 10px">
           <div class="r-pill">
             <div class="r-pill__group" id="GDPselectorDiv">
@@ -100,7 +102,6 @@
           <option>All</option>
         </select>
         <script src="js/dropdown.js" type="module"></script>
-        
         <div style="display: flex; flex-direction: column">
           <div class="navbar">
             <div class="dropdown">
@@ -108,6 +109,7 @@
                 Change countries selected
                 <i class="fa fa-caret-down"></i>
               </button>
+              <!-- Selector of list of countries  -->
               <div id="countrySelector" class="dropdown-content">
                 <input
                   type="text"
@@ -121,6 +123,7 @@
               </div>
             </div>
           </div>
+          <!-- Displays the list of selected countries -->
           <div id="countrySelectedList"></div>
         </div>
         <input
@@ -166,14 +169,9 @@
       
       
 
-      <!-- <br><br>
-      Below, see more details on the HAQ health index distribution. -->
     </div>
     <div >
-      <!-- <h3>
-        How are the selected countries doing on HAQ, HDI scores and Life
-        expectancy compare to your country ?
-      </h3> -->
+
       <br />
       <div id="gaugeHAQ" class="gauge"></div>
       <div id="gaugeHDI" class="gauge"></div>
@@ -190,6 +188,7 @@
       <br>
       <br>
       <div style="margin-top: 270px">
+        <!-- Creates a "Learn more" dropdown to have more information on the chart.  -->
       <details>
         <summary>&#9432; <span class="summaryclass">Learn more</span></summary>
         <p>Health system efficiency is measured through 3 indices:
@@ -207,6 +206,7 @@
       <div>
         <div style="font-style: italic; text-align: center; margin-top:40px ;color:#0b8199"> Identify your neighbours in terms of health system performance </div>
         <br />
+        <!-- Sorting selector -->
         <fieldset>
           <legend>Sort by</legend>
           <div>
@@ -248,13 +248,14 @@
           </div>
         </fieldset>
       </div>
+      <!-- Creates a div where the bar will be plotted -->
       <div style="display: flex; flex-direction: row">
         <div id="bar" class="responsive-bar-container"></div>
         <div id="bar-legend" class="responsive-bar-legend"></div>
       </div>
     </div>
     <h2 class="radar_title" style="color: #0b8199">How to improve your health system?</h2>
-
+<!-- Creates a selector of comparison type : between HAQ levels, GDP levels or between countries -->
     <fieldset>
       <legend>Comparison of health systems of:</legend>
       <div style="margin-bottom: 10px" id="selectorRadar">
@@ -316,7 +317,6 @@
       class="radarCountrySelector"
       style="display: flex; gap: 10px"
       >
-      <!-- <select class="radarCountryItems" id="radarCountryItems"></select> -->
       <input
       id="selectRadarCountryText"
       type="text"
@@ -332,13 +332,14 @@
   </div>
   <div >
     
-    <!-- <div id="scatterplot" class="responsive-svg-container"></div> -->
     <div style="font-style: italic; text-align: center; color:#0b8199; margin-top:10px">Identify on the radar the dimensions where your country underperforms in comparison to same level of GDP/HAQ countries or to your neighbour countries </div>
+   <!-- Creates a div where the radar will be plotted -->
     <div
     id="radar"
     class="radar"
     style="display: flex; flex-direction: column"
       ></div>
+      <!-- Creates a "Learn more" dropdown to know more about the chart -->
       <details>
         <summary>&#9432; <span class="summaryclass">Learn more</span></summary>
         <p>

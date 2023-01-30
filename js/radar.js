@@ -1,10 +1,11 @@
-import { RadarChart } from "./d3-spider-chart/src/radar-chart.js";
+import { RadarChart } from "./radarPlot/radar-chart.js";
 import {
   dataPerHAQLevel,
   dataPerGDPLevel,
   dataComparisonCountries,
 } from "./radarData.js";
-import { fillRadarSelectSelector } from "./dropdown2.js";
+
+//creates the radar chart and legend
 export const radarChart = (dataProcessed, LegendOptions) => {
   var colorscale = d3.scaleOrdinal(d3.schemeCategory10);
 
@@ -19,12 +20,14 @@ export const radarChart = (dataProcessed, LegendOptions) => {
   };
   d3.select("#radar").selectAll("svg").remove();
 
+  //Creates an svg element and appends it to the radar div
   var svg = d3
     .select("#radar")
     .append("svg")
     .attr("class", "radarLegend")
     .attr("width", w + 200)
     .attr("height", 100);
+
   //Create the title for the legend
   var text = svg
     .append("text")
@@ -75,11 +78,11 @@ export const radarChart = (dataProcessed, LegendOptions) => {
     .text(function (d) {
       return d[0];
     })
-    .append("title")
+    .append("title") // tooltip
     .text(function (d) {
       return d[1];
     });
-
+  // Plots the chart
   RadarChart.draw("#radar", dataProcessed, mycfg);
 };
 
@@ -87,6 +90,7 @@ export const radarChart = (dataProcessed, LegendOptions) => {
 export const RadarDraw = (mergedDataset) => {
   let homeCountry = document.getElementById("homeCountryItems").value;
 
+  // gets the selected toggle button
   const selected = document.querySelector(
     'input[name="comparisonRadar"]:checked'
   ).value;
@@ -94,6 +98,7 @@ export const RadarDraw = (mergedDataset) => {
   if (chartText) {
     chartText.remove();
   }
+  // draws the chart based on the selected toggle button
   if (selected == "haqradar") {
     radarChart(
       dataPerHAQLevel(mergedDataset)[0],
@@ -107,6 +112,7 @@ export const RadarDraw = (mergedDataset) => {
   } else if (selected == "countryradar") {
     let selectedCountry = document.getElementById("radarCountryItems").value;
     var chart = document.getElementById("radar");
+    //Checks if the user has selected a home country and then a country to compare with
     if (homeCountry == "Not selected" || !homeCountry) {
       var chart = document.getElementById("radar");
       let divElement = document.createElement("div");

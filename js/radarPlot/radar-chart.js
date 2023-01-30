@@ -1,5 +1,7 @@
+//This code was adapted from https://github.com/alangrafu/radar-chart-d3
 export var RadarChart = {
   draw: function (id, d, options) {
+    //Configuration of the radarchart
     var cfg = {
       radius: 5,
       w: 600,

@@ -53,6 +53,7 @@ Promise.all([
       console.log(file.length);
     }
     let mergedDataset = files[0];
+    // Keeps only countries where we have enough information for year 2015
     const data2015 = mergedDataset.filter(
       (data) =>
         data.year === 2015 &&
@@ -65,25 +66,33 @@ Promise.all([
     );
     let countries = data2015.map((data) => data.country);
     indicesChart(prepareDataIndicesChart(mergedDataset));
+    // Plots the gauge chart
     gaugeChart(mergedDataset);
+    // Plots the radar chart
     radarChart(dataPerHAQLevel(data2015)[0], dataPerHAQLevel(data2015)[1]);
+    // Creates the dropdown home country selector
     fillHomeSelectSelector(countries);
+    // Refreshs the country selector when a click on the toggle component
     document
       .getElementById("selectorRadar")
       .addEventListener("click", function () {
         fillRadarSelectSelector(countries);
       });
-
+    // Refreshs the radar component when a click on the toggle component
     document
       .getElementById("selectorRadar")
       .addEventListener("click", function () {
         RadarDraw(data2015);
       });
+
+    // Refreshs the radar component when country to compare is selected
     document
       .getElementById("radarCountrySelector")
       .addEventListener("change", function () {
         RadarDraw(data2015);
       });
+
+    // Refreshs the radar component when home country is selected
     document
       .getElementById("homeCountryItems")
       .addEventListener("change", function () {

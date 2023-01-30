@@ -14,11 +14,10 @@ HAQ measures healthcare access and quality.
 
 ```bash
 npm install d3
-npm install -g http-server
 ```
+
+Install Live Server extension from VSCode
 
 ## Run
 
-```bash
-http-server
-```
+Deploy the site through Live Server extension.
