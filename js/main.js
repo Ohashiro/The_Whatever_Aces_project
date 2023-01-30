@@ -59,7 +59,9 @@ Promise.all([
         data.nb_hospitals != 0 &&
         data.nb_hospitals != +data &&
         data.nb_general_practitionners != 0 &&
-        data.nb_general_practitionners != +data
+        data.nb_general_practitionners != +data &&
+        data.share_gov_expenses != 0 &&
+        data.share_gov_expenses != +data
     );
     let countries = data2015.map((data) => data.country);
     indicesChart(prepareDataIndicesChart(mergedDataset));
