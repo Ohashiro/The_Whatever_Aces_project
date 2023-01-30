@@ -301,7 +301,6 @@ export const dataPerGDPLevel = (data2015) => {
 
   const lowGDPLimit = d3.quantile(data2015, 1 / 3, (d) => d.gdp / d.population);
   const midGDPLimit = d3.quantile(data2015, 2 / 3, (d) => d.gdp / d.population);
-  console.log(lowGDPLimit, midGDPLimit);
   const dataLowGDP = data2015
     .filter((data) => data.gdp / data.population < lowGDPLimit)
     .filter((d) => d !== +d && d != 0);
