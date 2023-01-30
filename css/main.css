@@ -371,6 +371,7 @@ details summary::-webkit-details-marker {
   position: relative;
   display: inline-block;
   border-bottom: 1px dotted black;
+  z-index: 1000000
 }
 
 .tooltip .tooltiptext {
@@ -390,3 +391,4 @@ details summary::-webkit-details-marker {
 .tooltip:hover .tooltiptext {
   visibility: visible;
 }
+

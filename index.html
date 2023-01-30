@@ -55,9 +55,9 @@
             <!-- Tooltip text: -->
             <span class="tooltiptext"
               >Profiles: <br />
-              Low GDP/capita &le; 2881$ <br />
-              2881$ &lt; Mid GDP/capita &le; 10293$ <br />
-              10293$ &lt; High GDP/capita</span
+              Low GDP/capita &le; $2,881 <br />
+              $2,881 &lt; Mid GDP/capita &le; $10,293 <br />
+              $10,293 &lt; High GDP/capita</span
             >
           </span>
         </p>
@@ -132,7 +132,6 @@
           var input, filter, ul, li, a, i;
           input = document.getElementById("myInput");
           filter = input.value.toUpperCase();
-          console.log("filter", filter);
           div = document.getElementById("topNav");
           a = div.getElementsByTagName("li");
           for (i = 0; i < a.length; i++) {
@@ -275,7 +274,16 @@
               name="comparisonRadar"
               value="gdpradar"
               />
-              <label for="gdpradar">different GDP levels</label>
+              <label for="gdpradar">different GDP levels <span class="tooltip"
+                > &#9432;
+                <!-- Tooltip text: -->
+                <span class="tooltiptext"
+                  >Profiles: <br />
+                  Low GDP/capita &le; $19,718 <br />
+                  $19,718 &lt; Mid GDP/capita &le; $42,299 <br />
+                  $42,299 &lt; High GDP/capita</span
+                >
+              </span> </label>
             </span>
             <span class="r-pill__item">
               <input

@@ -1,7 +1,6 @@
 //Generates data for the radar chart grouped by HAQ level
 export const countryListString = (data) => {
   const countries = data.map((d) => d.country);
-  console.log(countries);
   const countriesString = countries.reduce(
     (countriesString, country) => (countriesString += country + ", "),
     ""
@@ -299,8 +298,10 @@ export const dataPerGDPLevel = (data2015) => {
   let homeCountry = document.getElementById("homeCountryItems").value;
   // const lowGDPLimit= (d3.max(data2015, d=>d.gdp/d.population)-d3.min(data2015, d=>d.gdp/d.population))/3+d3.min(data2015, d=>d.gdp/d.population);
   // const midGDPLimit= (d3.max(data2015, d=>d.gdp/d.population)-d3.min(data2015, d=>d.gdp/d.population))*2/3+d3.min(data2015, d=>d.gdp/d.population);;
+
   const lowGDPLimit = d3.quantile(data2015, 1 / 3, (d) => d.gdp / d.population);
   const midGDPLimit = d3.quantile(data2015, 2 / 3, (d) => d.gdp / d.population);
+  console.log(lowGDPLimit, midGDPLimit);
   const dataLowGDP = data2015
     .filter((data) => data.gdp / data.population < lowGDPLimit)
     .filter((d) => d !== +d && d != 0);
@@ -502,7 +503,7 @@ export const dataComparisonCountries = (data2015) => {
   }
   let worldAverage = worldAverageData(data2015);
   if (homeCountry === "Not selected" && selectedCountry === "Not selected") {
-    return [[worldAverage], ["World Average", countryListString(data2015)]];
+    return [[worldAverage], [["World Average", countryListString(data2015)]]];
   }
   if (homeCountry != "Not selected" && selectedCountry === "Not selected") {
     return [
