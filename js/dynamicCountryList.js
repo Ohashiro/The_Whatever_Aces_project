@@ -1,3 +1,4 @@
+//Computes the list of countries selected in the selector of the gauges component.
 export const dynamicCountryList = (countries) => {
   var countrySelectedList = document.getElementById("countrySelectedList");
   var ulList = document.createElement("ul");
