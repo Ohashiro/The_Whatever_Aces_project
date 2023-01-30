@@ -1,3 +1,57 @@
+const axesDefinitionMean = (data2015, axisName) => {
+  data2015 = data2015.filter((d) => d !== +d && d != 0);
+  const axes = {
+    className: axisName,
+    axes: [
+      {
+        axis: "Number of hospitals per 100,000 people",
+        value: d3.mean(
+          data2015,
+          (d) => (d.nb_hospitals / d.population) * 100000
+        ),
+      },
+      {
+        axis: "Number of beds per 1,000 people",
+        value: d3.mean(data2015, (d) => (d.nb_beds / d.population) * 1000),
+      },
+      {
+        axis: "Number of general practitionners per 10,000 people",
+        value: d3.mean(
+          data2015,
+          (d) => (d.nb_general_practitionners / d.population) * 10000
+        ),
+      },
+      {
+        axis: "Number of specialist practitionners per 10,000 people",
+        value: d3.mean(
+          data2015,
+          (d) => (d.nb_specialists / d.population) * 10000
+        ),
+      },
+      {
+        axis: "Remuneration of general practionners in 10,000K USD",
+        value: d3.mean(
+          data2015,
+          (d) => d.remuneration_general_practitionners / 10000
+        ),
+      },
+      {
+        axis: "Number of schools",
+        value: d3.mean(data2015, (d) => d.nb_schools),
+      },
+      {
+        axis: "Government health expenses share of GDP",
+        value: d3.mean(data2015, (d) => d.share_gov_expenses),
+      },
+      {
+        axis: "Out-of-pocket health expenses share of GDP",
+        value: d3.mean(data2015, (d) => d.share_outpocket_expenses),
+      },
+    ],
+  };
+  return axes;
+};
+
 //Generates data for the radar chart grouped by HAQ level
 export const countryListString = (data) => {
   const countries = data.map((d) => d.country);
@@ -47,56 +101,7 @@ export const dataForCountryData = (dataCountry, country) => {
   };
 };
 export const worldAverageData = (data2015) => {
-  data2015 = data2015.filter((d) => d !== +d && d != 0);
-  return {
-    className: "worldAverage",
-    axes: [
-      {
-        axis: "Number of hospitals per 100,000 people",
-        value: d3.mean(
-          data2015,
-          (d) => (d.nb_hospitals / d.population) * 100000
-        ),
-      },
-      {
-        axis: "Number of beds per 1,000 people",
-        value: d3.mean(data2015, (d) => (d.nb_beds / d.population) * 1000),
-      },
-      {
-        axis: "Number of general practitionners per 10,000 people",
-        value: d3.mean(
-          data2015,
-          (d) => (d.nb_general_practitionners / d.population) * 10000
-        ),
-      },
-      {
-        axis: "Number of specialist practitionners per 10,000 people",
-        value: d3.mean(
-          data2015,
-          (d) => (d.nb_specialists / d.population) * 10000
-        ),
-      },
-      {
-        axis: "Remuneration of general practionners in 10,000K USD",
-        value: d3.mean(
-          data2015,
-          (d) => d.remuneration_general_practitionners / 10000
-        ),
-      },
-      {
-        axis: "Number of schools",
-        value: d3.mean(data2015, (d) => d.nb_schools),
-      },
-      {
-        axis: "Government health expenses share of GDP",
-        value: d3.mean(data2015, (d) => d.share_gov_expenses),
-      },
-      {
-        axis: "Out-of-pocket health expenses share of GDP",
-        value: d3.mean(data2015, (d) => d.share_outpocket_expenses),
-      },
-    ],
-  };
+  return axesDefinitionMean(data2015, "World average");
 };
 const LastColumn = (data2015) => {
   data2015 = data2015.filter((d) => d !== +d && d != 0);
@@ -132,156 +137,10 @@ export const dataPerHAQLevel = (data2015) => {
   const dataHighHAQ = data2015
     .filter((data) => data.haq > midHAQLimit)
     .filter((d) => d !== +d && d != 0);
-  const lowHAQ = {
-    className: "lowHAQ",
-    axes: [
-      {
-        axis: "Number of hospitals per 100,000 people",
-        value: d3.mean(
-          dataLowHAQ,
-          (d) => (d.nb_hospitals / d.population) * 100000
-        ),
-      },
-      {
-        axis: "Number of beds per 1,000 people",
-        value: d3.mean(dataLowHAQ, (d) => (d.nb_beds / d.population) * 1000),
-      },
-      {
-        axis: "Number of general practitionners per 10,000 people",
-        value: d3.mean(
-          dataLowHAQ,
-          (d) => (d.nb_general_practitionners / d.population) * 10000
-        ),
-      },
-      {
-        axis: "Number of specialist practitionners per 10,000 people",
-        value: d3.mean(
-          dataLowHAQ,
-          (d) => (d.nb_specialists / d.population) * 10000
-        ),
-      },
-      {
-        axis: "Remuneration of general practionners in 10,000K USD",
-        value: d3.mean(
-          dataLowHAQ,
-          (d) => d.remuneration_general_practitionners / 10000
-        ),
-      },
-      {
-        axis: "Number of schools",
-        value: d3.mean(dataLowHAQ, (d) => d.nb_schools),
-      },
-      {
-        axis: "Government health expenses share of GDP",
-        value: d3.mean(dataLowHAQ, (d) => d.share_gov_expenses),
-      },
-      {
-        axis: "Out-of-pocket health expenses share of GDP",
-        value: d3.mean(dataLowHAQ, (d) => d.share_outpocket_expenses),
-      },
-    ],
-  };
-  const midHAQ = {
-    className: "midHAQ",
-    axes: [
-      {
-        axis: "Number of hospitals per 100,000 people",
-        value: d3.mean(
-          dataMidHAQ,
-          (d) => (d.nb_hospitals / d.population) * 100000
-        ),
-      },
-      {
-        axis: "Number of beds per 1,000 people",
-        value: d3.mean(dataMidHAQ, (d) => (d.nb_beds / d.population) * 1000),
-      },
-      {
-        axis: "Number of general practitionners per 10,000 people",
-        value: d3.mean(
-          dataMidHAQ,
-          (d) => (d.nb_general_practitionners / d.population) * 10000
-        ),
-      },
-      {
-        axis: "Number of specialist practitionners per 10,000 people",
-        value: d3.mean(
-          dataMidHAQ,
-          (d) => (d.nb_specialists / d.population) * 10000
-        ),
-      },
-      {
-        axis: "Remuneration of general practionners in 10,000K USD",
-        value: d3.mean(
-          dataMidHAQ,
-          (d) => d.remuneration_general_practitionners / 10000
-        ),
-      },
-      {
-        axis: "Number of schools",
-        value: d3.mean(dataMidHAQ, (d) => d.nb_schools),
-      },
-      {
-        axis: "Government health expenses share of GDP",
-        value: d3.mean(dataMidHAQ, (d) => d.share_gov_expenses),
-      },
-      {
-        axis: "Out-of-pocket health expenses share of GDP",
-        value: d3.mean(dataMidHAQ, (d) => d.share_outpocket_expenses),
-      },
-    ],
-  };
-
-  const highHAQ = {
-    className: "highHAQ",
-    axes: [
-      {
-        axis: "Number of hospitals per 100,000 people",
-        value: d3.mean(
-          dataHighHAQ,
-          (d) => (d.nb_hospitals / d.population) * 100000
-        ),
-      },
-      {
-        axis: "Number of beds per 1,000 people",
-        value: d3.mean(dataHighHAQ, (d) => (d.nb_beds / d.population) * 1000),
-      },
-      {
-        axis: "Number of general practitionners per 10,000 people",
-        value: d3.mean(
-          dataHighHAQ,
-          (d) => (d.nb_general_practitionners / d.population) * 10000
-        ),
-      },
-      {
-        axis: "Number of specialist practitionners per 10,000 people",
-        value: d3.mean(
-          dataHighHAQ,
-          (d) => (d.nb_specialists / d.population) * 10000
-        ),
-      },
-      {
-        axis: "Remuneration of general practionners in 10,000K USD",
-        value: d3.mean(
-          dataHighHAQ,
-          (d) => d.remuneration_general_practitionners / 10000
-        ),
-      },
-      {
-        axis: "Number of schools",
-        value: d3.mean(dataHighHAQ, (d) => d.nb_schools),
-      },
-      {
-        axis: "Government health expenses share of GDP",
-        value: d3.mean(dataHighHAQ, (d) => d.share_gov_expenses),
-      },
-      {
-        axis: "Out-of-pocket health expenses share of GDP",
-        value: d3.mean(dataHighHAQ, (d) => d.share_outpocket_expenses),
-      },
-    ],
-  };
-  console.log(dataHighHAQ);
-  const worldAverage = LastColumn(data2015);
+  const lowHAQ = axesDefinitionMean(dataLowHAQ, "Low HAQ");
+  const midHAQ = axesDefinitionMean(dataMidHAQ, "Mid HAQ");
+  const highHAQ = axesDefinitionMean(dataHighHAQ, "High HAQ");
+  const lastColumn = LastColumn(data2015);
   const legend = [
     ["Low HAQ countries", countryListString(dataLowHAQ)],
     ["Mid HAQ countries", countryListString(dataMidHAQ)],
@@ -290,179 +149,30 @@ export const dataPerHAQLevel = (data2015) => {
       ? ["World Average", countryListString(data2015)]
       : [homeCountry, homeCountry],
   ];
-  return [[lowHAQ, midHAQ, highHAQ, worldAverage], legend];
+  return [[lowHAQ, midHAQ, highHAQ, lastColumn], legend];
 };
 //Generates data for the radar chart grouped by GDP level
 export const dataPerGDPLevel = (data2015) => {
   data2015 = data2015.filter((d) => d !== +d && d != 0);
   let homeCountry = document.getElementById("homeCountryItems").value;
-  // const lowGDPLimit= (d3.max(data2015, d=>d.gdp/d.population)-d3.min(data2015, d=>d.gdp/d.population))/3+d3.min(data2015, d=>d.gdp/d.population);
-  // const midGDPLimit= (d3.max(data2015, d=>d.gdp/d.population)-d3.min(data2015, d=>d.gdp/d.population))*2/3+d3.min(data2015, d=>d.gdp/d.population);;
-
   const lowGDPLimit = d3.quantile(data2015, 1 / 3, (d) => d.gdp / d.population);
   const midGDPLimit = d3.quantile(data2015, 2 / 3, (d) => d.gdp / d.population);
-  const dataLowGDP = data2015
-    .filter((data) => data.gdp / data.population < lowGDPLimit)
-    .filter((d) => d !== +d && d != 0);
-  const dataMidGDP = data2015
-    .filter(
-      (data) =>
-        data.gdp / data.population > lowGDPLimit &&
-        data.gdp / data.population < midGDPLimit
-    )
-    .filter((d) => d !== +d && d != 0);
-  const dataHighGDP = data2015
-    .filter((data) => data.gdp / data.population > midGDPLimit)
-    .filter((d) => d !== +d && d != 0);
-  const lowGDP = {
-    className: "lowGDP",
-    axes: [
-      {
-        axis: "Number of hospitals per 100,000 people",
-        value: d3.mean(
-          dataLowGDP,
-          (d) => (d.nb_hospitals / d.population) * 100000
-        ),
-      },
-      {
-        axis: "Number of beds per 1,000 people",
-        value: d3.mean(dataLowGDP, (d) => (d.nb_beds / d.population) * 1000),
-      },
-      {
-        axis: "Number of general practitionners per 10,000 people",
-        value: d3.mean(
-          dataLowGDP,
-          (d) => (d.nb_general_practitionners / d.population) * 10000
-        ),
-      },
-      {
-        axis: "Number of specialist practitionners per 10,000 people",
-        value: d3.mean(
-          dataLowGDP,
-          (d) => (d.nb_specialists / d.population) * 10000
-        ),
-      },
-      {
-        axis: "Remuneration of general practionners in 10,000K USD",
-        value: d3.mean(
-          dataLowGDP,
-          (d) => d.remuneration_general_practitionners / 10000
-        ),
-      },
-      {
-        axis: "Number of schools",
-        value: d3.mean(dataLowGDP, (d) => d.nb_schools),
-      },
-      {
-        axis: "Government health expenses share of GDP",
-        value: d3.mean(dataLowGDP, (d) => d.share_gov_expenses),
-      },
-      {
-        axis: "Out-of-pocket health expenses share of GDP",
-        value: d3.mean(dataLowGDP, (d) => d.share_outpocket_expenses),
-      },
-    ],
-  };
-  const midGDP = {
-    className: "midGDP",
-    axes: [
-      {
-        axis: "Number of hospitals per 100,000 people",
-        value: d3.mean(
-          dataMidGDP,
-          (d) => (d.nb_hospitals / d.population) * 100000
-        ),
-      },
-      {
-        axis: "Number of beds per 1,000 people",
-        value: d3.mean(dataMidGDP, (d) => (d.nb_beds / d.population) * 1000),
-      },
-      {
-        axis: "Number of general practitionners per 10,000 people",
-        value: d3.mean(
-          dataMidGDP,
-          (d) => (d.nb_general_practitionners / d.population) * 10000
-        ),
-      },
-      {
-        axis: "Number of specialist practitionners per 10,000 people",
-        value: d3.mean(
-          dataMidGDP,
-          (d) => (d.nb_specialists / d.population) * 10000
-        ),
-      },
-      {
-        axis: "Remuneration of general practionners in 10,000K USD",
-        value: d3.mean(
-          dataMidGDP,
-          (d) => d.remuneration_general_practitionners / 10000
-        ),
-      },
-      {
-        axis: "Number of schools",
-        value: d3.mean(dataMidGDP, (d) => d.nb_schools),
-      },
-      {
-        axis: "Government health expenses share of GDP",
-        value: d3.mean(dataMidGDP, (d) => d.share_gov_expenses),
-      },
-      {
-        axis: "Out-of-pocket health expenses share of GDP",
-        value: d3.mean(dataMidGDP, (d) => d.share_outpocket_expenses),
-      },
-    ],
-  };
+  const dataLowGDP = data2015.filter(
+    (data) => data.gdp / data.population < lowGDPLimit
+  );
+  const dataMidGDP = data2015.filter(
+    (data) =>
+      data.gdp / data.population > lowGDPLimit &&
+      data.gdp / data.population < midGDPLimit
+  );
+  const dataHighGDP = data2015.filter(
+    (data) => data.gdp / data.population > midGDPLimit
+  );
+  const lowGDP = axesDefinitionMean(dataLowGDP, "Low GDP");
+  const midGDP = axesDefinitionMean(dataMidGDP, "Mid GDP");
 
-  const highGDP = {
-    className: "highGDP",
-    axes: [
-      {
-        axis: "Number of hospitals per 100,000 people",
-        value: d3.mean(
-          dataHighGDP,
-          (d) => (d.nb_hospitals / d.population) * 100000
-        ),
-      },
-      {
-        axis: "Number of beds per 1,000 people",
-        value: d3.mean(dataHighGDP, (d) => (d.nb_beds / d.population) * 1000),
-      },
-      {
-        axis: "Number of general practitionners per 10,000 people",
-        value: d3.mean(
-          dataHighGDP,
-          (d) => (d.nb_general_practitionners / d.population) * 10000
-        ),
-      },
-      {
-        axis: "Number of specialist practitionners per 10,000 people",
-        value: d3.mean(
-          dataHighGDP,
-          (d) => (d.nb_specialists / d.population) * 10000
-        ),
-      },
-      {
-        axis: "Remuneration of general practionners in 10,000K USD",
-        value: d3.mean(
-          dataHighGDP,
-          (d) => d.remuneration_general_practitionners / 10000
-        ),
-      },
-      {
-        axis: "Number of schools",
-        value: d3.mean(dataHighGDP, (d) => d.nb_schools),
-      },
-      {
-        axis: "Government health expenses share of GDP",
-        value: d3.mean(dataHighGDP, (d) => d.share_gov_expenses),
-      },
-      {
-        axis: "Out-of-pocket health expenses share of GDP",
-        value: d3.mean(dataHighGDP, (d) => d.share_outpocket_expenses),
-      },
-    ],
-  };
-  const worldAverage = LastColumn(data2015);
+  const highGDP = axesDefinitionMean(dataHighGDP, "High GDP");
+  const lastColumn = LastColumn(data2015);
   let lastColumnLegend = ["World Average", countryListString(data2015)];
   if (homeCountry != "Not selected") {
     lastColumnLegend = [homeCountry, homeCountry];
@@ -473,7 +183,7 @@ export const dataPerGDPLevel = (data2015) => {
     ["High GDP countries (per capita)", countryListString(dataHighGDP)],
     lastColumnLegend,
   ];
-  return [[lowGDP, midGDP, highGDP, worldAverage], legend];
+  return [[lowGDP, midGDP, highGDP, lastColumn], legend];
 };
 
 export const dataComparisonCountries = (data2015) => {
