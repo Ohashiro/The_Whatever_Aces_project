@@ -18,7 +18,7 @@ html {
 .responsive-bar-container {
   margin-right: auto;
   margin-left: auto;
-  width: 80%;
+  width: 85%;
   float: left;
   max-width: 1200px;
   margin-bottom: 1.5rem;
@@ -26,7 +26,7 @@ html {
 .responsive-bar-legend {
   margin-right: auto;
   margin-left: auto;
-  width: 18%;
+  width: 15%;
   float: right;
   max-width: 1200px;
   margin-bottom: 1.5rem;

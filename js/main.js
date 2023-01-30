@@ -117,13 +117,13 @@ function prepareDataIndicesChart(file) {
     file[i].area = area;
 
     if (file[i].gdp/file[i].population <= lowGDPLimit){
-      file[i].gdpProfile = "Low";
+      file[i].gdpProfile = "Low GDP/capita";
     } 
     if (file[i].gdp/file[i].population <= midGDPLimit && file[i].gdp/file[i].population > lowGDPLimit){
-      file[i].gdpProfile = "Mid";
+      file[i].gdpProfile = "Mid GDP/capita";
     } 
     if (file[i].gdp/file[i].population > midGDPLimit){
-      file[i].gdpProfile = "High";
+      file[i].gdpProfile = "High GDP/capita";
     }
     if (file[i].haq && file[i].hdi) {
       prepared_data.push(file[i]);

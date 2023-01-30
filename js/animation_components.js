@@ -42,12 +42,12 @@ function filter_data_on_gdp_profile(data) {
   let lowGDPLimit = compute_gdp_profiles(data)[0];
   let midGDPLimit = compute_gdp_profiles(data)[1];
   if (gdp_profile == 'low') {
-    let newData = data.filter(data => data.gdpProfile == "Low");
+    let newData = data.filter(data => data.gdpProfile == "Low GDP/capita");
     // let newData = data.filter(data => data.gdp/data.population <= lowGDPLimit);
     return newData
   } 
   if (gdp_profile == 'mid') {
-    let newData = data.filter(data => data.gdpProfile == "Mid");
+    let newData = data.filter(data => data.gdpProfile == "Mid GDP/capita");
     // let newData = data.filter(function(item) {
     //     if (midGDPLimit >= item.gdp/item.population && item.gdp/item.population  > lowGDPLimit) {
     //         return true;
@@ -57,7 +57,7 @@ function filter_data_on_gdp_profile(data) {
     return newData
   } 
   if (gdp_profile == 'high') {
-    let newData = data.filter(data => data.gdpProfile == "High");
+    let newData = data.filter(data => data.gdpProfile == "High GDP/capita");
     // let newData = data.filter(data => data.gdp/data.population  > midGDPLimit);
     return newData
   } 
