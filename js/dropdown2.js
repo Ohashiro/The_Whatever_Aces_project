@@ -25,14 +25,7 @@ Promise.all([
   }),
 ])
   .then(function (files) {
-    const data2015 = files[0].filter(
-      (data) =>
-        data.year === 2015 &&
-        data.nb_hospitals != 0 &&
-        data.nb_hospitals != +data &&
-        data.nb_general_practitionners != 0 &&
-        data.nb_general_practitionners != +data
-    );
+    const data2015 = files[0].filter((data) => data.year === 2015);
     const countries = country_list(data2015);
     console.log("countries are: ", countries);
     selectCountriesText.value = "All";

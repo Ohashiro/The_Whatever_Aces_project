@@ -106,7 +106,6 @@ export const RadarDraw = (mergedDataset) => {
     );
   } else if (selected == "countryradar") {
     let selectedCountry = document.getElementById("radarCountryItems").value;
-    console.log(selectedCountry, homeCountry, "coucou");
     var chart = document.getElementById("radar");
     if (homeCountry == "Not selected" || !homeCountry) {
       var chart = document.getElementById("radar");
