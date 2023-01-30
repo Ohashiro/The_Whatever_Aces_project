@@ -47,8 +47,6 @@ Promise.all([
       li.appendChild(el);
       li.appendChild(countryText);
     }
-    fillHomeSelectSelector(countries);
-    fillRadarSelectSelector(countries);
     dropdownSelection();
   })
   .catch(function (err) {
@@ -143,7 +141,7 @@ function setCountries(value) {
   return selectedCountries;
 }
 
-function fillHomeSelectSelector(countries) {
+export function fillHomeSelectSelector(countries) {
   var select = document.getElementsByClassName("homeCountryItems")[0];
   var options = countries;
   options = ["Not selected"].concat(countries);

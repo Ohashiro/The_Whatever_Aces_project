@@ -3,7 +3,10 @@ import { indicesChart } from "./indicesChart.js";
 import { gaugeChart } from "./gauge.js";
 import { radarChart, RadarDraw } from "./radar.js";
 import { dataPerHAQLevel, dataPerGDPLevel } from "./radarData.js";
-import { fillRadarSelectSelector } from "./dropdown2.js";
+import {
+  fillRadarSelectSelector,
+  fillHomeSelectSelector,
+} from "./dropdown2.js";
 // data sets list
 let data_sets = ["DatasetMerged.csv"];
 
@@ -62,6 +65,7 @@ Promise.all([
     indicesChart(prepareDataIndicesChart(mergedDataset));
     gaugeChart(mergedDataset);
     radarChart(dataPerHAQLevel(data2015)[0], dataPerHAQLevel(data2015)[1]);
+    fillHomeSelectSelector(countries);
     document
       .getElementById("selectorRadar")
       .addEventListener("click", function () {
@@ -91,10 +95,7 @@ Promise.all([
 function prepareDataIndicesChart(file) {
   let prepared_data = [];
   file = file.filter(
-    (data) =>
-      data.year === 2015 &&
-      data.gdp != 0 &&
-      data.population != 0
+    (data) => data.year === 2015 && data.gdp != 0 && data.population != 0
   );
   let lowGDPLimit = compute_gdp_profiles(file)[0];
   let midGDPLimit = compute_gdp_profiles(file)[1];
@@ -116,13 +117,16 @@ function prepareDataIndicesChart(file) {
     }
     file[i].area = area;
 
-    if (file[i].gdp/file[i].population <= lowGDPLimit){
+    if (file[i].gdp / file[i].population <= lowGDPLimit) {
       file[i].gdpProfile = "Low GDP/capita";
-    } 
-    if (file[i].gdp/file[i].population <= midGDPLimit && file[i].gdp/file[i].population > lowGDPLimit){
+    }
+    if (
+      file[i].gdp / file[i].population <= midGDPLimit &&
+      file[i].gdp / file[i].population > lowGDPLimit
+    ) {
       file[i].gdpProfile = "Mid GDP/capita";
-    } 
-    if (file[i].gdp/file[i].population > midGDPLimit){
+    }
+    if (file[i].gdp / file[i].population > midGDPLimit) {
       file[i].gdpProfile = "High GDP/capita";
     }
     if (file[i].haq && file[i].hdi) {
@@ -136,9 +140,9 @@ function prepareDataIndicesChart(file) {
 function compute_gdp_profiles(data) {
   let gdp_per_capita_array = [];
   for (let i = 0; i < data.length; i++) {
-    gdp_per_capita_array.push(data[i].gdp/data[i].population);
+    gdp_per_capita_array.push(data[i].gdp / data[i].population);
   }
-  const lowGDPLimit= d3.quantile(gdp_per_capita_array,0.33);
-  const midGDPLimit= d3.quantile(gdp_per_capita_array,0.66);
-  return [lowGDPLimit,midGDPLimit]
+  const lowGDPLimit = d3.quantile(gdp_per_capita_array, 0.33);
+  const midGDPLimit = d3.quantile(gdp_per_capita_array, 0.66);
+  return [lowGDPLimit, midGDPLimit];
 }
