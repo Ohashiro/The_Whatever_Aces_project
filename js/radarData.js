@@ -150,7 +150,7 @@ export const dataPerHAQLevel = (data2015) => {
     ["Low HAQ countries", countryListString(dataLowHAQ)],
     ["Mid HAQ countries", countryListString(dataMidHAQ)],
     ["High HAQ countries", countryListString(dataHighHAQ)],
-    homeCountry == "Not selected"
+    homeCountry == "Not selected" || homeCountry==""
       ? ["World Average", countryListString(data2015)]
       : [homeCountry, homeCountry],
   ];
